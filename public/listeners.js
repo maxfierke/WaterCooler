@@ -35,6 +35,8 @@ socket.on('disconnect', function () {
 });
 
 $(sendBtn).on('click', function() {
+    var name = document.getElementById("name");
+    var field = document.getElementById("field");
     if(name.value === "") {
         alert("Please type your name!");
     } else if (field.value !== "") {
