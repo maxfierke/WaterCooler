@@ -1,0 +1,22 @@
+doctype 5
+html(lang="en")
+    head
+        title= "WaterCooler"
+        link(href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css', rel='stylesheet', type='text/css')
+        link(href='/application.css', rel='stylesheet', type='text/css')
+    body
+        .container-fluid
+            #content.well
+            .controls.row-fluid
+                form#control-form.form-inline
+                    input#name.span1(type='text', placeholder='Name')
+                    #field-container.input-append.span11
+                        input#field.span11(type='text', placeholder='Message')
+                        input#send.btn.btn-primary.span1(type='button', value='Send')
+            .clearfix
+        script(src='/socket.io/socket.io.js', type='text/javascript')
+        script(src='//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js')
+        script(src='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js')
+        script(src='/helpers.js', type='text/javascript')
+        script(src='/watercooler.js', type='text/javascript')
+        script(src='/listeners.js', type='text/javascript')

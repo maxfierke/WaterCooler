@@ -1,0 +1,50 @@
+@media (max-width: 767px) {
+    body {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+.date {
+    margin-right: 5px;
+}
+
+#content {
+    overflow-y: scroll;
+    margin: 0;
+    word-wrap: break-word;
+}
+
+.controls {
+    position: fixed;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    width: 100%;
+    vertical-align: middle;
+    background: url('/assets/img/tweed.png') repeat;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .controls {
+        background: url('/assets/img/tweed_@2X.png') repeat;
+    }
+}
+
+#field-container {
+    display: inline-block;
+    float: none;
+    margin-left: 5px;
+}
+
+#control-form {
+    margin: 0;
+}
+
+#name {
+    margin-right: 5px;
+}

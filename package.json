@@ -1,0 +1,29 @@
+{
+    "name": "WaterCooler",
+    "version": "0.1.0",
+    "private": true,
+    "description": "Realtime chat application with bells and whistles.",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/maxfierke/WaterCooler.git"
+    },
+    "keywords": [
+        "realtime",
+        "chat",
+        "vimeo",
+        "youtube",
+        "images",
+        "memes"
+    ],
+    "dependencies": {
+        "socket.io": "latest",
+        "express": "latest",
+        "jade": "latest",
+        "validator": "latest"
+    },
+    "author": "Max Fierke <max@maxfierke.com>",
+    "license": "MIT",
+    "engines": {
+        "node": ">=0.9"
+    }
+}
