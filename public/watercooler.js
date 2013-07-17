@@ -34,8 +34,8 @@ var WaterCooler = {
                         url: 'https://www.googleapis.com/youtube/v3/videos?id=' + ytvid + '&key='+WaterCooler.config.integrations.youtube.apikey+'&part=snippet',
                         dataType: 'jsonp',
                         success: function(data) {
-                            var video = data[0].videos[0].snippet;
-                            var ytDivChildren = $('#vimeo-'+vmoId).children();
+                            var video = data.items[0].snippet;
+                            var ytDivChildren = $('#youtube-'+ytvid).children();
                             ytDivChildren.find('h4 > a').text(video.title);
                             ytDivChildren.find('.media').text(video.description);
                         }
