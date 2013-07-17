@@ -1,4 +1,5 @@
 var WaterCooler = {
+    room: window.location.pathname.split('/').slice(-1)[0],
     util: {
         parseMessageToHTML: function (data) {
 

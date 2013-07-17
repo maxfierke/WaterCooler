@@ -6,7 +6,12 @@ html(lang="en")
         link(href='/application.css', rel='stylesheet', type='text/css')
     body
         .container-fluid
-            #content.well
+            .row-fluid
+                #content.well.span10
+                aside#sidebar.span2
+                    header
+                        | Users
+                    ul#user-list
             .controls.row-fluid
                 form#control-form.form-inline
                     input#name.span1(type='text', placeholder='Name')
