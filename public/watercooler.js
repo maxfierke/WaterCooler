@@ -20,7 +20,7 @@ var WaterCooler = {
                 var html = '';
                 if (ytUrl = message.match(/watch\?v=([a-zA-Z0-9\-_]+)/)) {
                     var ytvid = ytUrl[0].split('=')[1];
-                    html = '<div class="media">';
+                    html = '<div class="media" id="youtube-'+ytvid+'">';
                     html += '<a class="pull-left" href="https://youtube.com/watch?v='+ytvid+'">';
                     html += '<img class="media-object" src="https://i1.ytimg.com/vi/'+ytvid+'/default.jpg" />';
                     html += '</a>';
@@ -29,6 +29,16 @@ var WaterCooler = {
                     html += '<div class="media">Description</div>';
                     html += '</div>';
                     html += '</div>';
+                    $.ajax({
+                        url: 'https://www.googleapis.com/youtube/v3/videos?id=' + ytvid + '&key='+WaterCooler.config.integrations.youtube.apikey+'&part=snippet',
+                        dataType: 'jsonp',
+                        success: function(data) {
+                            var video = data[0].videos[0].snippet;
+                            var ytDivChildren = $('#vimeo-'+vmoId).children();
+                            ytDivChildren.find('h4 > a').text(video.title);
+                            ytDivChildren.find('.media').text(video.description);
+                        }
+                    });
                 }
                 return html;
             }
@@ -79,3 +89,14 @@ var WaterCooler = {
         }
     }
 };
+
+// Load WaterCooler config
+$.ajax({
+  async: false,
+  dataType: 'json',
+  url: '/config.json',
+  success: function(data) {
+    WaterCooler.config = data;
+  }
+});
+
