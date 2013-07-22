@@ -57,7 +57,7 @@ if(WaterCooler) {
 
         socket.on('disconnect', function socketDisconnected() {
             $(content).append('<strong class="text-error">Connection Lost! I\'ll try to reconnect...</strong><br />');
-            $(content).scrollTop(content.scrollHeight);
+            $(content).scrollTop($(content)[0].scrollHeight);
         });
 
 

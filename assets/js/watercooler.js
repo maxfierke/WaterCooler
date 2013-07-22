@@ -19,6 +19,7 @@ var WaterCooler = {
 
                 if (announce) {
                     $('#content').append('<strong class="text-info">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+' has connected.</strong><br />');
+                    $('#content').scrollTop($('#content')[0].scrollHeight);
                 }
             }
         },
@@ -28,6 +29,7 @@ var WaterCooler = {
             // if announce is true, show a message about this room
             if (announce) {
                 $('#content').append('<strong class="text-info">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+' has left the room.</strong><br />');
+                $('#content').scrollTop($('#content')[0].scrollHeight);
             }
         },
         clientList: function (data) {
