@@ -22,7 +22,7 @@ module.exports = {
             }).done(function(err, message) {
                 if (err) return res.send(err,500);
                 message.user = req.session.user;
-                res.broadcast('', message);
+                res.broadcast(roomSlug, { type: 'message', data: message });
                 res.json(message, 200);
             });
         });

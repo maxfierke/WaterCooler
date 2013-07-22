@@ -13,7 +13,7 @@ module.exports = {
         var slug = req.params.slug;
         Room.findOneBySlug(slug).done(function (err, room) {
             if (err) return res.send(err, 404);
-            var subs = sails.io.sockets.clients();
+            var subs = sails.io.sockets.clients(slug);
             var connectedUsers = { users: [] };
             subs.forEach(function(element, index, array) {
                 connectedUsers.users[index] = element.handshake.session.user;
@@ -45,12 +45,20 @@ module.exports = {
         var slug = req.params.slug;
         Room.findOneBySlug(slug).done(function (err, room) {
             if (err) return res.send(err, 404);
-            Room.subscribe(req.socket, [{ id: room.id }]);
-            Message.subscribe(req.socket, [{ room: room.id }]);
-            User.findOne({ id: req.session.user.id }).done(function (err, user) {
-                if (err) return res.send(err, 500);
-                res.view({ title: room.name, room: room, user: JSON.stringify(user.toJSON()) });
-            })
+            if (!req.isSocket) {
+                User.findOne({ id: req.session.user.id }).done(function (err, user) {
+                    if (err) return res.send(err, 500);
+                    res.view({ title: room.name, room: room, user: JSON.stringify(user.toJSON()) });
+                });
+            } else {
+                req.listen(room.slug);
+                req.socket.on('disconnect', function () {
+                    req.socket.broadcast.to(room.slug).emit('presence', { state: 'offline', user: req.session.user });
+                    req.socket.leave(room.slug);
+                });
+                req.socket.broadcast.to(room.slug).emit('presence', { state: 'online', user: req.session.user });
+                res.json(room, 200);
+            }
         });
     }
 

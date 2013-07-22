@@ -35,15 +35,24 @@ if(WaterCooler) {
             if ($(content).text() != '') {
                 $(content).append('<strong class="text-success">Connection Success!</strong><br />');
             }
-            socket.get('/room/'+WaterCooler.room+'/subscribers', function (response) {
-                console.log('Data received: ', response);
+            socket.get('/room/'+WaterCooler.room, function (room) {
+                $(content).append('<strong class="text-info">Welcome to '+room.name+'!</strong><br />');
+                $(content).append('<p class="text-info">'+room.description+'</p>');
             });
+            socket.get('/room/'+WaterCooler.room+'/subscribers', WaterCooler.handler.clientList);
         });
 
-        socket.get('/room/'+WaterCooler.room+'/subscribers', WaterCooler.handler.clientListRefresh);
+        socket.on('message', function(response) {
+            WaterCooler.handler.messageReceived(response.data, content);
+        });
 
-        socket.on('message', function(message) {
-            WaterCooler.handler.messageReceived(message, content);
+        socket.on('presence', function(data) {
+            isMe = (data.user.id === activeUser.id ? true : false);
+            if (data.state == 'online'){
+                WaterCooler.handler.clientAdd(data.user, true, isMe);
+            } else if(data.state == 'offline'){
+                WaterCooler.handler.clientRemove(data.user, true);
+            }
         });
 
         socket.on('disconnect', function socketDisconnected() {
