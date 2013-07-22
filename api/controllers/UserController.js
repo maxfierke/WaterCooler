@@ -11,7 +11,7 @@ module.exports = {
         User.findOneByUsername(req.params.username).done(function (err, user) {
             if (err) return res.send(err,500);
             console.log(user);
-            if (req.isJson) {
+            if (req.wantsJSON) {
                 res.json({ user: user.toJSON() }, 200);
             } else {
                 res.view({ title: user.username, user: user });
@@ -23,7 +23,7 @@ module.exports = {
         User.findOne(req.session.user.id).done(function (err, user) {
             if (err) return res.send(err,500);
             console.log(user);
-            if (req.isJson) {
+            if (req.wantsJSON) {
                 res.json({ user: user.toJSON() }, 200);
             } else {
                 res.view({ title: user.username, user: user.toJSON() });
