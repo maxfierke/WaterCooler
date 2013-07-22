@@ -11,33 +11,29 @@ var WaterCooler = {
                 console.log("There is a problem: ", message);
             }
         },
-        clientListRefresh: function (data) {
-            // add a client to the clients list
-            function addClient(client, announce, isMe) {
-                if (isMe) {
-                    $('ul#user-list').append('<li data-clientId="'+client.id+'">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+' <span class="label label-info">Me</span></li>');
-                } else {
-                    $('ul#user-list').append('<li data-clientId="'+client.id+'">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+'</li>');
+        clientAdd: function (client, announce, isMe) {
+            if (isMe) {
+                $('ul#user-list').append('<li data-clientId="'+client.id+'">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+' <span class="label label-info">Me</span></li>');
+            } else {
+                $('ul#user-list').append('<li data-clientId="'+client.id+'">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+'</li>');
 
-                    if (announce) {
-                        $('#content').append('<strong class="text-info">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+' has connected.</strong><br />');
-                    }
-                }
-            }
-
-            // remove a client from the clients list
-            function removeClient(client, announce) {
-                $('ul#user-list li[data-clientId="' + client.id + '"]').remove();
-
-                // if announce is true, show a message about this room
                 if (announce) {
-                    $('#content').append('<strong class="text-info">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+' has left the room.</strong><br />');
+                    $('#content').append('<strong class="text-info">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+' has connected.</strong><br />');
                 }
             }
+        },
+        clientRemove: function (client, announce) {
+            $('ul#user-list li[data-clientId="' + client.id + '"]').remove();
 
+            // if announce is true, show a message about this room
+            if (announce) {
+                $('#content').append('<strong class="text-info">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+' has left the room.</strong><br />');
+            }
+        },
+        clientList: function (data) {
             for (var i = 0; i < data.users.length; i++) {
                 isMe = (data.users[i].id === activeUser.id ? true : false);
-                addClient(data.users[i], false, isMe);
+                WaterCooler.handler.clientAdd(data.users[i], false, isMe);
             }
         }
     },
