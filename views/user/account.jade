@@ -1,0 +1,67 @@
+extends ../layout
+
+block content
+    #container.container.well.center
+        #alerts.row-fluid
+        #account-container.row-fluid
+            form#account-form.span6
+                fieldset
+                    legend Account Details
+                    div
+                        div.span6
+                            input#firstName.input-block-level(type="text", value="#{user.firstName}", placeholder="First Name", required)
+                        div.span6
+                            input#lastName.input-block-level(type="text", value="#{user.lastName}", placeholder="Last Name", required)
+                    input#username.input-block-level(type="text", value="#{user.username}", placeholder="Username", required)
+                    input#password.input-block-level(type="password", value="", placeholder="Password")
+                    input#confirmPassword.input-block-level(type="password", value="", placeholder="Confirm Password")
+                    input#email.input-block-level(type="email", value="#{user.email}", placeholder="Email", required)
+                    input#location.input-block-level(type="text", value="#{user.location}", placeholder="Location")
+                    input.btn.btn-primary.btn-block(type="submit", value="Save")
+            .span6.text-center
+                img.img-polaroid(src="https://secure.gravatar.com/avatar/#{user.gravatar_hash}?s=200")
+                br
+                br
+                p.
+                    Avatar provided by <a href="http://gravatar.com">Gravatar.com</a>
+
+block scripts
+    script.
+        $("#account-form").submit(function(e){
+            e.preventDefault();
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var confirmPassword = $("#confirmPassword").val();
+            var email = $("#email").val();
+            var location = $("#location").val();
+            var firstName = $("#firstName").val();
+            var lastName = $("#lastName").val();
+            var data = {};
+            if (password === confirmPassword) {
+                if (password.length > 0) {
+                    data = { username: username, password: password, email: email,
+                             firstName: firstName, lastName: lastName, location: location };
+                } else {
+                    data = { username: username, email: email, firstName: firstName,
+                             lastName: lastName, location: location };
+                }
+                $.ajax({
+                    type: 'PUT',
+                    url: '/user/#{user.id}',
+                    data: data,
+                    success: function () {
+                        $('#alerts').html('<div class="alert alert-success span12">Account updated!</div>');
+                    },
+                    error: function(res) {
+                        $('#alerts').html('<div class="alert alert-error span12">'+res.responseJSON.error+'</div>');
+                    }
+                });
+            } else {
+                $('#alerts').html('<div class="alert alert-error span12">Passwords don\'t match</div>');
+                $('#password').popover({
+                    title: "Validation Error",
+                    content: "Passwords don't match"
+                }).click();
+            }
+        });
+-

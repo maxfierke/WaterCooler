@@ -1,0 +1,26 @@
+extends ../layout
+
+block styles
+    style.
+        body { background: #efefef; }
+        .navbar { margin-bottom: 0; }
+
+block content
+    .container-fluid
+        .row-fluid
+            #content.well.span10
+            aside#sidebar.span2
+                header Users
+                ul#user-list
+        .controls.row-fluid
+            form#control-form.form-inline
+                input#field.span11(type='text', placeholder='Message', autocomplete='off')
+                input#send.btn.btn-primary.span1(type='button', value='Send')
+        .clearfix
+
+block scripts
+    script(type='text/javascript').
+        var activeUser = !{user};
+    script(src='/js/helpers.js', type='text/javascript')
+    script(src='/js/watercooler.js', type='text/javascript')
+    script(src='/js/app.js', type='text/javascript')

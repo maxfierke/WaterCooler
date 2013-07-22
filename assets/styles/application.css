@@ -1,14 +1,47 @@
-@media (max-width: 767px) {
-    body {
-        padding-left: 0;
-        padding-right: 0;
-    }
+body {
+
 }
 
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+
+}
+
+.navbar {
+    margin-bottom: 15px;
+}
+
+.navbar-inverse a.brand {
+    font-family: 'Courgette', sans-serif;
+    color: #0390c5;
+}
+
+/* Login / Sign Up Styles */
 .container-fluid {
     padding: 0;
 }
 
+.center {
+    margin: 0 auto;
+}
+
+#login-container {
+    max-width: 600px;
+}
+
+#login-container h4.vertical-center {
+    position: relative;
+    top: 130px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* User Account styles */
+#container {
+    max-width: 600px;
+}
+
+
+/* Chat Room Styles */
 .date {
     margin-right: 5px;
 }
@@ -17,6 +50,18 @@
     overflow-y: scroll;
     margin: 0;
     word-wrap: break-word;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.message {
+    display: block;
+}
+
+.message-header,
+.message-content {
+    display: inline-block;
 }
 
 .controls {
@@ -26,27 +71,27 @@
     padding: 10px;
     width: 100%;
     vertical-align: middle;
-    background: url('/assets/img/tweed.png') repeat;
-}
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .controls {
-        background: url('/assets/img/tweed_@2X.png') repeat;
-    }
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e6e6e6),to(#d3d3d3));
+    background-image: -o-linear-gradient(top, #e6e6e6, #d3d3d3);
+    background-image: -moz-linear-gradient(top, #e6e6e6, #d3d3d3);
+    background-image: -webkit-linear-gradient(top, #e6e6e6, #d3d3d3);
+    background-image: -ms-linear-gradient(top, #e6e6e6, #d3d3d3);
+    background-image: linear-gradient(top, #e6e6e6, #d3d3d3);
 }
 
 #field-container {
     display: inline-block;
     float: none;
     margin-left: 5px;
+    margin-right: 5px;
 }
 
 #control-form {
     margin: 0;
 }
 
-#name {
-    margin-right: 5px;
+#send.btn {
+    margin-left: 5px;
 }
 
 #sidebar {

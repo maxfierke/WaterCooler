@@ -1,0 +1,39 @@
+doctype 5
+html
+  head
+    title WaterCooler - #{title}
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1")
+    link(href="//fonts.googleapis.com/css?family=Courgette", rel="stylesheet", type="text/css")
+    link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css", rel="stylesheet", type="text/css")
+    link(href="/styles/application.css", rel="stylesheet", type="text/css")
+    block styles
+  body
+    .navbar.navbar-inverse.navbar-static-top
+        .navbar-inner
+            .container
+                button.btn.btn-navbar(type="button", data-toggle="collapse", data-target=".nav-collapse")
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.brand(href="/") WaterCooler
+                .nav-collapse.collapse
+                    ul.nav
+                        li
+                            a(href="/account") My Account
+                        li
+                            a(href="/room") Rooms
+                        li
+                            a(href="/user") User
+                        li
+                            a(href="/content") Contact
+
+    block content
+
+    script(type="text/javascript", src="/js/socket.io.js")
+
+    script(type="text/javascript", src="/js/sails.io.js")
+
+    script(type="text/javascript", src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js")
+    script(type="text/javascript", src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js")
+
+    block scripts

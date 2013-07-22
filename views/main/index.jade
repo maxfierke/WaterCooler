@@ -1,0 +1,66 @@
+extends ../layout
+
+block content
+    #login-container.row-fluid.well.center
+        .span5
+            h3 Login
+            input.input-block-level(type="text", id="loginName", placeholder="Username", required)
+            input.input-block-level(type="password", id="loginPassword", placeholder="Password", required)
+            button#loginButton.btn.btn-primary.btn-block Login
+        .span1
+            h4.vertical-center OR
+        .span6
+            h3 Signup
+            div
+                div.span6
+                    input#signupFirstName.input-block-level(type="text", value="", placeholder="First Name", required)
+                div.span6
+                    input#signupLastName.input-block-level(type="text", value="", placeholder="Last Name", required)
+            input.input-block-level(type="text", id="signupUsername", placeholder="Username", required)
+            input.input-block-level(type="email", id="signupEmail", placeholder="Email", required)
+            input.input-block-level(type="password", id="signupPassword", placeholder="Password", required)
+            input.input-block-level(type="password", id="signupConfirmPassword", placeholder="Confirm Password", required)
+            button#signupButton.btn.btn-primary.btn-block Signup
+
+block scripts
+    script.
+        $("#loginButton").click(function(){
+            var username = $("#loginName").val();
+            var password = $("#loginPassword").val();
+            if (username && password) {
+                $.post('/login',
+                    { username: username, password: password },
+                    function () {
+                        window.location = "/account";
+                    }
+                ).fail(function(res){
+                    alert("Error: " + res.getResponseHeader("error"));
+                });
+            } else {
+                alert("A username and password is required");
+            }
+        });
+        $("#signupButton").click(function(){
+            var firstName = $("#signupFirstName").val();
+            var lastName = $("#signupLastName").val();
+            var username = $("#signupUsername").val();
+            var password = $("#signupPassword").val();
+            var confirmPassword = $("#signupConfirmPassword").val();
+            var email = $("#signupEmail").val();
+            if (username && password) {
+                if (password === confirmPassword) {
+                    $.post('/signup',
+                        { firstName: firstName, lastName: lastName, username: username, password: password, email: email },
+                        function () {
+                            window.location = "/account";
+                        }
+                    ).fail(function(res){
+                        alert("Error: " + res.responseJSON.error);
+                    });
+                } else {
+                    alert("Passwords don't match");
+                }
+            } else {
+                alert("A username and password is required");
+            }
+        });

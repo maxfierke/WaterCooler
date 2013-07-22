@@ -1,0 +1,2 @@
+# WaterCooler
+### a Sails application

@@ -1,5 +1,46 @@
 var WaterCooler = {
     room: window.location.pathname.split('/').slice(-1)[0],
+    handler: {
+        messageReceived: function(message, domMessageContainer) {
+            console.log('Message Received: ', message);
+            if (message) {
+                var html = WaterCooler.util.parseMessageToHTML(message);
+                $(domMessageContainer).append(html);
+                $(domMessageContainer).scrollTop($(domMessageContainer)[0].scrollHeight);
+            } else {
+                console.log("There is a problem: ", message);
+            }
+        },
+        clientListRefresh: function (data) {
+            // add a client to the clients list
+            function addClient(client, announce, isMe) {
+                if (isMe) {
+                    $('ul#user-list').append('<li data-clientId="'+client.id+'">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+' <span class="label label-info">Me</span></li>');
+                } else {
+                    $('ul#user-list').append('<li data-clientId="'+client.id+'">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+'</li>');
+
+                    if (announce) {
+                        $('#content').append('<strong class="text-info">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+' has connected.</strong><br />');
+                    }
+                }
+            }
+
+            // remove a client from the clients list
+            function removeClient(client, announce) {
+                $('ul#user-list li[data-clientId="' + client.id + '"]').remove();
+
+                // if announce is true, show a message about this room
+                if (announce) {
+                    $('#content').append('<strong class="text-info">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+' has left the room.</strong><br />');
+                }
+            }
+
+            for (var i = 0; i < data.users.length; i++) {
+                isMe = (data.users[i].id === activeUser.id ? true : false);
+                addClient(data.users[i], false, isMe);
+            }
+        }
+    },
     util: {
         parseMessageToHTML: function (data) {
 
@@ -78,14 +119,25 @@ var WaterCooler = {
                 return html;
             }
 
-            var html = '';
+            function parseImgLinks(message) {
+                var imgRegEx = /(?:([^:\/?#]+):)?(?:\/\/([^\/?#]*))?([^?#]*\.(?:jpe?g|gif|png))(?:\?([^#]*))?(?:#(.*))?/;
+                var html = '';
+                if (imageUrlMatch = message.match(imgRegEx)) {
+                    html += '<img src="'+imageUrlMatch[0]+'" />';
+                }
+                return html;
+            }
+
+            var html = '<div class="message"><div class="message-header span2">';
 
             //var vimeoUrl = message.match(/^http:\/\/(www\.)?vimeo\.com\/(clip\:)?(\d+).*$/);
-            html += parseTimestamp(data.timestamp);
-            html += '<b>' + (data.username ? data.username : 'Server') + ': </b>';
+            html += parseTimestamp(data.createdAt);
+            html += '<b>' + (data.user.username ? data.user.username : 'Server') + ': </b></div><div class="message-content span10 well well-small">';
             html += data.message.linkify() + '<br />';
             html += parseYouTubeLink(data.message);
             html += parseVimeoLink(data.message);
+            html += parseImgLinks(data.message);
+            html += '</div>';
             return html;
         }
     }

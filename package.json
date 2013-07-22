@@ -1,29 +1,25 @@
 {
     "name": "WaterCooler",
-    "version": "0.1.0",
     "private": true,
-    "description": "Realtime chat application with bells and whistles.",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/maxfierke/WaterCooler.git"
-    },
-    "keywords": [
-        "realtime",
-        "chat",
-        "vimeo",
-        "youtube",
-        "images",
-        "memes"
-    ],
+    "version": "0.0.1",
+    "description": "a Sails application",
     "dependencies": {
-        "socket.io": "latest",
-        "express": "latest",
+        "sails": "latest",
+        "grunt": "0.4.1",
+        "sails-disk": "latest",
         "jade": "latest",
-        "validator": "latest"
+        "optimist": "latest",
+        "bcrypt": "latest",
+        "sails-mongo": "latest",
+        "validator": "latest",
+        "underscore": "latest"
     },
-    "author": "Max Fierke <max@maxfierke.com>",
-    "license": "MIT",
-    "engines": {
-        "node": ">=0.9"
-    }
+    "scripts": {
+        "start": "node app.js",
+        "debug": "node debug app.js"
+    },
+    "main": "app.js",
+    "repository": "",
+    "author": "Max Fierke",
+    "license": "GNU GPLv3"
 }

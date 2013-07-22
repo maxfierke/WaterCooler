@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+    #container.container.well.center
+        #alerts.row-fluid
+        #account-container.row-fluid
+            .span6
+                h2 #{user.fullName()}
+                dl.dl-horizontal
+                    dt Username
+                    dd #{user.username}
+                    dt Email
+                    dd #{user.email}
+                    dt Location
+                    dd #{user.location}
+            .span6.text-center
+                img.img-polaroid(src="https://secure.gravatar.com/avatar/#{user.gravatarHash()}?s=200")

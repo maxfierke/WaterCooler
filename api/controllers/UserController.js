@@ -1,0 +1,34 @@
+/**
+ * UserController
+ *
+ * @module		:: Controller
+ * @description	:: Contains logic for handling requests.
+ */
+
+module.exports = {
+
+    view: function (req, res) {
+        User.findOneByUsername(req.params.username).done(function (err, user) {
+            if (err) return res.send(err,500);
+            console.log(user);
+            if (req.isJson) {
+                res.json({ user: user.toJSON() }, 200);
+            } else {
+                res.view({ title: user.username, user: user });
+            }
+        });
+    },
+
+    account: function (req, res) {
+        User.findOne(req.session.user.id).done(function (err, user) {
+            if (err) return res.send(err,500);
+            console.log(user);
+            if (req.isJson) {
+                res.json({ user: user.toJSON() }, 200);
+            } else {
+                res.view({ title: user.username, user: user.toJSON() });
+            }
+        });
+    }
+
+};
