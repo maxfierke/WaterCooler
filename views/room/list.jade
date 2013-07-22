@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+    #container.container.center
+        #alerts.row-fluid
+        each room in rooms
+            .row-fluid.well
+                a(href="/room/#{room.slug}")
+                    h3 #{room.name}
+                h4 #{room.description}

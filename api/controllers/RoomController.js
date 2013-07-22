@@ -60,6 +60,16 @@ module.exports = {
                 res.json(room, 200);
             }
         });
+    },
+
+    list: function (req, res) {
+        Room.find().done(function (err, rooms) {
+            if (req.wantsJSON) {
+                res.json({ rooms: rooms }, 200);
+            } else {
+                res.view({ title: 'Rooms', rooms: rooms });
+            }
+        });
     }
 
 };
