@@ -55,6 +55,10 @@ body {
     border-radius: 0px;
 }
 
+#content::-webkit-scrollbar {
+    display: none;
+}
+
 .message {
     display: block;
 }
@@ -103,7 +107,7 @@ body {
 }
 
 #send.btn {
-    margin-left: 5px;
+    margin-left: 10px;
 }
 
 #sidebar {
@@ -112,9 +116,17 @@ body {
 }
 
 #user-list {
+    width: 100%;
     list-style: none;
     margin: 0;
     padding: 0;
+    padding-right: 25px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+#user-list::-webkit-scrollbar {
+    display: none;
 }
 
 #sidebar header {
@@ -139,4 +151,8 @@ body {
     width: 100%;
     padding: 4px 12px;
     border-bottom: 1px solid #e6e6e6;
+}
+
+#user-list li img {
+    margin-right: 5px;
 }
