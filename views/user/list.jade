@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+    #container.container.center
+        #alerts.row-fluid
+        each user in users
+            .row-fluid.well
+                a(href="/user/#{user.username}")
+                    h3 #{user.fullName()}
