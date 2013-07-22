@@ -2,7 +2,6 @@ var WaterCooler = {
     room: window.location.pathname.split('/').slice(-1)[0],
     handler: {
         messageReceived: function(message, domMessageContainer) {
-            console.log('Message Received: ', message);
             if (message) {
                 var html = WaterCooler.util.parseMessageToHTML(message);
                 $(domMessageContainer).append(html);
