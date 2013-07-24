@@ -16,11 +16,15 @@ module.exports.policies = {
     // (`true` allows public access)
     '*': true,
 
-    UserController: {
-        '*': 'authenticated'
+    MainController: {
+        'dashboard': 'authenticated'
     },
 
     RoomController: {
+        '*': 'authenticated'
+    },
+
+    UserController: {
         '*': 'authenticated'
     }
 };
