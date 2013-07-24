@@ -1,13 +1,24 @@
 body {
-
-}
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-
+    background-image: url(/images/billie_holiday.png);
+    background-size: 100px 100px;
 }
 
 .navbar {
     margin-bottom: 15px;
+}
+
+.navbar-inverse .navbar-inner {
+    background-image: url(/images/classy_fabric.png);
+    background-size: 102px 102px;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    body {
+        background-image: url(/images/billie_holiday_@2X.png);
+    }
+    .navbar-inverse .navbar-inner {
+        background-image: url(/images/classy_fabric_@2X.png);
+    }
 }
 
 .navbar-inverse a.brand {
