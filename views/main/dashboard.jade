@@ -7,27 +7,22 @@ block content
             aside.span3
                 .well.well-small
                     ul.nav.nav-stacked.nav-pills
-                        li.active
+                        li
                             a(href="/dashboard") Dashboard
                         li
                             a(href="/account") Account
                         li
-                            a(href="#messages") Messages
+                            a(href="/messages") Messages
                 .well.well-small
-                    h5 Rooms
-                    ul.nav.nav-stacked.nav-pills
-                        each room in rooms
-                            li
-                                a(href="/room/#{room.slug}") #{room.name}
+                    h5 Rooms -&nbsp;
+                        small
+                            a(href="/rooms") manage
+                    ul.rooms-list.nav.nav-stacked.nav-pills
                 .well.well-small
-                    h5 Groups
-                    ul.nav.nav-stacked.nav-pills
-                        li
-                            a(href="#") Developers
-                        li
-                            a(href="#") Designers
-                        li
-                            a(href="#") Project Managers
+                    h5 Groups -&nbsp;
+                        small
+                            a(href="/groups") manage
+                    ul.groups-list.nav.nav-stacked.nav-pills
             block module
                 each room in rooms
                     .span9.row-fluid

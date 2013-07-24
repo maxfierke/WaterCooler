@@ -20,11 +20,14 @@ html
                     ul.nav
                         li
                             a(href="/account") My Account
-                        li
-                            a(href="/rooms") Rooms
-                        li
-                            a(href="/users") Users
-
+                        li.dropdown
+                            a#roomsLabel.dropdown-toggle(href="#", data-toggle="dropdown") Rooms&nbsp;
+                              b.caret
+                            ul.rooms-list.dropdown-menu(role="menu", aria-labelledby="roomsLabel")
+                        li.dropdown
+                            a#groupsLabel.dropdown-toggle(href="#", data-toggle="dropdown") Groups&nbsp;
+                              b.caret
+                            ul.groups-list.dropdown-menu(role="menu", aria-labelledby="groupsLabel")
     block content
 
     script(type="text/javascript", src="/js/socket.io.js")
@@ -33,5 +36,6 @@ html
 
     script(type="text/javascript", src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js")
     script(type="text/javascript", src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js")
+    script(type="text/javascript", src="/js/global.js")
 
     block scripts
