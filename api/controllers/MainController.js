@@ -8,7 +8,11 @@
 module.exports = {
 
     index: function (req, res) {
-        res.view({ title: 'Welcome' });
+        if (req.session.user === null) {
+            res.view({ title: 'Welcome' });
+        } else {
+            res.redirect('/dashboard');
+        }
     },
 
     signup: function (req, res) {
