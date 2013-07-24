@@ -1,0 +1,56 @@
+extends ../layout
+
+block content
+    .container.center
+        #alerts.row-fluid
+        .row-fluid
+            aside.span3
+                .well.well-small
+                    ul.nav.nav-stacked.nav-pills
+                        li.active
+                            a(href="/dashboard") Dashboard
+                        li
+                            a(href="/account") Account
+                        li
+                            a(href="#messages") Messages
+                .well.well-small
+                    h5 Rooms
+                    ul.nav.nav-stacked.nav-pills
+                        each room in rooms
+                            li
+                                a(href="/room/#{room.slug}") #{room.name}
+                .well.well-small
+                    h5 Groups
+                    ul.nav.nav-stacked.nav-pills
+                        li
+                            a(href="#") Developers
+                        li
+                            a(href="#") Designers
+                        li
+                            a(href="#") Project Managers
+            block module
+                each room in rooms
+                    .span9.row-fluid
+                        .well.span12
+                            span.pull-right
+                                i.icon-user
+                                |  #{room.clientcount} users connected
+                            h4
+                                a(href="/room/#{room.slug}") #{room.name}
+                            p.
+                                #{room.description}
+                            hr
+                            .pull-left
+                                i.icon-calendar
+                                span.label.label-info Created on #{room.createdAt}
+                            ul.inline.pull-right
+                                - if (room.groups && room.groups.length > 0)
+                                    each group in room.groups
+                                        li
+                                            span.label.label-success #{group.name}
+                                    li
+                                        i.icon-user
+                                - else
+                                    li Public&nbsp;
+                                        i.icon-globe
+                            .clearfix

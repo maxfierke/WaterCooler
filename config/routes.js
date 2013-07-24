@@ -44,6 +44,10 @@ module.exports.routes = {
         controller: 'main',
         action: 'logout'
     },
+    'get /dashboard' : {
+        controller: 'main',
+        action: 'dashboard'
+    },
     'get /account' : {
         controller: 'user',
         action: 'account'

@@ -76,6 +76,20 @@ module.exports = {
     logout: function (req, res) {
         req.session = null;
         res.redirect('/');
+    },
+
+    dashboard: function (req, res) {
+        Room.find().done(function (err, rooms) {
+            if (err) return res.send(err,500);
+            rooms.forEach(function (room, index, array) {
+                if (sails.io.sockets.manager.rooms['/' + room.slug]) {
+                    room.clientcount = sails.io.sockets.manager.rooms['/' + room.slug].length;
+                } else {
+                    room.clientcount = 0;
+                }
+            });
+            res.view({ title: 'Dashboard', rooms: rooms });
+        });
     }
 
 };
