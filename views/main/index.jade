@@ -1,30 +1,32 @@
 extends ../layout
 
 block content
-    #login-container.row-fluid.well.center
-        .span5
-            h3 Login
-            input.input-block-level(type="text", id="loginName", placeholder="Username", required)
-            input.input-block-level(type="password", id="loginPassword", placeholder="Password", required)
-            button#loginButton.btn.btn-primary.btn-block Login
-        .span1
-            h4.vertical-center OR
-        .span6
-            h3 Signup
-            div
-                div.span6
-                    input#signupFirstName.input-block-level(type="text", value="", placeholder="First Name", required)
-                div.span6
-                    input#signupLastName.input-block-level(type="text", value="", placeholder="Last Name", required)
-            input.input-block-level(type="text", id="signupUsername", placeholder="Username", required)
-            input.input-block-level(type="email", id="signupEmail", placeholder="Email", required)
-            input.input-block-level(type="password", id="signupPassword", placeholder="Password", required)
-            input.input-block-level(type="password", id="signupConfirmPassword", placeholder="Confirm Password", required)
-            button#signupButton.btn.btn-primary.btn-block Signup
+    #container.container
+        #alerts.row-fluid
+        #login-container.row-fluid.well.center
+            form#login-form.span5
+                h3 Login
+                input.input-block-level(type="text", id="loginName", placeholder="Username", required)
+                input.input-block-level(type="password", id="loginPassword", placeholder="Password", required)
+                button#loginButton.btn.btn-primary.btn-block(type="submit") Login
+            .span1
+                h4.vertical-center OR
+            form#signup-form.span6
+                h3 Signup
+                div
+                    div.span6
+                        input#signupFirstName.input-block-level(type="text", value="", placeholder="First Name", required)
+                    div.span6
+                        input#signupLastName.input-block-level(type="text", value="", placeholder="Last Name", required)
+                input.input-block-level(type="text", id="signupUsername", placeholder="Username", required)
+                input.input-block-level(type="email", id="signupEmail", placeholder="Email", required)
+                input.input-block-level(type="password", id="signupPassword", placeholder="Password", required)
+                input.input-block-level(type="password", id="signupConfirmPassword", placeholder="Confirm Password", required)
+                button#signupButton.btn.btn-primary.btn-block(type="submit")  Signup
 
 block scripts
     script.
-        $("#loginButton").click(function(){
+        $("#login-form").submit(function(e){
             var username = $("#loginName").val();
             var password = $("#loginPassword").val();
             if (username && password) {
@@ -34,13 +36,14 @@ block scripts
                         window.location = "/account";
                     }
                 ).fail(function(res){
-                    alert("Error: " + res.getResponseHeader("error"));
+                    $('#alerts').html('<div class="alert alert-error span12">'+res.responseJSON.error+'</div>');
                 });
             } else {
-                alert("A username and password is required");
+                $('#alerts').html('<div class="alert alert-error span12">Username and password are required</div>');
             }
+            e.preventDefault();
         });
-        $("#signupButton").click(function(){
+        $("#signup-form").submit(function(e){
             var firstName = $("#signupFirstName").val();
             var lastName = $("#signupLastName").val();
             var username = $("#signupUsername").val();
@@ -55,12 +58,16 @@ block scripts
                             window.location = "/account";
                         }
                     ).fail(function(res){
-                        alert("Error: " + res.responseJSON.error);
+                        $('#alerts').html('<div class="alert alert-error span12">'+res.responseJSON.error+'</div>');
                     });
                 } else {
-                    alert("Passwords don't match");
+                    $('#signupPassword').popover({
+                    title: "Validation Error",
+                    content: "Passwords don't match"
+                }).click();
                 }
             } else {
-                alert("A username and password is required");
+                $('#alerts').html('<div class="alert alert-error span12">Username and password are required</div>');
             }
+            e.preventDefault();
         });
