@@ -2,7 +2,7 @@
     "name": "WaterCooler",
     "private": true,
     "version": "0.0.1",
-    "description": "a Sails application",
+    "description": "Realtime chat application with bells and whistles.",
     "dependencies": {
         "sails": "latest",
         "grunt": "0.4.1",
@@ -21,5 +21,5 @@
     "main": "app.js",
     "repository": "",
     "author": "Max Fierke",
-    "license": "GNU GPLv3"
+    "license": "MIT"
 }
