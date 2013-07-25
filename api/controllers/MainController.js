@@ -79,6 +79,7 @@ module.exports = {
 
     logout: function (req, res) {
         req.session = null;
+        res.clearCookie(sails.config.session.key, { path: '/' });
         res.redirect('/');
     },
 
