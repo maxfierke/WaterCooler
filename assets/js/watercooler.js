@@ -12,9 +12,9 @@ var WaterCooler = {
         },
         clientAdd: function (client, announce, isMe) {
             if (isMe) {
-                $('ul#user-list').append('<li data-clientId="'+client.id+'"><img src="https://secure.gravatar.com/avatar/'+client.gravatar_hash+'?s=32" />'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+' <span class="label label-info">Me</span></li>');
+                $('ul#user-list').append('<li data-clientId="'+client.id+'"><img src="https://secure.gravatar.com/avatar/'+client.gravatar_hash+'?s=32" /><a href="/user/'+client.username+'">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+'</a> <span class="label label-info">Me</span></li>');
             } else {
-                $('ul#user-list').append('<li data-clientId="'+client.id+'"><img src="https://secure.gravatar.com/avatar/'+client.gravatar_hash+'?s=32" />'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+'</li>');
+                $('ul#user-list').append('<li data-clientId="'+client.id+'"><img src="https://secure.gravatar.com/avatar/'+client.gravatar_hash+'?s=32" /><a href="/user/'+client.username+'">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+'</a></li>');
 
                 if (announce) {
                     $('#content').append('<strong class="text-info">'+(client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : client.username)+' has connected.</strong><br />');
