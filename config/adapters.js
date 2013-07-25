@@ -32,10 +32,11 @@ module.exports.adapters = {
   // MongoDB adapter
   mongo: {
     module   : 'sails-mongo',
-    host     : 'localhost',
-    user     : 'watercooler',
-    password : 'MONGO_PASSWORD_HERE',
-    database : 'watercooler'
+    host     : (process.env.MONGOLAB_URI ? process.env.MONGOLAB_URI.match(/(?:mongodb:\/\/)(\w+):(\w+)@(.+\.\w+):(\d+)\/(\w+)/)[3] : 'localhost'),
+    port     : (process.env.MONGOLAB_URI ? process.env.MONGOLAB_URI.match(/(?:mongodb:\/\/)(\w+):(\w+)@(.+\.\w+):(\d+)\/(\w+)/)[4] : 27017),
+    user     : (process.env.MONGOLAB_URI ? process.env.MONGOLAB_URI.match(/(?:mongodb:\/\/)(\w+):(\w+)@(.+\.\w+):(\d+)\/(\w+)/)[1] : 'watercooler'),
+    password : (process.env.MONGOLAB_URI ? process.env.MONGOLAB_URI.match(/(?:mongodb:\/\/)(\w+):(\w+)@(.+\.\w+):(\d+)\/(\w+)/)[2] : 'INSERT_PASSWORD_HERE'),
+    database : (process.env.MONGOLAB_URI ? process.env.MONGOLAB_URI.match(/(?:mongodb:\/\/)(\w+):(\w+)@(.+\.\w+):(\d+)\/(\w+)/)[5] : 'watercooler')
   },
 
   // MySQL is the world's most popular relational database.

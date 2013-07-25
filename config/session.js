@@ -15,7 +15,7 @@ module.exports.session = {
   // Session secret is automatically generated when your new app is created
   // Replace at your own risk in production-- you will invalidate the cookies of your users,
   // forcing them to log in again.
-  secret: 'SET_THIS_TO_SOMETHING_SECRET',
+  secret: '6655c55ddbc2457f743c6b03b468a9c1',
 
   key: 'watercooler.sid',
 
@@ -27,11 +27,11 @@ module.exports.session = {
   // on localhost is expected.
   // Read more about options at: https://github.com/visionmedia/connect-redis
   //
-  // host: 'localhost',
-  // port: 6379,
+  host: (process.env.REDISCLOUD_URL ? process.env.REDISCLOUD_URL.match(/(?:redis:\/\/\w+):(\w+)@([A-Za-z0-9_\-\.]+):(\d+)/)[2] : 'localhost'),
+  port: (process.env.REDISCLOUD_URL ? process.env.REDISCLOUD_URL.match(/(?:redis:\/\/\w+):(\w+)@([A-Za-z0-9_\-\.]+):(\d+)/)[3] : 6379),
   // ttl: <redis session TTL in seconds>,
   // db: 0,
-  // pass: <redis auth password>
+  pass: (process.env.REDISCLOUD_URL ? process.env.REDISCLOUD_URL.match(/(?:redis:\/\/\w+):(\w+)@([A-Za-z0-9_\-\.]+):(\d+)/)[2] : null),
   // prefix: 'sess:'
 
 
