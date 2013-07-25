@@ -8,6 +8,8 @@
 
 module.exports = {
 
+    tableName: 'messages',
+
     attributes  : {
         user: {
             type: 'string',

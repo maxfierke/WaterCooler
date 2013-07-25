@@ -8,6 +8,8 @@
 
 module.exports = {
 
+    tableName: 'rooms',
+
     attributes: {
 
         slug: {
