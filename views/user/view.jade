@@ -1,9 +1,9 @@
-extends ../layout
+extends ../main/dashboard
 
-block content
-    #container.container.well.center
+block module
+    .span9.row-fluid
         #alerts.row-fluid
-        #account-container.row-fluid
+        #account-container.row-fluid.well
             .span6
                 h2 #{user.fullName()}
                 dl.dl-horizontal

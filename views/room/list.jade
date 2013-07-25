@@ -1,10 +1,29 @@
-extends ../layout
+extends ../main/dashboard
 
-block content
-    #container.container.center
+block module
+    .span9.row-fluid
         #alerts.row-fluid
         each room in rooms
-            .row-fluid.well
-                a(href="/room/#{room.slug}")
-                    h3 #{room.name}
-                h4 #{room.description}
+            .row-fluid.well.span12
+                span.pull-right
+                    i.icon-user
+                    |  #{room.clientcount} users connected
+                h4
+                    a(href="/room/#{room.slug}") #{room.name}
+                p.
+                    #{room.description}
+                hr
+                .pull-left
+                    i.icon-calendar
+                    span.label.label-info Created on #{room.createdAt}
+                ul.inline.pull-right
+                    - if (room.groups && room.groups.length > 0)
+                        each group in room.groups
+                            li
+                                span.label.label-success #{group.name}
+                        li
+                            i.icon-user
+                    - else
+                        li Public&nbsp;
+                            i.icon-globe
+                .clearfix
