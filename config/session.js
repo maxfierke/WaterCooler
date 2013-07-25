@@ -17,6 +17,7 @@ module.exports.session = {
   // forcing them to log in again.
   secret: 'SET_THIS_TO_SOMETHING_SECRET',
 
+  key: 'watercooler.sid',
 
   // In production, uncomment the following lines to set up a shared redis session store
   // that can be shared across multiple Sails.js servers
