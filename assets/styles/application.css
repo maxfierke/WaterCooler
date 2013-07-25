@@ -7,6 +7,7 @@ body {
     margin-bottom: 15px;
 }
 
+.dropdown-menu,
 .navbar-inverse .navbar-inner {
     background-image: url(/images/classy_fabric.png);
     background-size: 102px 102px;
@@ -16,6 +17,7 @@ body {
     body {
         background-image: url(/images/billie_holiday_@2X.png);
     }
+    .dropdown-menu,
     .navbar-inverse .navbar-inner {
         background-image: url(/images/classy_fabric_@2X.png);
     }
@@ -26,11 +28,44 @@ body {
     color: #0390c5;
 }
 
-/* Login / Sign Up Styles */
-.container-fluid {
-    padding: 0;
+.navbar .nav>li>.dropdown-menu:after {
+    content: none;
 }
 
+p.navbar-text span {
+    color: #e3e3e3;
+}
+
+#user-dropdown {
+    padding: 0 10px 0 10px;
+}
+
+a.dropdown-toggle:hover,
+a.dropdown-toggle:focus {
+    text-decoration: none;
+    outline: none;
+}
+
+.dropdown.open {
+    background-color: #111111;
+    color: #ffffff;
+}
+
+.dropdown-menu {
+    margin: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.dropdown-menu > li > a {
+    color: #999999;
+}
+
+#user-menu {
+    right: -2px;
+}
+
+/* Login / Sign Up Styles */
 .center {
     margin: 0 auto;
 }
@@ -47,6 +82,10 @@ body {
 }
 
 /* Chat Room Styles */
+.container-fluid {
+    padding: 0;
+}
+
 .date {
     margin-right: 5px;
 }

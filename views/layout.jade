@@ -16,18 +16,32 @@ html
                     span.icon-bar
                     span.icon-bar
                 a.brand(href="/") WaterCooler
-                .nav-collapse.collapse
-                    ul.nav
-                        li
-                            a(href="/account") My Account
-                        li.dropdown
-                            a#roomsLabel.dropdown-toggle(href="#", data-toggle="dropdown") Rooms&nbsp;
-                              b.caret
-                            ul.rooms-list.dropdown-menu(role="menu", aria-labelledby="roomsLabel")
-                        li.dropdown
-                            a#groupsLabel.dropdown-toggle(href="#", data-toggle="dropdown") Groups&nbsp;
-                              b.caret
-                            ul.groups-list.dropdown-menu(role="menu", aria-labelledby="groupsLabel")
+                - if (req.session.user)
+                    #user-dropdown.dropdown.pull-right
+                        a.dropdown-toggle(href="#", data-toggle="dropdown")
+                            p.navbar-text
+                                | Logged in as&nbsp;
+                                span #{req.session.user.firstName} #{req.session.user.lastName}
+                                | &nbsp;
+                                img.img-rounded(src="https://secure.gravatar.com/avatar/#{req.session.user.gravatar_hash}?s=28")
+                        ul#user-menu.dropdown-menu(role="menu")
+                            li
+                                a(href="/account") <i class="icon-cog icon-white"></i> Account Settings
+                            li
+                                a(href="/user/#{req.session.user.username}") <i class="icon-user icon-white"></i> Profile
+                            li
+                                a(href="/logout") <i class="icon-off icon-white"></i> Logout
+                    .nav-collapse.collapse
+                        ul.nav
+                            li.dropdown
+                                a#roomsLabel.dropdown-toggle(href="#", data-toggle="dropdown") Rooms&nbsp;
+                                  b.caret
+                                ul.rooms-list.dropdown-menu(role="menu", aria-labelledby="roomsLabel")
+                            li.dropdown
+                                a#groupsLabel.dropdown-toggle(href="#", data-toggle="dropdown") Groups&nbsp;
+                                  b.caret
+                                ul.groups-list.dropdown-menu(role="menu", aria-labelledby="groupsLabel")
+
     block content
 
     script(type="text/javascript", src="/js/socket.io.js")
