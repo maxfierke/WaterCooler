@@ -32,8 +32,10 @@ block content
                                 |  #{room.clientcount} users connected
                             h4
                                 a(href="/room/#{room.slug}") #{room.name}
-                            p.
+                            p.span10.
                                 #{room.description}
+                            a.btn.btn-success.btn-large(href="/room/#{room.slug}") Jump in!
+
                             hr
                             .pull-left
                                 i.icon-calendar
