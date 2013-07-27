@@ -10,4 +10,4 @@ if($('.rooms-list').length > 0) {
 }
 
 // Highlight the current nav item
-$('.nav a[href="'+window.location.pathname+'"]').parent('li').addClass('active');
+$('.nav-stacked a[href="'+window.location.pathname+'"]').parent('li').addClass('active');
