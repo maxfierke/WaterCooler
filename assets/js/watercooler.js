@@ -61,7 +61,7 @@ var WaterCooler = {
                     var ytvid = ytUrl[0].split('=')[1];
                     html = '<div class="media" id="youtube-'+ytvid+'">';
                     html += '<a class="pull-left" href="https://youtube.com/watch?v='+ytvid+'">';
-                    html += '<img class="media-object" src="https://i1.ytimg.com/vi/'+ytvid+'/default.jpg" />';
+                    html += '<img class="media-object img-thumbnail" src="https://i1.ytimg.com/vi/'+ytvid+'/default.jpg" />';
                     html += '</a>';
                     html += '<div class="media-body">';
                     html += '<h4 class="media-heading"><a href="https://youtube.com/watch?v='+ytvid+'">Title of the Video</a></h4>';
@@ -90,7 +90,7 @@ var WaterCooler = {
                     var vmoId = vmoIdMatches[3];
                     html = '<div class="media" id="vimeo-'+vmoId+'">';
                     html += '<a class="pull-left" href="">';
-                    html += '<img class="media-object" src="" />';
+                    html += '<img class="media-object img-thumbnail" src="" />';
                     html += '</a>';
                     html += '<div class="media-body">';
                     html += '<h4 class="media-heading"><a href=""></a></h4>';
