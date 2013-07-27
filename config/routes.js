@@ -60,9 +60,9 @@ module.exports.routes = {
         controller: 'user',
         action: 'index'
     },
-    'get /rooms' : {
+    'get /rooms/manage' : {
         controller: 'room',
-        action: 'list'
+        action: 'manage'
     },
     'post /room/:slug/message' : {
         controller: 'message',

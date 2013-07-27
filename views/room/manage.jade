@@ -1,0 +1,91 @@
+extends ../main/dashboard
+
+block module
+    .span9.row-fluid
+        #alerts.row-fluid.span12
+        .row-fluid.well
+            .lead Room Management
+            a.btn.btn-primary(href="#", data-toggle="modal", data-target="#addroom") <i class="icon-plus icon-white"></i> Add Room
+            hr
+            table.table
+                thead
+                    th Name
+                    th Slug
+                    th Description
+                    th # Connected
+                    th Actions
+                tbody#room-table-data
+                each room in rooms
+                    tr(data-roomid="#{room.id}")
+                        td
+                            a(href="/room/#{room.slug}") #{room.name}
+                        td.
+                            #{room.slug}
+                        td.
+                            #{room.description}
+                        td.
+                            #{room.clientcount}
+                        td
+                            .btn-group
+                                a.btn(href="#") <i class="icon-pencil"></i>
+                                a.btn.btn-danger(href="#") <i class="icon-trash icon-white"></i>
+
+    #addroom.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="addRoomLabel", aria-hidden="true")
+        .modal-header
+            button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+            h3#addRoomLabel Add a Room
+        form#new-form
+            .modal-body
+                label Room Name
+                input#roomName(type="text", placeholder="Room Name", required)
+                label Description
+                textarea#roomDesc(placeholder="Room Description")
+                label Groups
+                select#roomGroups(type="multiple")
+
+            .modal-footer
+                button.btn(data-dismiss="modal", aria-hidden="true") Close
+                button.btn.btn-primary(type="submit") Save changes
+
+block scripts
+    script.
+        $('.btn-danger').click(function (e) {
+            var row = $(this).parents('tr').first();
+            var name = row.find('a').first().text();
+            var id = row.data('roomid');
+            $.ajax({
+                url: '/room/'+id,
+                type: 'DELETE',
+                success: function () {
+                    row.remove();
+                    $('#alerts').html('<div class="alert alert-success span12">Room "'+name+'"" removed!</div>');
+                },
+                error: function(res) {
+                    $('#alerts').html('<div class="alert alert-error span12">Room could not be deleted: '+res.responseJSON.error+'</div>');
+                }
+            });
+        });
+        $('#new-form').submit(function (e) {
+            e.preventDefault();
+            var nameElement = document.getElementById('roomName');
+            var descElement = document.getElementById('roomDesc');
+            var groupsElement = document.getElementById('roomGroups');
+            var data = {
+                name: nameElement.value,
+                description: descElement.value,
+                groupsElement: groupsElement.value
+            };
+            $.ajax({
+                url: '/room',
+                type: 'POST',
+                data: data,
+                success: function (data) {
+                    var html = '<tr data-roomid="'+data.id+'"><td><a href="/room/'+data.slug+'">'+data.name+'</a></td><td>'+data.slug+'</td><td>'+data.description+'</td><td>0</td><td><div class="btn-group"><a class="btn btn-edit" href="#"><i class="icon-pencil"></i></a><a class="btn btn-danger" href="#"><i class="icon-trash icon-white"></i></a></div></td></tr>';
+                    $('#addroom .close').click();
+                    $('#room-table-data').append(html);
+                },
+                error: function(res) {
+                    $('#alerts').html('<div class="alert alert-error span12">Room could not be created: '+res.responseJSON.error+'</div>');
+                }
+            });
+        });
