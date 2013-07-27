@@ -5,7 +5,7 @@ block module
         #alerts.row-fluid.span12
         .row-fluid.well
             .lead Room Management
-            a.btn.btn-primary(href="#", data-toggle="modal", data-target="#addroom") <i class="icon-plus icon-white"></i> Add Room
+            a.btn.btn-primary(href="#", data-toggle="modal", data-target="#addmodal") <i class="icon-plus icon-white"></i> Add Room
             hr
             table.table
                 thead
@@ -27,25 +27,43 @@ block module
                             #{room.clientcount}
                         td
                             .btn-group
-                                a.btn(href="#") <i class="icon-pencil"></i>
+                                a.btn.btn-edit(href="#") <i class="icon-pencil"></i>
                                 a.btn.btn-danger(href="#") <i class="icon-trash icon-white"></i>
 
-    #addroom.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="addRoomLabel", aria-hidden="true")
+    #addmodal.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="addroomLabel", aria-hidden="true")
         .modal-header
             button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
-            h3#addRoomLabel Add a Room
+            h3#addroomLabel Add a Room
         form#new-form
             .modal-body
                 label Room Name
-                input#roomName(type="text", placeholder="Room Name", required)
+                input#addroomName(type="text", placeholder="Room Name", required)
                 label Description
-                textarea#roomDesc(placeholder="Room Description")
+                textarea#addroomDesc(placeholder="Room Description")
                 label Groups
-                select#roomGroups(type="multiple")
+                select#addroomGroups(type="multiple")
 
             .modal-footer
-                button.btn(data-dismiss="modal", aria-hidden="true") Close
-                button.btn.btn-primary(type="submit") Save changes
+                button.btn(data-dismiss="modal", aria-hidden="true") Cancel
+                button.btn.btn-primary(type="submit") Add Room
+
+    #editmodal.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="editroomLabel", aria-hidden="true")
+        input#editid(type="hidden")
+        .modal-header
+            button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+            h3#editroomLabel Edit a Room
+        form#edit-form
+            .modal-body
+                label Room Name
+                input#editroomName(type="text", placeholder="Room Name", required)
+                label Description
+                textarea#editroomDesc(placeholder="Room Description")
+                label Groups
+                select#editroomGroups(type="multiple")
+
+            .modal-footer
+                button.btn(data-dismiss="modal", aria-hidden="true") Cancel
+                button.btn.btn-primary(type="submit") Save Changes
 
 block scripts
     script.
@@ -65,15 +83,53 @@ block scripts
                 }
             });
         });
+        $('.btn-edit').click(function (e) {
+            var id = $(this).parents('tr').first().data('roomid');
+            $.ajax({
+                url: '/room/find/'+id,
+                type: 'GET',
+                success: function (data) {
+                    $('#editroomName').val(data.name);
+                    $('#editroomDesc').val(data.description);
+                    $('#editid').val(data.id);
+                    //TODO: Group handling
+                    $('#editmodal').modal('show');
+                },
+                error: function(res) {
+                    $('#alerts').html('<div class="alert alert-error span12">Could not edit room: '+res.responseJSON.error+'</div>');
+                }
+
+            });
+        });
+        $('#edit-form').submit(function (e) {
+            e.preventDefault();
+            var id = $('#editid').val();
+            //TODO: Group management
+            var data = {
+                name: $('#editroomName').val(),
+                description: $('#editroomDesc').val()
+            };
+            $.ajax({
+                url: '/room/'+id,
+                type: 'PUT',
+                data: data,
+                success: function (data) {
+                    var html = '<td><a href="/room/'+data.slug+'">'+data.name+'</a></td><td>'+data.slug+'</td><td>'+data.description+'</td><td>0</td><td><div class="btn-group"><a class="btn btn-edit" href="#"><i class="icon-pencil"></i></a><a class="btn btn-danger" href="#"><i class="icon-trash icon-white"></i></a></div></td>';
+                    console.log(data);
+                    $('#editmodal').modal('hide');
+                    $('tr[data-roomid='+data.id+']').html(html);
+                },
+                error: function(res) {
+                    $('#alerts').html('<div class="alert alert-error span12">Room could not be updated: '+res.responseJSON.error+'</div>');
+                }
+            });
+        });
         $('#new-form').submit(function (e) {
             e.preventDefault();
-            var nameElement = document.getElementById('roomName');
-            var descElement = document.getElementById('roomDesc');
-            var groupsElement = document.getElementById('roomGroups');
+            //TODO: Group management
             var data = {
-                name: nameElement.value,
-                description: descElement.value,
-                groupsElement: groupsElement.value
+                name: $('#addroomName').val(),
+                description: $('#addroomDesc').val()
             };
             $.ajax({
                 url: '/room',
@@ -81,7 +137,7 @@ block scripts
                 data: data,
                 success: function (data) {
                     var html = '<tr data-roomid="'+data.id+'"><td><a href="/room/'+data.slug+'">'+data.name+'</a></td><td>'+data.slug+'</td><td>'+data.description+'</td><td>0</td><td><div class="btn-group"><a class="btn btn-edit" href="#"><i class="icon-pencil"></i></a><a class="btn btn-danger" href="#"><i class="icon-trash icon-white"></i></a></div></td></tr>';
-                    $('#addroom .close').click();
+                    $('#addmodal .close').click();
                     $('#room-table-data').append(html);
                 },
                 error: function(res) {
