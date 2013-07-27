@@ -26,9 +26,9 @@ a.navbar-brand {
     color: #0390c5;
 }
 
-/*.navbar .nav>li>.dropdown-menu:after {
+.navbar .nav>li>.dropdown-menu:after {
     content: none;
-}*/
+}
 
 #user-dropdown > a,
 #user-dropdown > a:hover {
@@ -70,7 +70,7 @@ a.dropdown-toggle:focus {
 }
 
 #login-container {
-    max-width: 600px;
+    max-width: 900px;
 }
 
 #login-container h4.vertical-center {

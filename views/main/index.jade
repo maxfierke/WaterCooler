@@ -5,23 +5,38 @@ block content
         #alerts.row
         #login-container.row.well.center
             form#login-form.col-lg-5
-                h3 Login
-                input.input-block-level(type="text", id="loginName", placeholder="Username", required)
-                input.input-block-level(type="password", id="loginPassword", placeholder="Password", required)
+                legend Login
+                .form-group
+                    label Username
+                    input.form-control(type="text", id="loginName", placeholder="Username", required)
+                .form-group
+                    label Password
+                    input.form-control(type="password", id="loginPassword", placeholder="Password", required)
                 button#loginButton.btn.btn-primary.btn-block(type="submit") Login
             .col-lg-1
                 h4.vertical-center OR
-            form#signup-form.span6
-                h3 Signup
-                div
-                    div.col-lg-6
-                        input#signupFirstName.input-block-level(type="text", value="", placeholder="First Name", required)
-                    div.col-lg-6
-                        input#signupLastName.input-block-level(type="text", value="", placeholder="Last Name", required)
-                input.input-block-level(type="text", id="signupUsername", placeholder="Username", required)
-                input.input-block-level(type="email", id="signupEmail", placeholder="Email", required)
-                input.input-block-level(type="password", id="signupPassword", placeholder="Password", required)
-                input.input-block-level(type="password", id="signupConfirmPassword", placeholder="Confirm Password", required)
+            form#signup-form.col-lg-6
+                legend Signup
+                .row
+                    .col-lg-6.form-group
+                        label First Name
+                        input#signupFirstName.form-control(type="text", value="", placeholder="First Name", required)
+                    .col-lg-6.form-group
+                        label Last Name
+                        input#signupLastName.form-control(type="text", value="", placeholder="Last Name", required)
+                .form-group
+                    label Username
+                    input.form-control(type="text", id="signupUsername", placeholder="Username", required)
+                .form-group
+                    label Email
+                    input.form-control(type="email", id="signupEmail", placeholder="Email", required)
+                .row
+                    .col-lg-6.form-group
+                        label Password
+                        input.form-control(type="password", id="signupPassword", placeholder="Password", required)
+                    .col-lg-6.form-group
+                        label Confirm Password
+                        input.form-control(type="password", id="signupConfirmPassword", placeholder="Confirm Password", required)
                 button#signupButton.btn.btn-primary.btn-block(type="submit")  Signup
 
 block scripts
@@ -29,14 +44,15 @@ block scripts
         $("#login-form").submit(function(e){
             var username = $("#loginName").val();
             var password = $("#loginPassword").val();
+            console.log({ username: username, password: password });
             if (username && password) {
                 $.post('/login',
                     { username: username, password: password },
                     function () {
-                        window.location = "/account";
+                        window.location = "/dashboard";
                     }
                 ).fail(function(res){
-                    $('#alerts').html('<div class="alert alert-error">'+res.responseJSON.error+'</div>');
+                    $('#alerts').html('<div class="alert alert-error">Could not login: '+res.responseJSON.error+'</div>');
                 });
             } else {
                 $('#alerts').html('<div class="alert alert-error">Username and password are required</div>');
