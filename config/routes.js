@@ -84,7 +84,7 @@ module.exports.routes = {
         controller: 'room',
         action: 'create'
     },
-    'get /room' : {
+    'get /rooms' : {
         controller: 'room',
         action: 'index'
     }
