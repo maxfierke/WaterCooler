@@ -31,7 +31,7 @@ module.exports.session = {
   port: (process.env.REDISCLOUD_URL ? process.env.REDISCLOUD_URL.match(/(?:redis:\/\/\w+):(\w+)@([A-Za-z0-9_\-\.]+):(\d+)/)[3] : 6379),
   // ttl: <redis session TTL in seconds>,
   // db: 0,
-  pass: (process.env.REDISCLOUD_URL ? process.env.REDISCLOUD_URL.match(/(?:redis:\/\/\w+):(\w+)@([A-Za-z0-9_\-\.]+):(\d+)/)[2] : null),
+  pass: (process.env.REDISCLOUD_URL ? process.env.REDISCLOUD_URL.match(/(?:redis:\/\/\w+):(\w+)@([A-Za-z0-9_\-\.]+):(\d+)/)[1] : null),
   // prefix: 'sess:'
 
 
