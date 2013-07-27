@@ -41,7 +41,8 @@ module.exports = {
                         console.log(error);
                         res.send(500, { error: "DB Error" });
                     } else {
-                        req.session.user = user;
+                        req.session.authenticated = true;
+                        req.session.user = user.toJSON();
                         res.send(user);
                     }
                 });
