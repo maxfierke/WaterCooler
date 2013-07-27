@@ -10,7 +10,6 @@ module.exports = {
     view: function (req, res) {
         User.findOneByUsername(req.params.username).done(function (err, user) {
             if (err) return res.send(err,500);
-            console.log(user);
             if (req.wantsJSON) {
                 res.json({ user: user.toJSON() }, 200);
             } else {
@@ -22,7 +21,6 @@ module.exports = {
     account: function (req, res) {
         User.findOne(req.session.user.id).done(function (err, user) {
             if (err) return res.send(err,500);
-            console.log(user);
             if (req.wantsJSON) {
                 res.json({ user: user.toJSON() }, 200);
             } else {
@@ -31,7 +29,7 @@ module.exports = {
         });
     },
 
-    list: function (req, res) {
+    index: function (req, res) {
         User.find().done(function (err, users) {
             if (req.wantsJSON) {
                 res.json({ users: users }, 200);

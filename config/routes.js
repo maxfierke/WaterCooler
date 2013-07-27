@@ -58,7 +58,7 @@ module.exports.routes = {
     },
     'get /users' : {
         controller: 'user',
-        action: 'list'
+        action: 'index'
     },
     'get /rooms' : {
         controller: 'room',
