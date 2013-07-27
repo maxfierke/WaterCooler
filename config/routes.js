@@ -79,6 +79,14 @@ module.exports.routes = {
     'get /room/:slug' : {
         controller: 'room',
         action: 'room'
+    },
+    'post /room' : {
+        controller: 'room',
+        action: 'create'
+    },
+    'get /room' : {
+        controller: 'room',
+        action: 'index'
     }
 
   /*

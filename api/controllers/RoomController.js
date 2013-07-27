@@ -5,7 +5,8 @@
  * @description	:: Contains logic for handling requests.
  */
 
-var util = require('underscore');
+var util = require('underscore'),
+    slugify = require('slug');
 
 module.exports = {
 
@@ -62,7 +63,36 @@ module.exports = {
         });
     },
 
-    list: function (req, res) {
+    create: function (req, res) {
+        var name = req.param('name');
+        var description = req.param('description');
+        var groups = req.param('groups');
+        var users = req.param('users');
+        Room.findOneByName(name).done(function(err, room){
+            if (err) {
+                console.log(err);
+                res.send(500, { error: "DB Error" });
+            } else if (room) {
+                res.send(400, { error: "Room name already Taken" });
+            } else {
+                Room.create({
+                    name: name,
+                    slug: slugify(name).toLowerCase(),
+                    description: description,
+                    groups: groups,
+                    users: users
+                }).done(function(error, room) {
+                    if (error) {
+                        res.send(500, { error: "DB Error" });
+                    } else {
+                        res.send(room);
+                    }
+                });
+            }
+        });
+    },
+
+    manage: function (req, res) {
         Room.find().done(function (err, rooms) {
             if (err) return res.send(err, 500);
             rooms.forEach(function (room, index, array) {

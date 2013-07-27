@@ -12,7 +12,8 @@
         "bcrypt": "latest",
         "sails-mongo": "https://github.com/maxfierke/sails-mongo/tarball/master",
         "validator": "latest",
-        "underscore": "latest"
+        "underscore": "latest",
+        "slug": "latest"
     },
     "scripts": {
         "start": "node app.js",
