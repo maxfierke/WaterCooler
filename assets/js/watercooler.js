@@ -127,7 +127,6 @@ var WaterCooler = {
 
             var html = '<div class="message"><div class="message-header span2">';
 
-            //var vimeoUrl = message.match(/^http:\/\/(www\.)?vimeo\.com\/(clip\:)?(\d+).*$/);
             html += parseTimestamp(data.createdAt);
             html += '<b>'+(data.user.firstName && data.user.lastName ? data.user.firstName + ' ' + data.user.lastName : data.user.username)+'</b></div><div class="message-content span10 well well-small">';
             html += data.message.linkify() + '<br />';
