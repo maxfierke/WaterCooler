@@ -9,13 +9,23 @@ block module
                     legend Account Details
                     div
                         div.span6
+                            label First Name
                             input#firstName.input-block-level(type="text", value="#{user.firstName}", placeholder="First Name", required)
                         div.span6
+                            label Last Name
                             input#lastName.input-block-level(type="text", value="#{user.lastName}", placeholder="Last Name", required)
+                    label Username
                     input#username.input-block-level(type="text", value="#{user.username}", placeholder="Username", required)
-                    input#password.input-block-level(type="password", value="", placeholder="Password")
-                    input#confirmPassword.input-block-level(type="password", value="", placeholder="Confirm Password")
+                    div
+                        div.span6
+                            label Password
+                            input#password.input-block-level(type="password", value="", placeholder="Password")
+                        div.span6
+                            label Confirm Password
+                            input#confirmPassword.input-block-level(type="password", value="", placeholder="Confirm Password")
+                    label Email
                     input#email.input-block-level(type="email", value="#{user.email}", placeholder="Email", required)
+                    label Location
                     input#location.input-block-level(type="text", value="#{user.location}", placeholder="Location")
                     input.btn.btn-primary.btn-block(type="submit", value="Save")
             .span6.text-center
