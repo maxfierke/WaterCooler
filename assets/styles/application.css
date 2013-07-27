@@ -89,6 +89,11 @@ a.dropdown-toggle:focus {
     margin-right: 5px;
 }
 
+.chat-row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
 #content {
     overflow-y: scroll;
     margin: 0;
@@ -96,6 +101,8 @@ a.dropdown-toggle:focus {
     -moz-border-radius: 0px;
     -webkit-border-radius: 0px;
     border-radius: 0px;
+    padding-right: 0;
+    margin-right: 0;
 }
 
 #content::-webkit-scrollbar {
@@ -104,11 +111,16 @@ a.dropdown-toggle:focus {
 
 .message {
     display: block;
+    padding-left: 0;
 }
 
 .message-header,
 .message-content {
     display: inline-block;
+}
+
+.message-header {
+    padding-left: 0;
 }
 
 .message-content {
@@ -125,9 +137,9 @@ a.dropdown-toggle:focus {
 
 .controls {
     position: fixed;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 10px 0;
     width: 100%;
     vertical-align: middle;
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e6e6e6),to(#d3d3d3));
@@ -138,24 +150,15 @@ a.dropdown-toggle:focus {
     background-image: linear-gradient(top, #e6e6e6, #d3d3d3);
 }
 
-#field-container {
-    display: inline-block;
-    float: none;
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
 #control-form {
     margin: 0;
 }
 
-#send.btn {
-    margin-left: 10px;
-}
-
 #sidebar {
     margin-left: 0;
-    width: 15.3%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-right: 0;
 }
 
 #user-list {
@@ -163,7 +166,6 @@ a.dropdown-toggle:focus {
     list-style: none;
     margin: 0;
     padding: 0;
-    padding-right: 25px;
     overflow: hidden;
     overflow-y: scroll;
 }
@@ -181,7 +183,6 @@ a.dropdown-toggle:focus {
     background-image: linear-gradient(top, #e6e6e6, #d3d3d3);
     color: #555;
     display: inline-block;
-    height: 18px;
     padding: 5px 12px;
     width: 100%;
     border-bottom: 1px solid #c3c3c3;

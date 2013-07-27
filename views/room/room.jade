@@ -7,15 +7,17 @@ block styles
 
 block content
     .container-fluid
-        .row
+        .row.chat-row
             #content.well.col-lg-10
             aside#sidebar.col-lg-2
                 header Users
                 ul#user-list
-        .controls.row
+        .controls.row.col-lg-12
             form#control-form.form-inline
-                input#field.col-lg-11(type='text', placeholder='Message', autocomplete='off')
-                input#send.btn.btn-primary.col-lg-1(type='button', value='Send')
+                .col-lg-10
+                    input#field.form-control(type='text', placeholder='Message', autocomplete='off')
+                .col-lg-2
+                    button#send.btn.btn-primary.btn-block(type='button') Send
         .clearfix
 
 block scripts

@@ -125,7 +125,7 @@ var WaterCooler = {
                 return html;
             }
 
-            var html = '<div class="message"><div class="message-header col-lg-2">';
+            var html = '<div class="message col-lg-12"><div class="message-header col-lg-2">';
 
             html += parseTimestamp(data.createdAt);
             html += '<b>'+(data.user.firstName && data.user.lastName ? data.user.firstName + ' ' + data.user.lastName : data.user.username)+'</b></div><div class="message-content col-lg-10 well well-small">';
