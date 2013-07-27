@@ -14,15 +14,20 @@ block content
                         li
                             a(href="/messages") Messages
                 .well.well-small
-                    h5 Rooms -&nbsp;
-                        small
-                            a(href="/rooms") manage
+                    h5 Rooms
                     ul.rooms-list.nav.nav-stacked.nav-pills
                 .well.well-small
-                    h5 Groups -&nbsp;
-                        small
-                            a(href="/groups") manage
+                    h5 Groups
                     ul.groups-list.nav.nav-stacked.nav-pills
+                .well.well-small
+                    h5 Application Management
+                    ul.nav.nav-stacked.nav-pills
+                        li
+                            a(href="/rooms/manage") Room Management
+                        li
+                            a(href="/groups/manage") Group Management
+                        li
+                            a(href="/users/manage") User Management
             block module
                 each room in rooms
                     .span9.row-fluid
