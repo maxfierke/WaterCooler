@@ -10,7 +10,9 @@
 $(window).on('resize', function () {
     //vpw = $(window).width();
     vph = $(window).height();
-    $('#content').css({'height': (vph-90) + 'px'});
+    nbh = $('.navbar').height();
+    mch = $('.controls').outerHeight();
+    $('#content').css({'height': (vph-(nbh+mch)) + 'px'});
 });
 
 $(window).resize();
