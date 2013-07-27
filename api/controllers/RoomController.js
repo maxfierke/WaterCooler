@@ -63,6 +63,20 @@ module.exports = {
         });
     },
 
+    index: function (req, res) {
+        Room.find().done(function (err, rooms) {
+            if (err) return res.send(err, 500);
+            rooms.forEach(function (room, index, array) {
+                if (sails.io.sockets.manager.rooms['/' + room.slug]) {
+                    room.clientcount = sails.io.sockets.manager.rooms['/' + room.slug].length;
+                } else {
+                    room.clientcount = 0;
+                }
+            });
+            res.json({ rooms: rooms }, 200);
+        });
+    },
+
     create: function (req, res) {
         var name = req.param('name');
         var description = req.param('description');
