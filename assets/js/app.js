@@ -77,7 +77,7 @@ if(WaterCooler) {
             e.preventDefault();
             var field = document.getElementById("field");
             if (field.value !== "") {
-                socket.post('/room/'+WaterCooler.room+'/message/create', { message: field.value }, function (response) {
+                socket.post('/room/'+WaterCooler.room+'/message', { message: field.value }, function (response) {
                     WaterCooler.handler.messageReceived(response, content);
                     field.value = '';
                 });
