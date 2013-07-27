@@ -33,7 +33,7 @@ block content
                     .col-lg-9.row-fluid
                         .well.col-lg-12
                             span.pull-right
-                                i.icon-user
+                                i.glyphicon.glyphicon-user
                                 |  #{room.clientcount} users connected
                             h4
                                 a(href="/room/#{room.slug}") #{room.name}
@@ -51,10 +51,10 @@ block content
                                         li
                                             span.label.label-success #{group.name}
                                     li
-                                        i.icon-user
+                                        i.glyphicon.glyphicon-user
                                 - else
                                     li Public&nbsp;
-                                        i.icon-globe
+                                        i.glyphicon.glyphicon-globe
                             .clearfix
     footer.container
         p.muted.credit Copyright &copy; 2013 Max Fierke &middot; Licensed under the MIT license &middot; <a href="https://github.com/maxfierke/WaterCooler">Report a bug</a>
