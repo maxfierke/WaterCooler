@@ -21,9 +21,6 @@ module.exports = {
         var username = req.param("username");
         var password = req.param("password");
         var email = req.param("email");
-        console.log(username);
-        console.log(password);
-        console.log(email);
 
         User.findOneByUsername(username).done(function(err, usr){
             if (err) {
