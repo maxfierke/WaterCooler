@@ -4,43 +4,40 @@ html
     title WaterCooler - #{title}
     meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1")
     link(href="//fonts.googleapis.com/css?family=Courgette", rel="stylesheet", type="text/css")
-    link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css", rel="stylesheet", type="text/css")
+    link(href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css", rel="stylesheet", type="text/css")
     link(href="/styles/application.css", rel="stylesheet", type="text/css")
     block styles
   body
     .navbar.navbar-inverse.navbar-static-top
-        .navbar-inner
-            .container
-                button.btn.btn-navbar(type="button", data-toggle="collapse", data-target=".nav-collapse")
-                    span.icon-bar
-                    span.icon-bar
-                    span.icon-bar
-                a.brand(href="/") WaterCooler
-                - if (req.session.user)
-                    #user-dropdown.dropdown.pull-right
+        .container
+            button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-responsive-collapse")
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+            a.navbar-brand(href="/") WaterCooler
+            - if (req.session.user)
+                ul.nav.navbar-nav.pull-right
+                    li#user-dropdown.dropdown
                         a.dropdown-toggle(href="#", data-toggle="dropdown")
-                            p.navbar-text
-                                | Logged in as&nbsp;
-                                span #{req.session.user.firstName} #{req.session.user.lastName}
-                                | &nbsp;
-                                img.img-rounded(src="https://secure.gravatar.com/avatar/#{req.session.user.gravatar_hash}?s=28")
+                            | Logged in as&nbsp;
+                            span #{req.session.user.firstName} #{req.session.user.lastName}
                         ul#user-menu.dropdown-menu(role="menu")
                             li
-                                a(href="/account") <i class="icon-cog icon-white"></i> Account Settings
+                                a(href="/account") <i class="glyphicon glyphicon-cog glyphicon-white"></i> Account Settings
                             li
-                                a(href="/user/#{req.session.user.username}") <i class="icon-user icon-white"></i> Profile
+                                a(href="/user/#{req.session.user.username}") <i class="glyphicon glyphicon-user glyphicon-white"></i> Profile
                             li
-                                a(href="/logout") <i class="icon-off icon-white"></i> Logout
-                    .nav-collapse.collapse
-                        ul.nav
-                            li.dropdown
-                                a#roomsLabel.dropdown-toggle(href="#", data-toggle="dropdown") Rooms&nbsp;
-                                  b.caret
-                                ul.rooms-list.dropdown-menu(role="menu", aria-labelledby="roomsLabel")
-                            li.dropdown
-                                a#groupsLabel.dropdown-toggle(href="#", data-toggle="dropdown") Groups&nbsp;
-                                  b.caret
-                                ul.groups-list.dropdown-menu(role="menu", aria-labelledby="groupsLabel")
+                                a(href="/logout") <i class="glyphicon glyphicon-off glyphicon-white"></i> Logout
+                .nav-collapse.collapse.navbar-responsive-collapse
+                    ul.nav.navbar-nav
+                        li.dropdown
+                            a#roomsLabel.dropdown-toggle(href="#", data-toggle="dropdown") Rooms&nbsp;
+                              b.caret
+                            ul.rooms-list.dropdown-menu(role="menu", aria-labelledby="roomsLabel")
+                        li.dropdown
+                            a#groupsLabel.dropdown-toggle(href="#", data-toggle="dropdown") Groups&nbsp;
+                              b.caret
+                            ul.groups-list.dropdown-menu(role="menu", aria-labelledby="groupsLabel")
 
     block content
 
@@ -52,7 +49,7 @@ html
     script(type="text/javascript", src="/js/sails.io.js")
 
     script(type="text/javascript", src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js")
-    script(type="text/javascript", src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js")
+    script(type="text/javascript", src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js")
     script(type="text/javascript", src="/js/global.js")
 
     block scripts

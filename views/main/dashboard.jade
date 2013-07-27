@@ -2,9 +2,9 @@ extends ../layout
 
 block content
     .container.center
-        #alerts.row-fluid
-        .row-fluid
-            aside.span3
+        #alerts.row
+        .row
+            aside.col-lg-3
                 .well.well-small
                     ul.nav.nav-stacked.nav-pills
                         li
@@ -30,14 +30,14 @@ block content
                             a(href="/users/manage") User Management
             block module
                 each room in rooms
-                    .span9.row-fluid
-                        .well.span12
+                    .col-lg-9.row-fluid
+                        .well.col-lg-12
                             span.pull-right
                                 i.icon-user
                                 |  #{room.clientcount} users connected
                             h4
                                 a(href="/room/#{room.slug}") #{room.name}
-                            p.span10.
+                            p.col-lg-10.
                                 #{room.description}
                             a.btn.btn-success.btn-large(href="/room/#{room.slug}") Jump in!
 

@@ -1,9 +1,9 @@
 extends ../main/dashboard
 
 block module
-    .span9.row-fluid
-        #alerts.row-fluid.span12
-        .row-fluid.well
+    .col-lg-9.row
+        #alerts.row.col-lg-12
+        .row.well
             .lead Room Management
             a.btn.btn-primary(href="#", data-toggle="modal", data-target="#addmodal") <i class="icon-plus icon-white"></i> Add Room
             hr
@@ -76,10 +76,10 @@ block scripts
                 type: 'DELETE',
                 success: function () {
                     row.remove();
-                    $('#alerts').html('<div class="alert alert-success span12">Room "'+name+'"" removed!</div>');
+                    $('#alerts').html('<div class="alert alert-success">Room "'+name+'"" removed!</div>');
                 },
                 error: function(res) {
-                    $('#alerts').html('<div class="alert alert-error span12">Room could not be deleted: '+res.responseJSON.error+'</div>');
+                    $('#alerts').html('<div class="alert alert-error">Room could not be deleted: '+res.responseJSON.error+'</div>');
                 }
             });
         });
@@ -96,7 +96,7 @@ block scripts
                     $('#editmodal').modal('show');
                 },
                 error: function(res) {
-                    $('#alerts').html('<div class="alert alert-error span12">Could not edit room: '+res.responseJSON.error+'</div>');
+                    $('#alerts').html('<div class="alert alert-error">Could not edit room: '+res.responseJSON.error+'</div>');
                 }
 
             });
@@ -120,7 +120,7 @@ block scripts
                     $('tr[data-roomid='+data.id+']').html(html);
                 },
                 error: function(res) {
-                    $('#alerts').html('<div class="alert alert-error span12">Room could not be updated: '+res.responseJSON.error+'</div>');
+                    $('#alerts').html('<div class="alert alert-error">Room could not be updated: '+res.responseJSON.error+'</div>');
                 }
             });
         });
@@ -141,7 +141,7 @@ block scripts
                     $('#room-table-data').append(html);
                 },
                 error: function(res) {
-                    $('#alerts').html('<div class="alert alert-error span12">Room could not be created: '+res.responseJSON.error+'</div>');
+                    $('#alerts').html('<div class="alert alert-error">Room could not be created: '+res.responseJSON.error+'</div>');
                 }
             });
         });

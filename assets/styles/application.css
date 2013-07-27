@@ -7,8 +7,7 @@ body {
     margin-bottom: 15px;
 }
 
-.dropdown-menu,
-.navbar-inverse .navbar-inner {
+.navbar-inverse {
     background-image: url(/images/classy_fabric.png);
     background-size: 102px 102px;
 }
@@ -17,22 +16,26 @@ body {
     body {
         background-image: url(/images/billie_holiday_@2X.png);
     }
-    .dropdown-menu,
-    .navbar-inverse .navbar-inner {
+    .navbar-inverse {
         background-image: url(/images/classy_fabric_@2X.png);
     }
 }
 
-.navbar-inverse a.brand {
+a.navbar-brand {
     font-family: 'Courgette', sans-serif;
     color: #0390c5;
 }
 
-.navbar .nav>li>.dropdown-menu:after {
+/*.navbar .nav>li>.dropdown-menu:after {
     content: none;
+}*/
+
+#user-dropdown > a,
+#user-dropdown > a:hover {
+    color: #b1b1b1;
 }
 
-p.navbar-text span {
+#user-dropdown a span {
     color: #e3e3e3;
 }
 
@@ -46,15 +49,11 @@ a.dropdown-toggle:focus {
     outline: none;
 }
 
-.dropdown.open {
-    background-color: #111111;
-    color: #ffffff;
-}
-
 .dropdown-menu {
-    margin: 0;
+    border: none;
     -moz-border-radius: 0;
     border-radius: 0;
+    background-color: #111;
 }
 
 .dropdown-menu > li > a {
@@ -62,7 +61,7 @@ a.dropdown-toggle:focus {
 }
 
 #user-menu {
-    right: -2px;
+    right: 10px;
 }
 
 /* Login / Sign Up Styles */

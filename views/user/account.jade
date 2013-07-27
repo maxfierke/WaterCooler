@@ -1,73 +1,92 @@
 extends ../main/dashboard
 
 block module
-    .span9.row-fluid
-        #alerts.row-fluid
-        #account-container.row-fluid.well
-            form#account-form.span6
+    .col-lg-9
+        #alerts.row
+        #account-container.row.well
+            form#account-form.col-lg-6
                 fieldset
-                    legend Account Details
-                    div
-                        div.span6
-                            label First Name
-                            input#firstName.input-block-level(type="text", value="#{user.firstName}", placeholder="First Name", required)
-                        div.span6
-                            label Last Name
-                            input#lastName.input-block-level(type="text", value="#{user.lastName}", placeholder="Last Name", required)
-                    label Username
-                    input#username.input-block-level(type="text", value="#{user.username}", placeholder="Username", required)
-                    div
-                        div.span6
-                            label Password
-                            input#password.input-block-level(type="password", value="", placeholder="Password")
-                        div.span6
-                            label Confirm Password
-                            input#confirmPassword.input-block-level(type="password", value="", placeholder="Confirm Password")
-                    label Email
-                    input#email.input-block-level(type="email", value="#{user.email}", placeholder="Email", required)
-                    label Location
-                    input#location.input-block-level(type="text", value="#{user.location}", placeholder="Location")
-                    input.btn.btn-primary.btn-block(type="submit", value="Save")
-            .span6.text-center
-                img.img-polaroid(src="https://secure.gravatar.com/avatar/#{user.gravatar_hash}?s=200")
-                br
-                br
-                p.
-                    Avatar provided by <a href="http://gravatar.com">Gravatar.com</a>
+                    legend Update Profile
+                    .form-group
+                        label First Name
+                        input#firstName.form-control(type="text", value="#{user.firstName}", placeholder="First Name", required)
+                    .form-group
+                        label Last Name
+                        input#lastName.form-control(type="text", value="#{user.lastName}", placeholder="Last Name", required)
+                    .form-group
+                        label Username
+                        .input-group
+                            span.input-group-addon @
+                            input#username.form-control(type="text", value="#{user.username}", placeholder="Username", required)
+                    .form-group
+                        label Email
+                        input#email.form-control(type="email", value="#{user.email}", placeholder="Email", required)
+                    .form-group
+                        label Location
+                        input#location.form-control(type="text", value="#{user.location}", placeholder="Location")
+                    input.btn.btn-primary.btn-block(type="submit", value="Update Profile")
+            .col-lg-6
+                .text-center
+                    img.img-thumbnail(src="https://secure.gravatar.com/avatar/#{user.gravatar_hash}?s=200")
+                    br
+                    br
+                form#password-form
+                    legend Change Password
+                    .form-group
+                        label Password
+                        input#password.form-control(type="password", value="", placeholder="Password")
+                    .form-group
+                        label Confirm Password
+                        input#confirmPassword.form-control(type="password", value="", placeholder="Confirm Password")
+                    input.btn.btn-warning.btn-block(type="submit", value="Change Password")
 
 block scripts
     script.
         $("#account-form").submit(function(e){
             e.preventDefault();
             var username = $("#username").val();
-            var password = $("#password").val();
-            var confirmPassword = $("#confirmPassword").val();
             var email = $("#email").val();
             var location = $("#location").val();
             var firstName = $("#firstName").val();
             var lastName = $("#lastName").val();
-            var data = {};
-            if (password === confirmPassword) {
-                if (password.length > 0) {
-                    data = { username: username, password: password, email: email,
-                             firstName: firstName, lastName: lastName, location: location };
-                } else {
-                    data = { username: username, email: email, firstName: firstName,
-                             lastName: lastName, location: location };
+            var data = { username: username, email: email, firstName: firstName,
+                         lastName: lastName, location: location };
+            $.ajax({
+                type: 'PUT',
+                url: '/user/#{user.id}',
+                data: data,
+                success: function () {
+                    $('#alerts').html('<div class="alert alert-success">Profile updated!</div>');
+                },
+                error: function(res) {
+                    $('#alerts').html('<div class="alert alert-error">Could not update profile: '+res.responseJSON.error+'</div>');
                 }
+            });
+        });
+        $('#password-form').submit(function (e) {
+            e.preventDefault();
+            var password = $("#password").val();
+            var confirmPassword = $("#confirmPassword").val();
+            if (password == confirmPassword && password.legend > 5) {
                 $.ajax({
                     type: 'PUT',
                     url: '/user/#{user.id}',
-                    data: data,
+                    data: { password: password },
                     success: function () {
-                        $('#alerts').html('<div class="alert alert-success span12">Account updated!</div>');
+                        $('#alerts').html('<div class="alert alert-success">Password updated!</div>');
                     },
                     error: function(res) {
-                        $('#alerts').html('<div class="alert alert-error span12">'+res.responseJSON.error+'</div>');
+                        $('#alerts').html('<div class="alert alert-error">Could not update password: '+res.responseJSON.error+'</div>');
                     }
                 });
+            } else if (password.length < 6) {
+                $('#alerts').html('<div class="alert alert-error">Password is too short!</div>');
+                $('#password').popover({
+                    title: "Validation Error",
+                    content: "Password is too short!"
+                }).click();
             } else {
-                $('#alerts').html('<div class="alert alert-error span12">Passwords don\'t match</div>');
+                $('#alerts').html('<div class="alert alert-error">Passwords don\'t match</div>');
                 $('#password').popover({
                     title: "Validation Error",
                     content: "Passwords don't match"

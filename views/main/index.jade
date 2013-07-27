@@ -2,21 +2,21 @@ extends ../layout
 
 block content
     #container.container
-        #alerts.row-fluid
-        #login-container.row-fluid.well.center
-            form#login-form.span5
+        #alerts.row
+        #login-container.row.well.center
+            form#login-form.col-lg-5
                 h3 Login
                 input.input-block-level(type="text", id="loginName", placeholder="Username", required)
                 input.input-block-level(type="password", id="loginPassword", placeholder="Password", required)
                 button#loginButton.btn.btn-primary.btn-block(type="submit") Login
-            .span1
+            .col-lg-1
                 h4.vertical-center OR
             form#signup-form.span6
                 h3 Signup
                 div
-                    div.span6
+                    div.col-lg-6
                         input#signupFirstName.input-block-level(type="text", value="", placeholder="First Name", required)
-                    div.span6
+                    div.col-lg-6
                         input#signupLastName.input-block-level(type="text", value="", placeholder="Last Name", required)
                 input.input-block-level(type="text", id="signupUsername", placeholder="Username", required)
                 input.input-block-level(type="email", id="signupEmail", placeholder="Email", required)
@@ -36,10 +36,10 @@ block scripts
                         window.location = "/account";
                     }
                 ).fail(function(res){
-                    $('#alerts').html('<div class="alert alert-error span12">'+res.responseJSON.error+'</div>');
+                    $('#alerts').html('<div class="alert alert-error">'+res.responseJSON.error+'</div>');
                 });
             } else {
-                $('#alerts').html('<div class="alert alert-error span12">Username and password are required</div>');
+                $('#alerts').html('<div class="alert alert-error">Username and password are required</div>');
             }
             e.preventDefault();
         });
@@ -58,7 +58,7 @@ block scripts
                             window.location = "/account";
                         }
                     ).fail(function(res){
-                        $('#alerts').html('<div class="alert alert-error span12">'+res.responseJSON.error+'</div>');
+                        $('#alerts').html('<div class="alert alert-error">'+res.responseJSON.error+'</div>');
                     });
                 } else {
                     $('#signupPassword').popover({
@@ -67,7 +67,7 @@ block scripts
                 }).click();
                 }
             } else {
-                $('#alerts').html('<div class="alert alert-error span12">Username and password are required</div>');
+                $('#alerts').html('<div class="alert alert-error">Username and password are required</div>');
             }
             e.preventDefault();
         });
