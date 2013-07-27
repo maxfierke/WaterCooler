@@ -67,7 +67,7 @@ block scripts
             e.preventDefault();
             var password = $("#password").val();
             var confirmPassword = $("#confirmPassword").val();
-            if (password == confirmPassword && password.legend > 5) {
+            if (password === confirmPassword && password.length > 5) {
                 $.ajax({
                     type: 'PUT',
                     url: '/user/#{user.id}',
