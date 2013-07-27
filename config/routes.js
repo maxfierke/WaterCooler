@@ -64,9 +64,9 @@ module.exports.routes = {
         controller: 'room',
         action: 'list'
     },
-    'post /room/:slug/message/create' : {
+    'post /room/:slug/message' : {
         controller: 'message',
-        action: 'room_message_create'
+        action: 'create'
     },
     'get /room/:slug/subscribers' : {
         controller: 'room',

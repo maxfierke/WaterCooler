@@ -9,7 +9,7 @@ var sanitize = require('validator').sanitize;
 
 module.exports = {
 
-    room_message_create: function (req, res) {
+    create: function (req, res) {
         var message = req.param('message');
         var roomSlug = req.params.slug;
         Room.findOneBySlug(roomSlug).done(function (err, room) {
