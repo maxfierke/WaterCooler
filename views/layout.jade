@@ -16,20 +16,20 @@ html
                 span.icon-bar
                 span.icon-bar
             a.navbar-brand(href="/") WaterCooler
-            - if (req.session.user)
-                ul.nav.navbar-nav.pull-right
-                    li#user-dropdown.dropdown
-                        a.dropdown-toggle(href="#", data-toggle="dropdown")
-                            | Logged in as&nbsp;
-                            span #{req.session.user.firstName} #{req.session.user.lastName}
-                        ul#user-menu.dropdown-menu(role="menu")
-                            li
-                                a(href="/account") <i class="glyphicon glyphicon-cog glyphicon-white"></i> Account Settings
-                            li
-                                a(href="/user/#{req.session.user.username}") <i class="glyphicon glyphicon-user glyphicon-white"></i> Profile
-                            li
-                                a(href="/logout") <i class="glyphicon glyphicon-off glyphicon-white"></i> Logout
-                .nav-collapse.collapse.navbar-responsive-collapse
+            .nav-collapse.collapse.navbar-responsive-collapse
+                - if (req.session.user)
+                    ul.nav.navbar-nav.pull-right
+                        li#user-dropdown.dropdown
+                            a.dropdown-toggle(href="#", data-toggle="dropdown")
+                                | Logged in as&nbsp;
+                                span #{req.session.user.firstName} #{req.session.user.lastName}
+                            ul#user-menu.dropdown-menu(role="menu")
+                                li
+                                    a(href="/account") <i class="glyphicon glyphicon-cog glyphicon-white"></i> Account Settings
+                                li
+                                    a(href="/user/#{req.session.user.username}") <i class="glyphicon glyphicon-user glyphicon-white"></i> Profile
+                                li
+                                    a(href="/logout") <i class="glyphicon glyphicon-off glyphicon-white"></i> Logout
                     ul.nav.navbar-nav
                         li.dropdown
                             a#roomsLabel.dropdown-toggle(href="#", data-toggle="dropdown") Rooms&nbsp;

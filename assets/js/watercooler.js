@@ -125,10 +125,10 @@ var WaterCooler = {
                 return html;
             }
 
-            var html = '<div class="message col-lg-12"><div class="message-header col-lg-2">';
+            var html = '<div class="message col-12"><div class="message-header col-lg-2 col-md-3 col-sm-4">';
 
             html += parseTimestamp(data.createdAt);
-            html += '<b>'+(data.user.firstName && data.user.lastName ? data.user.firstName + ' ' + data.user.lastName : data.user.username)+'</b></div><div class="message-content col-lg-10 well well-small">';
+            html += '<b>'+(data.user.firstName && data.user.lastName ? data.user.firstName + ' ' + data.user.lastName : data.user.username)+'</b></div><div class="message-content col-lg-10 col-md-9 col-sm-8 well well-small">';
             html += data.message.linkify() + '<br />';
             html += parseYouTubeLink(data.message);
             html += parseVimeoLink(data.message);
