@@ -1,7 +1,7 @@
 extends ../main/dashboard
 
 block module
-    .col-lg-9.row
+    .col-lg-9
         #alerts.row.col-lg-12
         .row.well
             .lead Room Management
@@ -27,43 +27,54 @@ block module
                             #{room.clientcount}
                         td
                             .btn-group
-                                a.btn.btn-edit(href="#") <i class="icon-pencil"></i>
-                                a.btn.btn-danger(href="#") <i class="icon-trash icon-white"></i>
+                                a.btn.btn-edit.btn-default(href="#") <i class="glyphicon glyphicon-pencil"></i>
+                                a.btn.btn-danger(href="#") <i class="glyphicon glyphicon-trash"></i>
 
-    #addmodal.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="addroomLabel", aria-hidden="true")
-        .modal-header
-            button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
-            h3#addroomLabel Add a Room
-        form#new-form
-            .modal-body
-                label Room Name
-                input#addroomName(type="text", placeholder="Room Name", required)
-                label Description
-                textarea#addroomDesc(placeholder="Room Description")
-                label Groups
-                select#addroomGroups(type="multiple")
+    #addmodal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="addroomLabel", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+                    h4#addroomLabel Add a Room
+                form#new-form
+                    .modal-body
+                        .form-group
+                            label Room Name
+                            input#addroomName.form-control(type="text", placeholder="Room Name", required)
+                        .form-group
+                            label Description
+                            textarea#addroomDesc.form-control(placeholder="Room Description")
+                        .form-group
+                            label Groups
+                            select#addroomGroups.form-control(multiple)
 
-            .modal-footer
-                button.btn(data-dismiss="modal", aria-hidden="true") Cancel
-                button.btn.btn-primary(type="submit") Add Room
+                    .modal-footer
+                        button.btn.btn-default(data-dismiss="modal", aria-hidden="true") Cancel
+                        button.btn.btn-primary(type="submit", data-dismiss="modal") Add Room
 
-    #editmodal.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="editroomLabel", aria-hidden="true")
-        input#editid(type="hidden")
-        .modal-header
-            button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
-            h3#editroomLabel Edit a Room
-        form#edit-form
-            .modal-body
-                label Room Name
-                input#editroomName(type="text", placeholder="Room Name", required)
-                label Description
-                textarea#editroomDesc(placeholder="Room Description")
-                label Groups
-                select#editroomGroups(type="multiple")
+    #editmodal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="editroomLabel", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    input#editid(type="hidden")
+                    .modal-header
+                        button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+                        h4#editroomLabel Edit a Room
+                    form#edit-form
+                        .modal-body
+                            .form-group
+                                label Room Name
+                                input#editroomName.form-control(type="text", placeholder="Room Name", required)
+                            .form-group
+                                label Description
+                                textarea#editroomDesc.form-control(placeholder="Room Description")
+                            .form-group
+                                label Groups
+                                select#editroomGroups.form-control(multiple)
 
-            .modal-footer
-                button.btn(data-dismiss="modal", aria-hidden="true") Cancel
-                button.btn.btn-primary(type="submit") Save Changes
+                        .modal-footer
+                            button.btn.btn-default(data-dismiss="modal", aria-hidden="true") Cancel
+                            button.btn.btn-primary(type="submit", data-dismiss="modal") Save Changes
 
 block scripts
     script.
