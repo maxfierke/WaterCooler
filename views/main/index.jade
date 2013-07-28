@@ -68,10 +68,10 @@ block scripts
             var email = $("#signupEmail").val();
             if (username && password) {
                 if (password === confirmPassword) {
-                    $.post('/signup',
+                    $.post('/user',
                         { firstName: firstName, lastName: lastName, username: username, password: password, email: email },
                         function () {
-                            window.location = "/account";
+                            window.location = "/";
                         }
                     ).fail(function(res){
                         $('#alerts').html('<div class="alert alert-error">'+res.responseJSON.error+'</div>');

@@ -32,10 +32,6 @@ module.exports.routes = {
         controller: 'main',
         action: 'index'
     },
-    '/signup' : {
-        controller: 'main',
-        action: 'signup'
-    },
     '/login' : {
         controller: 'main',
         action: 'login'
@@ -59,6 +55,10 @@ module.exports.routes = {
     'get /users' : {
         controller: 'user',
         action: 'index'
+    },
+    'post /user' : {
+        controller: 'user',
+        action: 'create'
     },
     'get /rooms/manage' : {
         controller: 'room',

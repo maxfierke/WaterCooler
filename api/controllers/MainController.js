@@ -15,41 +15,6 @@ module.exports = {
         }
     },
 
-    signup: function (req, res) {
-        var firstName = req.param("firstName");
-        var lastName = req.param("lastName");
-        var username = req.param("username");
-        var password = req.param("password");
-        var email = req.param("email");
-
-        User.findOneByUsername(username).done(function(err, usr){
-            if (err) {
-                console.log(err);
-                res.send(500, { error: "DB Error" });
-            } else if (usr) {
-                console.log(usr);
-                res.send(400, { error: "Username already Taken" });
-            } else {
-                User.create({
-                    username: username,
-                    password: password,
-                    email: email,
-                    firstName: firstName,
-                    lastName: lastName
-                }).done(function(error, user) {
-                    if (error) {
-                        console.log(error);
-                        res.send(500, { error: "DB Error" });
-                    } else {
-                        req.session.authenticated = true;
-                        req.session.user = user.toJSON();
-                        res.send(user);
-                    }
-                });
-            }
-        });
-    },
-
     login: function (req, res) {
         var username = req.param("username");
         var password = req.param("password");
