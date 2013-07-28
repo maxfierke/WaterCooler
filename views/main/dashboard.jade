@@ -45,7 +45,7 @@ block content
                             .pull-left
                                 i.icon-calendar
                                 span.label.label-info Created on #{room.createdAt}
-                            ul.inline.pull-right
+                            ul.list-inline.pull-right
                                 - if (room.groups && room.groups.length > 0)
                                     each group in room.groups
                                         li
