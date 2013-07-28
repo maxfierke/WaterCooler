@@ -1,0 +1,215 @@
+extends ../main/dashboard
+
+block module
+    .col-lg-9
+        #alerts.row.col-lg-12
+        .row.well
+            .lead User Management
+            a.btn.btn-primary(href="#", data-toggle="modal", data-target="#addmodal") <i class="icon-plus icon-white"></i> Add User
+            hr
+            table.table
+                thead
+                    th Name
+                    th Username
+                    th Email
+                    th Location
+                    th Actions
+                tbody#user-table-data
+                each user in users
+                    tr(data-userid="#{user.id}")
+                        td.
+                            #{user.fullName()}
+                        td
+                            a(href="/user/#{user.username}") #{user.username}
+                        td.
+                            #{user.email}
+                        td.
+                            #{user.location}
+                        td
+                            .btn-group
+                                a.btn.btn-edit.btn-default(href="#", data-toggle="modal", data-target="#editmodal") <i class="glyphicon glyphicon-pencil"></i>
+                                a.btn.btn-danger(href="#") <i class="glyphicon glyphicon-trash"></i>
+
+    #addmodal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="addLabel", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+                    h4#addLabel Add a User
+                form#new-form
+                    .modal-body
+                        .row
+                            .col-lg-6.form-group
+                                label First Name
+                                input#signupFirstName.form-control(type="text", value="", placeholder="First Name", required)
+                            .col-lg-6.form-group
+                                label Last Name
+                                input#signupLastName.form-control(type="text", value="", placeholder="Last Name", required)
+                        .form-group
+                            label Username
+                            .input-group
+                                    span.input-group-addon @
+                                    input#signupUsername.form-control(type="text", placeholder="Username", required)
+                        .form-group
+                            label Email
+                            input.form-control(type="email", id="signupEmail", placeholder="Email", required)
+                        .row
+                            .col-lg-6.form-group
+                                label Password
+                                input.form-control(type="password", id="signupPassword", placeholder="Password", required)
+                            .col-lg-6.form-group
+                                label Confirm Password
+                                input.form-control(type="password", id="signupConfirmPassword", placeholder="Confirm Password", required)
+
+                    .modal-footer
+                        button.btn.btn-default(data-dismiss="modal", aria-hidden="true") Cancel
+                        button.btn.btn-primary(type="submit") Add User
+
+    #editmodal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="editLabel", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    input#editid(type="hidden")
+                    .modal-header
+                        button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+                        h4#editLabel Edit a User
+                    form#edit-form
+                        .modal-body
+                            .form-group
+                                label First Name
+                                input#editFirstName.form-control(type="text", placeholder="First Name", required)
+                            .form-group
+                                label Last Name
+                                input#editLastName.form-control(type="text", placeholder="Last Name", required)
+                            .form-group
+                                label Username
+                                .input-group
+                                    span.input-group-addon @
+                                    input#editUsername.form-control(type="text", placeholder="Username", required)
+                            .form-group
+                                label Email
+                                input#editEmail.form-control(type="email", placeholder="Email", required)
+                            .form-group
+                                label Location
+                                input#editLocation.form-control(type="text", placeholder="Location")
+                            .form-group
+                                label Password
+                                input#editPassword.form-control(type="password", value="", placeholder="Password")
+                            .form-group
+                                label Confirm Password
+                                input#editConfirmPassword.form-control(type="password", value="", placeholder="Confirm Password")
+
+                        .modal-footer
+                            button.btn.btn-default(data-dismiss="modal", aria-hidden="true") Cancel
+                            button.btn.btn-primary(type="submit") Save Changes
+
+block scripts
+    script.
+        $('.btn-danger').click(function (e) {
+            var row = $(this).parents('tr').first();
+            var name = row.find('a').first().text();
+            var id = row.data('userid');
+            $.ajax({
+                url: '/user/'+id,
+                type: 'DELETE',
+                success: function () {
+                    row.remove();
+                    $('#alerts').html('<div class="alert alert-success">Room "'+name+'"" removed!</div>');
+                },
+                error: function(res) {
+                    $('#alerts').html('<div class="alert alert-error">Room could not be deleted: '+res.responseJSON.error+'</div>');
+                }
+            });
+        });
+        $('.btn-edit').click(function (e) {
+            var id = $(this).parents('tr').first().data('userid');
+            $.ajax({
+                url: '/user/find/'+id,
+                type: 'GET',
+                success: function (data) {
+                    $('#editFirstName').val(data.firstName);
+                    $('#editLastName').val(data.lastName);
+                    $('#editUsername').val(data.username);
+                    $('#editEmail').val(data.email);
+                    $('#editLocation').val(data.location);
+                    $('#editPassword').val('');
+                    $('#editConfirmPassword').val('');
+                    $('#editid').val(data.id);
+                    //TODO: Group handling
+                    $('#editmodal').modal('show');
+                },
+                error: function(res) {
+                    $('#alerts').html('<div class="alert alert-error">Could not edit user: '+res.responseJSON.error+'</div>');
+                }
+
+            });
+        });
+        $('#edit-form').submit(function (e) {
+            var id = $('#editid').val();
+            var firstName = $("#editFirstName").val();
+            var lastName = $("#editLastName").val();
+            var username = $("#editUsername").val();
+            var password = $("#editPassword").val();
+            var confirmPassword = $("#editConfirmPassword").val();
+            var email = $("#editEmail").val();
+            var location = $("#editLocation").val();
+            var data = { firstName: firstName, lastName: lastName, username: username, email: email, location: location };
+            if (username && email) {
+                if (password === confirmPassword) {
+                    if (password.length > 0) {
+                        data.password = password;
+                    }
+                    $.ajax({
+                        url: '/user/'+id,
+                        type: 'PUT',
+                        data: data,
+                        success: function (data) {
+                            var html = '<td>'+data.fullName+'</td><td><a href="/user/'+data.username+'">'+data.username+'</a></td><td>'+data.email+'</td><td>'+data.location+'</td><td><div class="btn-group"><a class="btn btn-default btn-edit" href="#"><i class="glyphicon glyphicon-pencil"></i></a><a class="btn btn-danger" href="#"><i class="glyphicon glyphicon-trash"></i></a></div></td>';
+                            $('#editmodal').modal('hide');
+                            $('tr[data-userid='+data.id+']').html(html);
+                        },
+                        error: function(res) {
+                            $('#editmodal .modal-body').prepend('<div class="alert alert-error">User could not be updated: '+res.responseJSON.error+'</div>');
+                        }
+                    });
+                } else {
+                    $('#editSignupPassword').popover({
+                    title: "Validation Error",
+                    content: "Passwords don't match"
+                }).click();
+                }
+            } else {
+                $('#editmodal .modal-body').prepend('<div class="alert alert-error">Username and email are required</div>');
+            }
+            e.preventDefault();
+        });
+        $('#new-form').submit(function (e) {
+            var firstName = $("#signupFirstName").val();
+            var lastName = $("#signupLastName").val();
+            var username = $("#signupUsername").val();
+            var password = $("#signupPassword").val();
+            var confirmPassword = $("#signupConfirmPassword").val();
+            var email = $("#signupEmail").val();
+            if (username && password) {
+                if (password === confirmPassword) {
+                    $.post('/user',
+                        { firstName: firstName, lastName: lastName, username: username, password: password, email: email },
+                        function (data) {
+                            var html = '<tr data-userid="'+data.id+'"><td>'+data.fullName+'</td><td><a href="/user/'+data.username+'">'+data.username+'</a></td><td>'+data.email+'</td><td>'+data.location+'</td><td><div class="btn-group"><a class="btn btn-default btn-edit" href="#"><i class="glyphicon glyphicon-pencil"></i></a><a class="btn btn-danger" href="#"><i class="glyphicon glyphicon-trash"></i></a></div></td></tr>';
+                            $('#addmodal').modal('hide');
+                            $('#user-table-data').append(html);
+                        }
+                    ).fail(function(res){
+                        $('#addmodal .modal-body').prepend('<div class="alert alert-error">User could not be created: '+res.responseJSON.error+'</div>');
+                    });
+                } else {
+                    $('#signupPassword').popover({
+                    title: "Validation Error",
+                    content: "Passwords don't match"
+                }).click();
+                }
+            } else {
+                $('#addmodal .modal-body').prepend('<div class="alert alert-error">Username and password are required</div>');
+            }
+            e.preventDefault();
+        });

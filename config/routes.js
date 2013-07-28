@@ -52,9 +52,9 @@ module.exports.routes = {
         controller: 'user',
         action: 'view'
     },
-    'get /users' : {
+    'get /users/manage' : {
         controller: 'user',
-        action: 'index'
+        action: 'manage'
     },
     'post /user' : {
         controller: 'user',

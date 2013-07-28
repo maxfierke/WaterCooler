@@ -61,13 +61,9 @@ module.exports = {
         });
     },
 
-    index: function (req, res) {
+    manage: function (req, res) {
         User.find().done(function (err, users) {
-            if (req.wantsJSON) {
-                res.json({ users: users }, 200);
-            } else {
-                res.view({ title: 'Users', users: users });
-            }
+            res.view({ title: 'Manage Users', users: users });
         });
     }
 

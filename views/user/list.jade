@@ -1,9 +1,0 @@
-extends ../layout
-
-block content
-    #container.container.center
-        #alerts.row
-        each user in users
-            .row.well
-                a(href="/user/#{user.username}")
-                    h3 #{user.fullName()}
