@@ -106,21 +106,18 @@ module.exports = {
     },
 
     beforeUpdate: function (values, next) {
-        User.findOne(values.id).done(function (err, user) {
-            if (err) return next(err);
-            if (user.password === values.password) {
-                next();
-            } else {
-                bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-                    if (err) return next(err);
-                    values.salt = salt;
-                    bcrypt.hash(values.password, salt, function(err, hash) {
-                        if(err) return next(err);
-                        values.password = hash;
-                        next();
-                    });
+        if (values.password) {
+            bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+                if (err) return next(err);
+                values.salt = salt;
+                bcrypt.hash(values.password, salt, function(err, hash) {
+                    if(err) return next(err);
+                    values.password = hash;
+                    next();
                 });
-            }
-        });
+            });
+        } else {
+            next();
+        }
     }
 };
