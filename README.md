@@ -1,12 +1,33 @@
 # WaterCooler
 
+## Description
+WaterCooler is a free and open-source group chat application designed for use internally within offices and organizations. The intention is to provide a FOSS counterweight to proprietary, SaaS solutions such as Campfire and HipChat, and provide a solution for people looking to host a rich, multi-room chat application behind their firewall on their own hardware.
+
+### Features
+* Multple Chat rooms with the option to restrict to certains users and groups.
+* Rich, realtime chat functionality
+    * Remote image inclusion
+    * YouTube & Vimeo link parse-to-details functionality
+    * Github integration through PUSH service hook (planned)
+* Useable on different screen sizes (responsive)
+* Easily deployable to Heroku
+
+
 ## Requirements
-* Node.js (only tested on 0.10.13)
+* Node.js (only tested on 0.10.x)
 * MongoDB
 * Redis
 
+## Technologies In Use
+* Node.js
+* Express
+* Sails.js
+* Twitter Bootstrap 3
+* Socket.io
+* jQuery
+
 ## Authors
-* Copyright &copy; 2013 Max Fierke <max@maxfierke.com>
+* Max Fierke <max@maxfierke.com>
 
 ## License
 Copyright © 2013 Max Fierke
