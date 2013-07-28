@@ -27,7 +27,7 @@ block module
                             #{room.clientcount}
                         td
                             .btn-group
-                                a.btn.btn-edit.btn-default(href="#") <i class="glyphicon glyphicon-pencil"></i>
+                                a.btn.btn-edit.btn-default(href="#", data-toggle="modal", data-target="#editmodal") <i class="glyphicon glyphicon-pencil"></i>
                                 a.btn.btn-danger(href="#") <i class="glyphicon glyphicon-trash"></i>
 
     #addmodal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="addroomLabel", aria-hidden="true")
@@ -50,7 +50,7 @@ block module
 
                     .modal-footer
                         button.btn.btn-default(data-dismiss="modal", aria-hidden="true") Cancel
-                        button.btn.btn-primary(type="submit", data-dismiss="modal") Add Room
+                        button.btn.btn-primary(type="submit") Add Room
 
     #editmodal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="editroomLabel", aria-hidden="true")
         .modal-dialog
@@ -74,7 +74,7 @@ block module
 
                         .modal-footer
                             button.btn.btn-default(data-dismiss="modal", aria-hidden="true") Cancel
-                            button.btn.btn-primary(type="submit", data-dismiss="modal") Save Changes
+                            button.btn.btn-primary(type="submit") Save Changes
 
 block scripts
     script.
@@ -125,8 +125,7 @@ block scripts
                 type: 'PUT',
                 data: data,
                 success: function (data) {
-                    var html = '<td><a href="/room/'+data.slug+'">'+data.name+'</a></td><td>'+data.slug+'</td><td>'+data.description+'</td><td>0</td><td><div class="btn-group"><a class="btn btn-edit" href="#"><i class="icon-pencil"></i></a><a class="btn btn-danger" href="#"><i class="icon-trash icon-white"></i></a></div></td>';
-                    console.log(data);
+                    var html = '<td><a href="/room/'+data.slug+'">'+data.name+'</a></td><td>'+data.slug+'</td><td>'+data.description+'</td><td>0</td><td><div class="btn-group"><a class="btn btn-default btn-edit" href="#"><i class="glyphicon glyphicon-pencil"></i></a><a class="btn btn-danger" href="#"><i class="glyphicon glyphicon-trash"></i></a></div></td>';
                     $('#editmodal').modal('hide');
                     $('tr[data-roomid='+data.id+']').html(html);
                 },
@@ -140,15 +139,16 @@ block scripts
             //TODO: Group management
             var data = {
                 name: $('#addroomName').val(),
-                description: $('#addroomDesc').val()
+                description: $('#addroomDesc').val(),
+                groups: $('#addroomGroups').val()
             };
             $.ajax({
                 url: '/room',
                 type: 'POST',
                 data: data,
                 success: function (data) {
-                    var html = '<tr data-roomid="'+data.id+'"><td><a href="/room/'+data.slug+'">'+data.name+'</a></td><td>'+data.slug+'</td><td>'+data.description+'</td><td>0</td><td><div class="btn-group"><a class="btn btn-edit" href="#"><i class="icon-pencil"></i></a><a class="btn btn-danger" href="#"><i class="icon-trash icon-white"></i></a></div></td></tr>';
-                    $('#addmodal .close').click();
+                    var html = '<tr data-roomid="'+data.id+'"><td><a href="/room/'+data.slug+'">'+data.name+'</a></td><td>'+data.slug+'</td><td>'+data.description+'</td><td>0</td><td><div class="btn-group"><a class="btn btn-default btn-edit" href="#"><i class="glyphicon glyphicon-pencil"></i></a><a class="btn btn-danger" href="#"><i class="glyphicon glyphicon-trash"></i></a></div></td></tr>';
+                    $('#addmodal').modal('hide');
                     $('#room-table-data').append(html);
                 },
                 error: function(res) {
