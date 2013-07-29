@@ -7,7 +7,7 @@
 
 var util = require('underscore'),
     slugify = require('slug'),
-    aync = require('async');
+    async = require('async');
 
 module.exports = {
 
@@ -103,7 +103,7 @@ module.exports = {
 
     view: function (req, res) {
         Group.findOneBySlug(req.params.slug).then(function (group) {
-            aync.map(group.admins, function (admin, cb) {
+            async.map(group.admins, function (admin, cb) {
                 User.findOne(admin).then(function (user) {
                     cb(null, user.toJSON());
                 });
@@ -113,7 +113,7 @@ module.exports = {
                     res.send(500, { error: "DB Error" });
                 }
                 group.admins = results;
-                aync.map(group.users, function (user, cb) {
+                async.map(group.users, function (user, cb) {
                     User.findOne(user).then(function (user) {
                         cb(null, user.toJSON());
                     });
