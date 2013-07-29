@@ -1,0 +1,80 @@
+extends ../main/dashboard
+
+block module
+    .col-lg-9
+        .row
+            #alerts.col-lg-12
+        #group-container.row.well
+            h2 #{group.name}
+            p.
+                #{group.description}
+            h4 Administrators
+            ul.list-inline
+                for user in group.admins
+                    li <a href="/user/#{user.username}">#{user.fullName}</a>
+            h4 Users
+            table.table
+                thead
+                    th Name
+                    th Username
+                    th Actions
+                tbody#users-tbody
+                    for user in group.users
+                        tr(data-userid="#{user.id}")
+                            td #{user.fullName}
+                            td #{user.username}
+                            td
+                                button.btn.btn-danger(type="button") <i class="glyphicon glyphicon-remove"></i>
+                    tr#addRow
+                        td
+                            input#addUserName.form-control.typeahead(type="text", autocomplete="off")
+                        td
+                            button#addBtn.btn.btn-default Add
+                        td
+
+block scripts
+    script(type="text/javascript", src="/js/hogan-2.0.0.min.js")
+    script(type="text/javascript", src="/js/typeahead.min.js")
+    script.
+        $('.typeahead').typeahead({
+            name: 'watercooler-users',
+            valueKey: 'username',
+            remote: {
+                url: '/users',
+                type: 'json',
+                filter: function (parsedResponse) { return parsedResponse.users }
+            },
+            template: '<img src="https://secure.gravatar.com/avatar/{{gravatar_hash}}?s=16" /> {{fullName}} ({{username}})',
+            engine: Hogan
+        });
+        $('#addBtn').click(function (e) {
+            var username = $("#addUserName").val();
+            if (username) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/group/#{group.slug}/user',
+                    data: { username: username }
+                }).success(function (user) {
+                    $('#addRow').before('<tr data-userid="'+user.id+'"><td>'+user.fullName+'</td><td>'+user.username+'</td><td><button class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i></button></td></tr>')
+                }).fail(function (res) {
+                    console.log(res.responseJSON);
+                });
+            }
+        });
+        $('.btn-danger').click(function (e) {
+            var row = $(this).parents('tr').first();
+            var name = row.first('td').text();
+            var id = row.data('userid');
+            $.ajax({
+                url: '/group/#{group.slug}/user/'+id,
+                type: 'DELETE',
+                success: function () {
+                    row.remove();
+                    $('#alerts').html('<div class="alert alert-success">User "'+name+'" removed from #{group.name}!</div>');
+                },
+                error: function(res) {
+                    $('#alerts').html('<div class="alert alert-error">User could not be removed: '+res.responseJSON.error+'</div>');
+                }
+            });
+        });
+

@@ -7,6 +7,12 @@
 
 module.exports = {
 
+    index: function (req, res) {
+        User.find().done(function (err, users) {
+            res.json({ users: users }, 200);
+        });
+    },
+
     create: function (req, res) {
         var firstName = req.param("firstName");
         var lastName = req.param("lastName");

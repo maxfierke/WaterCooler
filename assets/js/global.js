@@ -1,11 +1,22 @@
 // If rooms list exists, let's populate it.
-if($('.rooms-list').length > 0) {
+if ($('.rooms-list').length > 0) {
     $.getJSON('/rooms', function (data) {
         var items = [];
         $.each(data.rooms, function(index, room) {
             items.push('<li><a href="/room/'+room.slug+'">'+room.name+'</a></li>');
         });
         $('.rooms-list').html(items);
+    });
+}
+
+// If groups list exists, let's populate it.
+if ($('.groups-list').length > 0) {
+    $.getJSON('/groups', function (data) {
+        var items = [];
+        $.each(data.groups, function(index, group) {
+            items.push('<li><a href="/group/'+group.slug+'">'+group.name+'</a></li>');
+        });
+        $('.groups-list').html(items);
     });
 }
 

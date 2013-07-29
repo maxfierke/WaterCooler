@@ -13,6 +13,7 @@
         "sails-mongo": "https://github.com/maxfierke/sails-mongo/tarball/master",
         "validator": "latest",
         "underscore": "latest",
+        "async": "latest",
         "slug": "latest"
     },
     "scripts": {

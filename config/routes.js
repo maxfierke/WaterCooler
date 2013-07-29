@@ -56,6 +56,10 @@ module.exports.routes = {
         controller: 'user',
         action: 'manage'
     },
+    'get /users' : {
+        controller: 'user',
+        action: 'index'
+    },
     'post /user' : {
         controller: 'user',
         action: 'create'
@@ -86,6 +90,30 @@ module.exports.routes = {
     },
     'get /rooms' : {
         controller: 'room',
+        action: 'index'
+    },
+    'get /groups/manage' : {
+        controller: 'group',
+        action: 'manage'
+    },
+    'get /group/:slug' : {
+        controller: 'group',
+        action: 'view'
+    },
+    'post /group/:slug/user' : {
+        controller: 'group',
+        action: 'user_add'
+    },
+    'delete /group/:slug/user/:id' : {
+        controller: 'group',
+        action: 'user_delete'
+    },
+    'post /group' : {
+        controller: 'group',
+        action: 'create'
+    },
+    'get /groups' : {
+        controller: 'group',
         action: 'index'
     }
 

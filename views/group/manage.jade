@@ -1,0 +1,186 @@
+extends ../main/dashboard
+
+block module
+    .col-lg-9
+        .row
+            #alerts
+        .row.well
+            .lead Group Management
+            a.btn.btn-primary(href="#", data-toggle="modal", data-target="#addmodal") <i class="icon-plus icon-white"></i> Add Group
+            hr
+            table.table
+                thead
+                    th Name
+                    th Slug
+                    th Description
+                    th Type
+                    th Actions
+                tbody#group-table-data
+                each group in groups
+                    tr(data-groupid="#{group.id}")
+                        td
+                            a(href="/group/#{group.slug}") #{group.name}
+                        td.
+                            #{group.slug}
+                        td.
+                            #{group.description}
+                        td.
+                            #{group.type}
+                        td
+                            .btn-group
+                                a.btn.btn-edit.btn-default(href="#", data-toggle="modal", data-target="#editmodal") <i class="glyphicon glyphicon-pencil"></i>
+                                a.btn.btn-danger(href="#") <i class="glyphicon glyphicon-trash"></i>
+
+    #addmodal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="addLabel", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+                    h4#addLabel Add a Group
+                form#new-form
+                    .modal-body
+                        .form-group
+                            label Group Name
+                            input#addName.form-control(type="text", placeholder="Group Name", required)
+                        .form-group
+                            label Description
+                            textarea#addDesc.form-control(placeholder="Group Description")
+                        .form-group
+                            label Admins
+                            select#addAdmins.form-control(multiple)
+                        .form-group
+                            label Type
+                            #addType
+                                label.radio-inline
+                                    input(type="radio", name="type", value="NORMAL", checked)
+                                    | Normal
+                                label.radio-inline
+                                    input(type="radio", name="type", value="ADMIN")
+                                    | Administrative
+
+                    .modal-footer
+                        button.btn.btn-default(data-dismiss="modal", aria-hidden="true") Cancel
+                        button.btn.btn-primary(type="submit") Add Group
+
+    #editmodal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="editLabel", aria-hidden="true")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    input#editid(type="hidden")
+                    .modal-header
+                        button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+                        h4#editLabel Edit a Group
+                    form#edit-form
+                        .modal-body
+                            .form-group
+                                label Group Name
+                                input#editName.form-control(type="text", placeholder="Group Name", required)
+                            .form-group
+                                label Description
+                                textarea#editDesc.form-control(placeholder="Group Description")
+                            .form-group
+                                label Admins
+                                select#editAdmins.form-control(multiple)
+                            .form-group
+                                label Type
+                                #editType
+                                    label.radio-inline
+                                        input(type="radio", name="type", value="NORMAL", checked)
+                                        | Normal
+                                    label.radio-inline
+                                        input(type="radio", name="type", value="ADMIN")
+                                        | Administrative
+
+
+                        .modal-footer
+                            button.btn.btn-default(data-dismiss="modal", aria-hidden="true") Cancel
+                            button.btn.btn-primary(type="submit") Save Changes
+
+block scripts
+    script.
+        $.get('/users', function (res) {
+            res.users.forEach(function(user, index, array) {
+                $('#addAdmins').append('<option value="'+user.id+'">'+user.fullName+' ('+user.username+')</option>');
+            });
+        });
+        $('.btn-danger').click(function (e) {
+            var row = $(this).parents('tr').first();
+            var name = row.find('a').first().text();
+            var id = row.data('groupid');
+            $.ajax({
+                url: '/group/'+id,
+                type: 'DELETE',
+                success: function () {
+                    row.remove();
+                    $('#alerts').html('<div class="alert alert-success">Group "'+name+'"" removed!</div>');
+                },
+                error: function(res) {
+                    $('#alerts').html('<div class="alert alert-error">Group could not be deleted: '+res.responseJSON.error+'</div>');
+                }
+            });
+        });
+        $('.btn-edit').click(function (e) {
+            var id = $(this).parents('tr').first().data('groupid');
+            $.ajax({
+                url: '/group/find/'+id,
+                type: 'GET',
+                success: function (data) {
+                    $('#editName').val(data.name);
+                    $('#editDesc').val(data.description);
+                    $('#editid').val(data.id);
+                    //TODO: Group handling
+                    $('#editmodal').modal('show');
+                },
+                error: function(res) {
+                    $('#alerts').html('<div class="alert alert-error">Could not edit group: '+res.responseJSON.error+'</div>');
+                }
+
+            });
+        });
+        $('#edit-form').submit(function (e) {
+            var id = $('#editid').val();
+            //TODO: Group management
+            var data = {
+                name: $('#editName').val(),
+                description: $('#editDesc').val(),
+                type: $('#editType input[name="type"]:checked').val()
+            };
+            $.ajax({
+                url: '/group/'+id,
+                type: 'PUT',
+                data: data,
+                success: function (data) {
+                    var html = '<td><a href="/group/'+data.slug+'">'+data.name+'</a></td><td>'+data.slug+'</td><td>'+data.description+'</td><td>'+data.type+'</td><td><div class="btn-group"><a class="btn btn-default btn-edit" href="#"><i class="glyphicon glyphicon-pencil"></i></a><a class="btn btn-danger" href="#"><i class="glyphicon glyphicon-trash"></i></a></div></td>';
+                    $('#editmodal').modal('hide');
+                    $('tr[data-groupid='+data.id+']').html(html);
+                },
+                error: function(res) {
+                    $('#alerts').html('<div class="alert alert-error">Group could not be updated: '+res.responseJSON.error+'</div>');
+                }
+            });
+            e.preventDefault();
+        });
+        $('#new-form').submit(function (e) {
+            //TODO: Group management
+            var data = {
+                name: $('#addName').val(),
+                description: $('#addDesc').val(),
+                type: $('#addType input[name="type"]:checked').val(),
+                admins: $('#addAdmins').val()
+            };
+            console.log(data);
+            $.ajax({
+                url: '/group',
+                type: 'POST',
+                data: data,
+                success: function (data) {
+                    var html = '<tr data-groupid="'+data.id+'"><td><a href="/group/'+data.slug+'">'+data.name+'</a></td><td>'+data.slug+'</td><td>'+data.description+'</td><td>'+data.type+'</td><td><div class="btn-group"><a class="btn btn-default btn-edit" href="#"><i class="glyphicon glyphicon-pencil"></i></a><a class="btn btn-danger" href="#"><i class="glyphicon glyphicon-trash"></i></a></div></td></tr>';
+                    $('#addmodal').modal('hide');
+                    $('#group-table-data').append(html);
+                },
+                error: function(res) {
+                    $('#alerts').html('<div class="alert alert-error">Group could not be created: '+res.responseJSON.error+'</div>');
+                }
+            });
+            e.preventDefault();
+        });
