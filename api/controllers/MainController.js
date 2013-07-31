@@ -24,7 +24,6 @@ module.exports = {
                 console.log(err);
                 res.send(500, { error: "DB Error" });
             } else {
-                console.log(usr);
                 if (usr) {
                     if (usr.verifyPassword(password)) {
                         req.session.authenticated = true;
