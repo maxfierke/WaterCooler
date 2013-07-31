@@ -27,6 +27,7 @@ module.exports = {
 
         type: {
             type: 'string',
+            defaultsTo: 'NORMAL',
             required: true
         },
 

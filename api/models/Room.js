@@ -30,7 +30,8 @@ module.exports = {
         },
 
         groups: {
-            type: 'array'
+            type: 'array',
+            defaultTo: []
         }
 
     }
