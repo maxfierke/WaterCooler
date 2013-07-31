@@ -16,6 +16,10 @@ module.exports.policies = {
     // (`true` allows public access)
     '*': true,
 
+    GroupController: {
+        '*': 'authenticated'
+    },
+
     MainController: {
         'dashboard': 'authenticated'
     },
