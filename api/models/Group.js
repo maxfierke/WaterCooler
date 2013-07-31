@@ -37,11 +37,13 @@ module.exports = {
         },
 
         admins: {
-            type: 'array'
+            type: 'array',
+            defaultsTo: []
         },
 
         users: {
-            type: 'array'
+            type: 'array',
+            defaultsTo: []
         }
     }
 
