@@ -10,7 +10,7 @@
         "jade": "latest",
         "optimist": "latest",
         "bcrypt": "latest",
-        "sails-mongo": "https://github.com/maxfierke/sails-mongo/tarball/master",
+        "sails-mongo": "latest",
         "validator": "latest",
         "underscore": "latest",
         "async": "latest",
