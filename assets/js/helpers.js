@@ -18,5 +18,14 @@ String.prototype.linkify = function() {
     return this
         .replace(urlPattern, '<a href="$&">$&</a>')
         .replace(pseudoUrlPattern, '$1<a href="http://$2">$2</a>')
-        .replace(emailAddressPattern, '<a href="mailto:$&">$&</a>');
+        .replace(emailAddressPattern, '<a href="mailto:$&">$&</a>')
+        .replace(/(?:\s|^)[@]\w+/g, function(u) {
+            var username = u.replace('@','').replace(/^\s\s*/, '');
+            $.get('/user/'+username, function () {
+                $('.username.'+username).html(' <span class="label highlight"><a href="/user/'+username+'">@'+username+'</a></span>');
+            }).fail(function (err) {
+                $('.username.'+username).contents().unwrap();
+            });
+            return ' <span class="username '+username+'">@'+username+'</span>';
+        });
 };

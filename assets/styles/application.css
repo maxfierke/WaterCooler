@@ -201,6 +201,11 @@ a.dropdown-toggle:focus {
     margin-right: 5px;
 }
 
+.highlight {
+    background-color: rgba(200,200,200, 0.6);
+    border: 1px solid #c4c4c4;
+}
+
 .twitter-typeahead {
     display: block !important;
 }

@@ -48,10 +48,14 @@ module.exports = {
     view: function (req, res) {
         User.findOneByUsername(req.params.username).done(function (err, user) {
             if (err) return res.send(err,500);
-            if (req.wantsJSON) {
-                res.json({ user: user.toJSON() }, 200);
+            if (user) {
+                if (req.wantsJSON) {
+                    res.json({ user: user.toJSON() }, 200);
+                } else {
+                    res.view({ title: user.username, user: user });
+                }
             } else {
-                res.view({ title: user.username, user: user });
+                return res.send(404);
             }
         });
     },

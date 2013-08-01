@@ -23,7 +23,7 @@ var content = document.getElementById("content");
 
 $(field).focus();
 
-if(WaterCooler) {
+if (window.WaterCooler) {
     (function (io) {
 
         // as soon as this file is loaded, connect automatically,
