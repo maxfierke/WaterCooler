@@ -5,6 +5,9 @@
  * @description	:: Contains logic for handling requests.
  */
 
+var util = require('underscore'),
+    async = require('async');
+
 module.exports = {
 
     index: function (req, res) {
@@ -46,17 +49,26 @@ module.exports = {
     },
 
     dashboard: function (req, res) {
-        Room.find().done(function (err, rooms) {
-            if (err) return res.send(err,500);
-            rooms.forEach(function (room, index, array) {
-                if (sails.io.sockets.manager.rooms['/' + room.slug]) {
-                    room.clientcount = sails.io.sockets.manager.rooms['/' + room.slug].length;
-                } else {
-                    room.clientcount = 0;
-                }
+        Group.find({ users: req.session.user.id }).then(function (groups) {
+            var groupids = util.pluck(groups, 'id');
+            Room.find().done(function (err, rooms) {
+                if (err) return res.send(500, { error: "DB Error" });
+                async.filter(rooms, function (room, cb) {
+                    return cb(room.groups.length == 0 || util.intersection(groupids, room.groups).length > 0);
+                }, function (results) {
+                    results.forEach(function (room, index, array) {
+                        if (sails.io.sockets.manager.rooms['/' + room.slug]) {
+                            room.clientcount = sails.io.sockets.manager.rooms['/' + room.slug].length;
+                        } else {
+                            room.clientcount = 0;
+                        }
+                    });
+                    return res.view({ title: 'Dashboard', rooms: results });
+                });
             });
-            res.view({ title: 'Dashboard', rooms: rooms });
-        });
+        }).fail(function (err) {
+            return res.view({ title: 'Dashboard', rooms: [] });
+        }).done();
     }
 
 };
