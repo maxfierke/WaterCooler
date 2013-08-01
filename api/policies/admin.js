@@ -5,7 +5,8 @@ module.exports = function (req, res, ok) {
 
     // User is allowed, proceed to controller
     if (req.session.authenticated && req.session.user.id) {
-        Group.findOne({ $and: [{ type: 'ADMIN'}, { users: req.session.user.id }] }).done(function (err, group) {
+        Group.findOne({ type: "ADMIN", or: [{ admins: req.session.user.id }, { users: req.session.user.id }] }).done(function (err, group) {
+            if (err) return res.send(500, { error: "DB Error" });
             if (group) {
                 return ok();
             }  else {
