@@ -71,14 +71,27 @@ module.exports = {
                 async.filter(rooms, function (room, cb) {
                     return cb(room.groups.length == 0 || util.intersection(groupids, room.groups).length > 0);
                 }, function (results) {
-                    results.forEach(function (room, index, array) {
+                    async.map(results, function (room, cb) {
                         if (sails.io.sockets.manager.rooms['/' + room.slug]) {
                             room.clientcount = sails.io.sockets.manager.rooms['/' + room.slug].length;
                         } else {
                             room.clientcount = 0;
                         }
+                        async.map(room.groups, function (group, cb2) {
+                            Group.findOne(group).done(function (err, dbgroup) {
+                                return cb2(err, dbgroup);
+                            });
+                        }, function (err, hydratedGroups) {
+                            room.groups = hydratedGroups;
+                            console.log(room.groups);
+                            return cb(err, room);
+                        });
+                    }, function (err, hydratedRooms) {
+                        console.log(hydratedRooms);
+                        console.log(hydratedRooms[1].groups);
+                        if (err) return res.send(500, { error: "DB Error" });
+                        return res.json({ rooms: hydratedRooms }, 200);
                     });
-                    return res.json({ rooms: results }, 200);
                 });
             });
         }).fail(function (err) {
