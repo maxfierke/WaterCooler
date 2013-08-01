@@ -12,7 +12,9 @@ var util = require('underscore'),
 module.exports = {
 
     index: function (req, res) {
-        Group.find({ users: req.session.user.id }).done(function (err, groups) {
+        Group.find({ users: req.session.user.id })
+        .sort("name ASC")
+        .done(function (err, groups) {
             if (err) res.send(500, { error: "DB Error" });
             res.json({ groups: groups }, 200);
         });
@@ -55,7 +57,7 @@ module.exports = {
     },
 
     manage: function (req, res) {
-        Group.find().done(function (err, groups) {
+        Group.find().sort("name ASC").done(function (err, groups) {
             res.view({ groups: groups });
         });
     },

@@ -51,7 +51,9 @@ module.exports = {
     dashboard: function (req, res) {
         Group.find({ users: req.session.user.id }).then(function (groups) {
             var groupids = util.pluck(groups, 'id');
-            Room.find().done(function (err, rooms) {
+            Room.find()
+            .sort("name ASC")
+            .done(function (err, rooms) {
                 if (err) return res.send(500, { error: "DB Error" });
                 async.filter(rooms, function (room, cb) {
                     return cb(room.groups.length == 0 || util.intersection(groupids, room.groups).length > 0);

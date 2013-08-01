@@ -8,7 +8,7 @@
 module.exports = {
 
     index: function (req, res) {
-        User.find().done(function (err, users) {
+        User.find().sort("username ASC").done(function (err, users) {
             res.json({ users: users }, 200);
         });
     },
@@ -68,7 +68,7 @@ module.exports = {
     },
 
     manage: function (req, res) {
-        User.find().done(function (err, users) {
+        User.find().sort("username ASC").done(function (err, users) {
             res.view({ title: 'Manage Users', users: users });
         });
     }
