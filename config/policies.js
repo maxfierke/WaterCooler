@@ -17,19 +17,32 @@ module.exports.policies = {
     '*': true,
 
     GroupController: {
-        '*': 'authenticated'
+        '*': 'authenticated',
+        'create': ['authenticated', 'admin'],
+        'manage': ['authenticated', 'admin'],
+        'user_add': ['authenticated', 'admin'],
+        'user_delete': ['authenticated', 'admin'],
+        'destroy': ['authenticated', 'admin']
     },
 
     MainController: {
         'dashboard': 'authenticated'
     },
 
-    RoomController: {
+    MessageController: {
         '*': 'authenticated'
+    },
+
+    RoomController: {
+        '*': 'authenticated',
+        'create': ['authenticated', 'admin'],
+        'manage': ['authenticated', 'admin'],
+        'destroy': ['authenticated', 'admin']
     },
 
     UserController: {
         '*': 'authenticated',
+        'manage': ['authenticated', 'admin'],
         'create': true
     }
 };
