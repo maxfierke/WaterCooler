@@ -68,7 +68,6 @@ module.exports = {
                             });
                         }, function (err, hydratedGroups) {
                             room.groups = hydratedGroups;
-                            console.log(room.groups);
                             return cb(err, room);
                         });
                     }, function (err, hydratedRooms) {

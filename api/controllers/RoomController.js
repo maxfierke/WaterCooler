@@ -83,12 +83,9 @@ module.exports = {
                             });
                         }, function (err, hydratedGroups) {
                             room.groups = hydratedGroups;
-                            console.log(room.groups);
                             return cb(err, room);
                         });
                     }, function (err, hydratedRooms) {
-                        console.log(hydratedRooms);
-                        console.log(hydratedRooms[1].groups);
                         if (err) return res.send(500, { error: "DB Error" });
                         return res.json({ rooms: hydratedRooms }, 200);
                     });
