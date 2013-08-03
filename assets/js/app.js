@@ -12,7 +12,8 @@ $(window).on('resize', function () {
     vph = $(window).height();
     nbh = $('.navbar').height();
     mch = $('.controls').outerHeight();
-    $('#content').css({'height': (vph-(nbh+mch)) + 'px'});
+    rih = $('#room-info').outerHeight();
+    $('#content').css({'height': (vph-(nbh+mch+rih)) + 'px'});
 });
 
 $(window).resize();
@@ -39,7 +40,6 @@ if (window.WaterCooler) {
             }
             socket.get('/room/'+WaterCooler.room, function (room) {
                 $(content).append('<strong class="text-info">Welcome to '+room.name+'!</strong><br />');
-                $(content).append('<p class="text-info">'+room.description+'</p>');
             });
             socket.get('/room/'+WaterCooler.room+'/subscribers', WaterCooler.handler.clientList);
 

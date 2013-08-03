@@ -8,7 +8,11 @@ block styles
 block content
     .container-fluid
         .row.chat-row
-            #content.well.col-lg-10.col-9.col-sm-9
+            #chatwrapper.container-fluid.col-lg-10.col-9.col-sm-9
+                #room-info
+                    h4#room-name.inline-heading #{room.name}
+                    #room-topic.inline-heading #{room.description}
+                #content.well
             aside#sidebar.col-lg-2.col-sm-3.col-3
                 header Users
                 ul#user-list

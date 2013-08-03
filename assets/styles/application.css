@@ -12,6 +12,14 @@ body {
     background-size: 102px 102px;
 }
 
+.inline-heading {
+    display: inline;
+    padding-left: 10px;
+    margin-left: 0;
+    padding-right: 0;
+    margin-right: 0;
+}
+
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     body {
         background-image: url(/images/billie_holiday_@2X.png);
@@ -87,6 +95,28 @@ a.dropdown-toggle:focus {
 /* Chat Room Styles */
 .container-fluid {
     padding: 0;
+}
+
+#room-info {
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e6e6e6),to(#d3d3d3));
+    background-image: -o-linear-gradient(top, #e6e6e6, #d3d3d3);
+    background-image: -moz-linear-gradient(top, #e6e6e6, #d3d3d3);
+    background-image: -webkit-linear-gradient(top, #e6e6e6, #d3d3d3);
+    background-image: -ms-linear-gradient(top, #e6e6e6, #d3d3d3);
+    background-image: linear-gradient(top, #e6e6e6, #d3d3d3);
+    color: #555;
+    display: inline-block;
+    padding: 5px 12px;
+    width: 100%;
+    border-bottom: 1px solid #c3c3c3;
+    margin: 0;
+    text-shadow: 1px -1px 1px #ccc;
+    box-shadow: inset 0 0 1px #ccc;
+}
+
+#room-topic {
+    font-size: 0.9em;
+    color: #737373;
 }
 
 .date {
@@ -189,9 +219,10 @@ a.dropdown-toggle:focus {
     display: inline-block;
     padding: 5px 12px;
     width: 100%;
+    height: 32px;
     border-bottom: 1px solid #c3c3c3;
     margin: 0;
-    text-shadow: inset 1px 1px 1px #ccc;
+    text-shadow: 1px -1px 1px #ccc;
     box-shadow: inset 0 0 1px #ccc;
 }
 
