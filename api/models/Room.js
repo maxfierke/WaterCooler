@@ -31,7 +31,7 @@ module.exports = {
 
         groups: {
             type: 'array',
-            defaultTo: []
+            defaultsTo: []
         }
 
     }
