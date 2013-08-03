@@ -24,7 +24,7 @@ String.prototype.linkify = function() {
             $.get('/user/'+username, function () {
                 $('.username.'+username).html(' <span class="label highlight"><a href="/user/'+username+'">@'+username+'</a></span>');
             }).fail(function (err) {
-                $('.username.'+username).contents().unwrap();
+                $('.username.'+username).replaceWith('@'+username);
             });
             return ' <span class="username '+username+'">@'+username+'</span>';
         });
