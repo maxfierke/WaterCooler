@@ -72,6 +72,10 @@ module.exports.routes = {
         controller: 'message',
         action: 'create'
     },
+    'get /room/:slug/groups' : {
+        controller: 'room',
+        action: 'room_groups'
+    },
     'get /room/:slug/subscribers' : {
         controller: 'room',
         action: 'room_subscribers'

@@ -6,9 +6,24 @@
  */
 
 var util = require('underscore'),
-    slugify = require('slug');
+    slugify = require('slug'),
+    async = require('async');
 
 module.exports = {
+
+    room_groups: function (req, res) {
+        var slug = req.params.slug;
+        Room.findOneBySlug(slug).done(function (err, room) {
+            if (err) return res.send(err, 404);
+            async.map(room.groups, function (group, cb) {
+                Group.findOne(group).done(function (err, dbgroup) {
+                    return cb(err, dbgroup);
+                });
+            }, function (err, hydratedGroups) {
+                return res.json({ groups: hydratedGroups }, 200);
+            });
+        });
+    },
 
     room_subscribers: function (req, res) {
         var slug = req.params.slug;
