@@ -47,12 +47,30 @@ module.exports = {
 
     room_messages: function (req, res) {
         var slug = req.params.slug;
+        var limit = req.param('limit');
+        var user = req.param('user');
         Room.findOneBySlug(slug).done(function (err, room) {
             if (err) return res.send(err, 404);
             Message.find()
             .where({ room: room.id })
+            .where((user ? { user: user } : {}))
+            .sort({ $natural: -1 })
+            .limit((limit ? limit : 10))
             .exec(function (err, msgs) {
-                res.json(msgs, 200);
+                async.each(msgs, function(msg, cb) {
+                    User.findOne({ id: msg.user}).done(function (err, dbuser) {
+                        if (err) {
+                            msg.user = { id: user, name: 'Deleted User' };
+                            return cb(err);
+                        } else {
+                            msg.user = dbuser;
+                            return cb(err);
+                        }
+                    });
+                }, function (err) {
+                    if (err) return res.send(err, 500);
+                    return res.json({ messages: msgs.reverse() }, 200);
+                });
             });
         });
     },
