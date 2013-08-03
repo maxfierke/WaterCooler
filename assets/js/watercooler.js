@@ -36,6 +36,13 @@ var WaterCooler = {
                 isMe = (data.users[i].id === activeUser.id ? true : false);
                 WaterCooler.handler.clientAdd(data.users[i], false, isMe);
             }
+        },
+        pastMessages: function (data) {
+            $('#content').append('<h5>Previously...</h5><div class="faded">');
+            for (var i = 0; i < data.messages.length; i++) {
+                WaterCooler.handler.messageReceived(data.messages[i], '#content .faded');
+            }
+            $('#content').append('</div><h5>Present Day</h5>');
         }
     },
     util: {

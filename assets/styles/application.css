@@ -64,6 +64,10 @@ a.dropdown-toggle:focus {
     right: 10px;
 }
 
+.faded {
+    opacity: 0.5;
+}
+
 /* Login / Sign Up Styles */
 .center {
     margin: 0 auto;

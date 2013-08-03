@@ -42,6 +42,14 @@ if (window.WaterCooler) {
                 $(content).append('<p class="text-info">'+room.description+'</p>');
             });
             socket.get('/room/'+WaterCooler.room+'/subscribers', WaterCooler.handler.clientList);
+
+            $.ajax({
+                type: 'GET',
+                url: '/room/'+WaterCooler.room+'/messages?limit=5',
+                success: WaterCooler.handler.pastMessages
+            }).fail(function (err) {
+                log("Houston, we have a problem: ", err.responseJSON);
+            });
         });
 
         socket.on('message', function(response) {
