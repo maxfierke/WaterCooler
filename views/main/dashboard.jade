@@ -29,32 +29,38 @@ block content
                         li
                             a(href="/users/manage") User Management
             block module
-                each room in rooms
-                    .col-lg-9.row-fluid
-                        .well.col-lg-12
-                            span.pull-right
-                                i.glyphicon.glyphicon-user
-                                |  #{room.clientcount} users connected
-                            h4
-                                a(href="/room/#{room.slug}") #{room.name}
-                            p.col-lg-10.
-                                #{room.description}
-                            a.btn.btn-success.btn-large.pull-right(href="/room/#{room.slug}") Jump in!
-                            .clearfix
-                            hr
-                            .pull-left
-                                i.icon-calendar
-                                span.label.label-info Created on #{room.createdAt}
-                            ul.list-inline.pull-right
-                                - if (room.groups && room.groups.length > 0)
-                                    each group in room.groups
+                - if (rooms.length > 0)
+                    each room in rooms
+                        .col-lg-9.row-fluid
+                            .well.col-lg-12
+                                span.pull-right
+                                    i.glyphicon.glyphicon-user
+                                    |  #{room.clientcount} users connected
+                                h4
+                                    a(href="/room/#{room.slug}") #{room.name}
+                                p.col-lg-10.
+                                    #{room.description}
+                                a.btn.btn-success.btn-large.pull-right(href="/room/#{room.slug}") Jump in!
+                                .clearfix
+                                hr
+                                .pull-left
+                                    i.icon-calendar
+                                    span.label.label-info Created on #{room.createdAt}
+                                ul.list-inline.pull-right
+                                    - if (room.groups && room.groups.length > 0)
+                                        each group in room.groups
+                                            li
+                                                span.label.label-success #{group.name}
                                         li
-                                            span.label.label-success #{group.name}
-                                    li
-                                        i.glyphicon.glyphicon-user
-                                - else
-                                    li Public&nbsp;
-                                        i.glyphicon.glyphicon-globe
-                            .clearfix
+                                            i.glyphicon.glyphicon-user
+                                    - else
+                                        li Public&nbsp;
+                                            i.glyphicon.glyphicon-globe
+                                .clearfix
+                - else
+                    .col-lg-9.row-fluid
+                        .well
+                            h1.text-center.text-muted.text-light No rooms found!
+
     footer.container
-        p.text-muted.credit Copyright &copy; 2013 Max Fierke &middot; Licensed under the MIT license &middot; <a href="https://github.com/maxfierke/WaterCooler">Report a bug</a>
+        p.text-muted.text-light Copyright &copy; 2013 Max Fierke &middot; Licensed under the MIT license &middot; <a href="https://github.com/maxfierke/WaterCooler">Report a bug</a>
