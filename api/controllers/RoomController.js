@@ -54,7 +54,7 @@ module.exports = {
             Message.find()
             .where({ room: room.id })
             .where((user ? { user: user } : {}))
-            .sort({ $natural: -1 })
+            .sort({ createdAt: -1, $natural: -1 })
             .limit((limit ? limit : 10))
             .exec(function (err, msgs) {
                 async.each(msgs, function(msg, cb) {
