@@ -12,11 +12,11 @@ var util = require('underscore'),
 module.exports = {
 
     index: function (req, res) {
-        Group.find({ users: req.session.user.id })
+        Group.find({ or: [{ users: req.session.user.id }, { admins: req.session.user.id }] })
         .sort("name ASC")
         .done(function (err, groups) {
-            if (err) res.send(500, { error: "DB Error" });
-            res.json({ groups: groups }, 200);
+            if (err) return res.send(500, { error: "DB Error" });
+            return res.json({ groups: groups }, 200);
         });
     },
 

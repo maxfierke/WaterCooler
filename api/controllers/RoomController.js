@@ -97,7 +97,7 @@ module.exports = {
     },
 
     index: function (req, res) {
-        Group.find({ users: req.session.user.id }).then(function (groups) {
+        Group.find({ or: [{ users: req.session.user.id }, { admins: req.session.user.id }] }).then(function (groups) {
             var groupids = util.pluck(groups, 'id');
             Room.find()
             .sort("name ASC")
