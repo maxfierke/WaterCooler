@@ -1,5 +1,5 @@
 var WaterCooler = {
-    room: window.location.pathname.split('/').slice(-1)[0],
+    room: window.location.pathname.split('/')[2],
     handler: {
         messageReceived: function(message, domMessageContainer) {
             if (message) {
