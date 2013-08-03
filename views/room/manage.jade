@@ -78,6 +78,11 @@ block module
 
 block scripts
     script.
+        $.get('/groups', function (res) {
+            res.groups.forEach(function(group, index, array) {
+                $('#addroomGroups').append('<option value="'+group.id+'">'+group.name+'</option>');
+            });
+        });
         $('.btn-danger').click(function (e) {
             var row = $(this).parents('tr').first();
             var name = row.find('a').first().text();
