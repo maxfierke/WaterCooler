@@ -29,19 +29,19 @@ module.exports = {
         var slug = req.params.slug;
         Room.findOneBySlug(slug).done(function (err, room) {
             if (err) return res.send(err, 404);
-            var subs = sails.io.sockets.clients(slug);
-            var connectedUsers = { users: [] };
-            subs.forEach(function(element, index, array) {
-                connectedUsers.users[index] = element.handshake.session.user;
+            var connectedUsers = sails.io.sockets.clients(slug);
+            async.map(connectedUsers, function(user, cb) {
+                return cb(err, user.handshake.session.user);
+            }, function (err, results) {
+                connectedUsers = util.sortBy(results, function(user) {
+                    if (user.firstName && user.lastName) {
+                        return user.firstName + " " + user.lastName;
+                    } else {
+                        return user.username;
+                    }
+                });
+                return res.json({ users: connectedUsers }, 200);
             });
-            connectedUsers.users = util.sortBy(connectedUsers.users, function(user) {
-                if (user.firstName && user.lastName) {
-                    return user.firstName + " " + user.lastName;
-                } else {
-                    return user.username;
-                }
-            });
-            res.json(connectedUsers, 200);
         });
     },
 
