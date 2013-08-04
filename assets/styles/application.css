@@ -249,6 +249,11 @@ a.dropdown-toggle:focus {
     font-size: 90%;
 }
 
+.glyphicon:before {
+    position: relative;
+    top: 3px;
+}
+
 .twitter-typeahead {
     display: block !important;
 }
