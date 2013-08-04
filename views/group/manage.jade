@@ -128,6 +128,7 @@ block scripts
                     $('#editName').val(data.name);
                     $('#editDesc').val(data.description);
                     $('#editid').val(data.id);
+                    $('#editType input[value='+data.type+']').attr('checked', 'checked');
                     //TODO: Group handling
                     $('#editmodal').modal('show');
                 },
