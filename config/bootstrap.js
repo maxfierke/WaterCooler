@@ -19,7 +19,7 @@ module.exports.bootstrap = function (cb) {
                 username: 'admin',
                 password: 'changeme',
                 email: 'changeme@change.me'
-            }).done(function (err, group) {
+            }).done(function (err, user) {
                 sails.models.group.findOne({ type: 'ADMIN' }).done(function (err, group) {
                     if (err) console.log("Bro, we couldn't even lift", err);
                     if (group) {
@@ -27,6 +27,7 @@ module.exports.bootstrap = function (cb) {
                     } else {
                         sails.models.group.create({
                             name: 'Administrators',
+                            slug: 'administrators',
                             type: 'ADMIN',
                             admins: [user.id]
                         }).done(function (err, group) {
