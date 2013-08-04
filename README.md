@@ -1,5 +1,5 @@
 # WaterCooler
-
+![WaterCooler in action!](screenshots/watercooler_maxhatesadminsteve.png)
 ## Description
 WaterCooler is a free and open-source group chat application designed for use internally within offices and organizations. The intention is to provide a FOSS counterweight to proprietary, SaaS solutions such as Campfire and HipChat, and provide a solution for people looking to host a rich, multi-room chat application behind their firewall on their own hardware.
 
@@ -25,7 +25,7 @@ There are currently a number of limitations, outside of unimplemented applicatio
 2. Run `$ npm install`
 3. Modify config/adapters.js and config/session.js with your MongoDB and Redis info
     * If deploying to Herkou, the application will just use your instance's MongoLab and RedisCloud details.
-4. Start the server with '$ node app.js'. It's should now be running on http://127.0.0.1:3700 by default.
+4. Start the server with `$ node app.js`. It's should now be running on [http://127.0.0.1:3700](http://127.0.0.1:3700) by default.
 5. (optional) For YouTube URL parsing, put your YouTube API key in assets/config.json
 6. Login with user: `admin` password: `changeme` **and change the password**
 
