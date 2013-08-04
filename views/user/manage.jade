@@ -15,20 +15,20 @@ block module
                     th Location
                     th Actions
                 tbody#user-table-data
-                each user in users
-                    tr(data-userid="#{user.id}")
-                        td.
-                            #{user.fullName()}
-                        td
-                            a(href="/user/#{user.username}") #{user.username}
-                        td.
-                            #{user.email}
-                        td.
-                            #{user.location}
-                        td
-                            .btn-group
-                                a.btn.btn-edit.btn-default(href="#", data-toggle="modal", data-target="#editmodal") <i class="glyphicon glyphicon-pencil"></i>
-                                a.btn.btn-danger(href="#") <i class="glyphicon glyphicon-trash"></i>
+                    each user in users
+                        tr(data-userid="#{user.id}")
+                            td.
+                                #{user.fullName()}
+                            td
+                                a(href="/user/#{user.username}") #{user.username}
+                            td.
+                                #{user.email}
+                            td.
+                                #{user.location}
+                            td
+                                .btn-group
+                                    a.btn.btn-edit.btn-default(href="#", data-toggle="modal", data-target="#editmodal") <i class="glyphicon glyphicon-pencil"></i>
+                                    a.btn.btn-danger(href="#") <i class="glyphicon glyphicon-trash"></i>
 
     #addmodal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="addLabel", aria-hidden="true")
         .modal-dialog

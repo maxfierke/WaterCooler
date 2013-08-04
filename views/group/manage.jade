@@ -16,20 +16,20 @@ block module
                     th Type
                     th Actions
                 tbody#group-table-data
-                each group in groups
-                    tr(data-groupid="#{group.id}")
-                        td
-                            a(href="/group/#{group.slug}") #{group.name}
-                        td.
-                            #{group.slug}
-                        td.
-                            #{group.description}
-                        td.
-                            #{group.type}
-                        td
-                            .btn-group
-                                a.btn.btn-edit.btn-default(href="#", data-toggle="modal", data-target="#editmodal") <i class="glyphicon glyphicon-pencil"></i>
-                                a.btn.btn-danger(href="#") <i class="glyphicon glyphicon-trash"></i>
+                    each group in groups
+                        tr(data-groupid="#{group.id}")
+                            td
+                                a(href="/group/#{group.slug}") #{group.name}
+                            td.
+                                #{group.slug}
+                            td.
+                                #{group.description}
+                            td.
+                                #{group.type}
+                            td
+                                .btn-group
+                                    a.btn.btn-edit.btn-default(href="#", data-toggle="modal", data-target="#editmodal") <i class="glyphicon glyphicon-pencil"></i>
+                                    a.btn.btn-danger(href="#") <i class="glyphicon glyphicon-trash"></i>
 
     #addmodal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="addLabel", aria-hidden="true")
         .modal-dialog
