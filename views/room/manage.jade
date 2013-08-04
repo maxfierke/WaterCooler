@@ -92,7 +92,7 @@ block scripts
                 type: 'DELETE',
                 success: function () {
                     row.remove();
-                    $('#alerts').html('<div class="alert alert-success">Room "'+name+'"" removed!</div>');
+                    $('#alerts').html('<div class="alert alert-success">Room "'+name+'" removed!</div>');
                 },
                 error: function(res) {
                     $('#alerts').html('<div class="alert alert-error">Room could not be deleted: '+res.responseJSON.error+'</div>');
