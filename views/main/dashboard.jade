@@ -19,15 +19,16 @@ block content
                 .well.well-small
                     h5 Groups
                     ul.groups-list.nav.nav-stacked.nav-pills
-                .well.well-small
-                    h5 Application Management
-                    ul.nav.nav-stacked.nav-pills
-                        li
-                            a(href="/groups/manage") Group Management
-                        li
-                            a(href="/rooms/manage") Room Management
-                        li
-                            a(href="/users/manage") User Management
+                - if (req.session.isAdmin)
+                    .well.well-small
+                        h5 Application Management
+                        ul.nav.nav-stacked.nav-pills
+                            li
+                                a(href="/groups/manage") Group Management
+                            li
+                                a(href="/rooms/manage") Room Management
+                            li
+                                a(href="/users/manage") User Management
             block module
                 #rooms.col-lg-9
                     .well
