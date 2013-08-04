@@ -49,38 +49,7 @@ module.exports = {
     },
 
     dashboard: function (req, res) {
-        Group.find({ users: req.session.user.id }).then(function (groups) {
-            var groupids = util.pluck(groups, 'id');
-            Room.find()
-            .sort("name ASC")
-            .done(function (err, rooms) {
-                if (err) return res.send(500, { error: "DB Error" });
-                async.filter(rooms, function (room, cb) {
-                    return cb(room.groups.length == 0 || util.intersection(groupids, room.groups).length > 0);
-                }, function (results) {
-                    async.map(results, function (room, cb) {
-                        if (sails.io.sockets.manager.rooms['/' + room.slug]) {
-                            room.clientcount = sails.io.sockets.manager.rooms['/' + room.slug].length;
-                        } else {
-                            room.clientcount = 0;
-                        }
-                        async.map(room.groups, function (group, cb2) {
-                            Group.findOne(group).done(function (err, dbgroup) {
-                                return cb2(err, dbgroup);
-                            });
-                        }, function (err, hydratedGroups) {
-                            room.groups = hydratedGroups;
-                            return cb(err, room);
-                        });
-                    }, function (err, hydratedRooms) {
-                        if (err) return res.send(500, { error: "DB Error" });
-                        return res.view({ title: 'Dashboard', rooms: hydratedRooms });
-                    });
-                });
-            });
-        }).fail(function (err) {
-            return res.view({ title: 'Dashboard', rooms: [] });
-        }).done();
+        return res.view({ title: 'Dashboard' });
     }
 
 };
