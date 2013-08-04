@@ -8,7 +8,7 @@ var $rooms = $('#rooms');
 if ($roomsList.length > 0) {
     $.getJSON('/rooms', function (data) {
         var items = [];
-        $rooms.html('');
+        if (data.rooms.length > 0) $rooms.html('');
         data.rooms.forEach(function (room, i, all) {
             items.push('<li><a href="/room/'+room.slug+'">'+room.name+'</a></li>');
             if ($rooms.length > 0) {
