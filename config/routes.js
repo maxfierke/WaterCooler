@@ -60,6 +60,10 @@ module.exports.routes = {
         controller: 'user',
         action: 'index'
     },
+    'put /user/:id' : {
+        controller: 'user',
+        action: 'update'
+    },
     'post /user' : {
         controller: 'user',
         action: 'create'
