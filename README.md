@@ -15,19 +15,26 @@ WaterCooler is a free and open-source group chat application designed for use in
 ## Limitations
 There are currently a number of limitations, outside of unimplemented application functionality. There are currently a number of features missing from the Waterline ORM, namely support for association and aggregate functions. As a result, there are a number of inefficent workarounds in-place to emulate this behavior. These usually involve fetching a whole collection and iterating over each entry to filter out entries that don't match the conditions. I'm looking into whether or not it would be worth the effort to switch to Mongoose ODM at the cost of database portability, or whether I should just wait until Waterline catches up.
 
-
 ## Requirements
 * Node.js (only tested on 0.10.x)
 * MongoDB
 * Redis
 
+## Installation
+1. Clone the repo
+2. Run `$ npm install`
+3. Modify config/adapters.js and config/session.js with your MongoDB and Redis info
+    * If deploying to Herkou, the application will just use your instance's MongoLab and RedisCloud details.
+4. Start the server with '$ node app.js'. It's should now be running on http://127.0.0.1:3700 by default.
+5. (optional) For YouTube URL parsing, put your YouTube API key in assets/config.json
+6. Login with user: `admin` password: `changeme` **and change the password**
+
 ## Technologies In Use
-* Node.js
-* Express
-* Sails.js
+* Node.js + Express + Sails.js + Socket.io
 * Twitter Bootstrap 3
-* Socket.io
 * jQuery
+* MongoDB
+* Redis
 
 ## Authors
 * Max Fierke <max@maxfierke.com>
