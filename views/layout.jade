@@ -22,7 +22,10 @@ html
                         li#user-dropdown.dropdown
                             a.dropdown-toggle(href="#", data-toggle="dropdown")
                                 | Logged in as&nbsp;
-                                span #{req.session.user.firstName} #{req.session.user.lastName}
+                                - if (req.session.user.firstName || req.session.user.lastName)
+                                    span #{req.session.user.firstName} #{req.session.user.lastName}
+                                - else
+                                    span #{req.session.user.username}
                             ul#user-menu.dropdown-menu(role="menu")
                                 li
                                     a(href="/account") <i class="glyphicon glyphicon-cog glyphicon-white"></i> Account Settings
