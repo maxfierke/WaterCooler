@@ -9,8 +9,33 @@
  */
 
 module.exports.bootstrap = function (cb) {
-
-  // It's very important to trigger this callack method when you are finished 
-  // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
-  cb();
+    // Load an admin user and group if none found.
+    sails.models.user.findOne({ username: 'admin' }).done(function (err, user) {
+        if (err) console.log("Bro, we couldn't even lift", err);
+        if (user) {
+            cb();
+        } else {
+            sails.models.user.create({
+                username: 'admin',
+                password: 'changeme',
+                email: 'changeme@change.me'
+            }).done(function (err, group) {
+                sails.models.group.findOne({ type: 'ADMIN' }).done(function (err, group) {
+                    if (err) console.log("Bro, we couldn't even lift", err);
+                    if (group) {
+                        cb();
+                    } else {
+                        sails.models.group.create({
+                            name: 'Administrators',
+                            type: 'ADMIN',
+                            admins: [user.id]
+                        }).done(function (err, group) {
+                            if (err) console.log("Bro, we couldn't even lift", err);
+                            cb();
+                        });
+                    }
+                });
+            });
+        }
+    });
 };
