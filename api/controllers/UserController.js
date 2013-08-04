@@ -56,9 +56,10 @@ module.exports = {
         var data = {};
 
         if (password === '' || password === null || password === 'undefined') {
-            delete data.password;
             data = { username: username, password: password, email: email,
                      firstName: firstName, lastName: lastName, location: location };
+        } else if (password !== '' && password !== null && password !== "undefined") {
+            data = { password: password };
         } else {
             data = { username: username, email: email, firstName: firstName,
                      lastName: lastName, location: location };
