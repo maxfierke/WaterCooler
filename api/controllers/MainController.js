@@ -22,16 +22,24 @@ module.exports = {
         var username = req.param("username");
         var password = req.param("password");
 
-        User.findOneByUsername(username).done(function(err, usr) {
+        User.findOneByUsername(username).done(function(err, user) {
             if (err) {
                 console.log(err);
                 res.send(500, { error: "DB Error" });
             } else {
-                if (usr) {
-                    if (usr.verifyPassword(password)) {
-                        req.session.authenticated = true;
-                        req.session.user = usr.toJSON();
-                        res.send(usr.toJSON());
+                if (user) {
+                    if (user.verifyPassword(password)) {
+                        Group.findOne({ type: "ADMIN", or: [{ admins: user.id }, { users: user.id }] }).done(function (err, group) {
+                            if (err) return res.send(500, { error: "DB Error" });
+                            if (group) {
+                                req.session.isAdmin = true;
+                            }  else {
+                                req.session.isAdmin = false;
+                            }
+                            req.session.authenticated = true;
+                            req.session.user = user.toJSON();
+                            res.send(user.toJSON());
+                        });
                     } else {
                         res.send(400, { error: "Wrong Password" });
                     }

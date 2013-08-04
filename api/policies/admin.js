@@ -8,8 +8,10 @@ module.exports = function (req, res, ok) {
         Group.findOne({ type: "ADMIN", or: [{ admins: req.session.user.id }, { users: req.session.user.id }] }).done(function (err, group) {
             if (err) return res.send(500, { error: "DB Error" });
             if (group) {
+                req.session.isAdmin = true;
                 return ok();
             }  else {
+                req.session.isAdmin = false;
                 return res.send("You are not permitted to perform this action.", 403);
             }
         });
