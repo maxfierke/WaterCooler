@@ -12,18 +12,20 @@ module.exports = {
     create: function (req, res) {
         var message = req.param('message');
         var roomSlug = req.params.slug;
-        Room.findOneBySlug(roomSlug).done(function (err, room) {
+        Room.findOneBySlug(roomSlug, function (err, room) {
             if (err) return res.send(err,400);
             message = sanitize(message).xss();
             Message.create({
                 user: req.session.user.id,
                 message: message,
                 room: room.id
-            }).done(function(err, message) {
+            }, function(err, message) {
                 if (err) return res.send(err,500);
                 message.user = req.session.user;
-                res.broadcast(roomSlug, { type: 'message', data: message });
-                res.json(message, 200);
+                if (req.isSocket) {
+                    Message.publishCreate(message.toJSON(), req.socket);
+                }
+                return res.json({ type: 'message', data: message }, 200);
             });
         });
     }

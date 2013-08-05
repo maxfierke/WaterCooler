@@ -53,7 +53,9 @@ if (window.WaterCooler) {
         });
 
         socket.on('message', function(response) {
-            WaterCooler.handler.messageReceived(response.data, content);
+            if(response.model === "message" && response.verb === "create") {
+                WaterCooler.handler.messageReceived(response.data, content);
+            }
         });
 
         socket.on('presence', function(data) {
@@ -87,10 +89,10 @@ if (window.WaterCooler) {
             e.preventDefault();
             var field = document.getElementById("field");
             if (field.value !== "") {
-                socket.post('/room/'+WaterCooler.room+'/message', { message: field.value }, function (response) {
-                    WaterCooler.handler.messageReceived(response, content);
-                    field.value = '';
-                });
+                var message = field.value;
+                field.value = '';
+                socket.post('/room/'+WaterCooler.room+'/message', { message: message });
+                WaterCooler.handler.messageReceived({ user: activeUser, message:message, createdAt: new Date() }, content);
             }
         });
 

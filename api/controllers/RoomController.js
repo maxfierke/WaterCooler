@@ -86,11 +86,13 @@ module.exports = {
                 });
             } else {
                 req.listen(room.slug);
+                Room.subscribe(room.id);
                 req.socket.on('disconnect', function () {
                     req.socket.broadcast.to(room.slug).emit('presence', { state: 'offline', user: req.session.user });
                     req.socket.leave(room.slug);
                 });
                 req.socket.broadcast.to(room.slug).emit('presence', { state: 'online', user: req.session.user });
+                Message.subscribe(req.socket, [{ room: room.id }]);
                 res.json(room, 200);
             }
         });
