@@ -58,6 +58,8 @@ if (window.WaterCooler) {
             }
         });
 
+        socket.on('github', WaterCooler.handler.githubPush);
+
         socket.on('presence', function(data) {
             isMe = (data.user.id === activeUser.id ? true : false);
             if (data.state == 'online'){

@@ -72,6 +72,10 @@ module.exports.routes = {
         controller: 'room',
         action: 'manage'
     },
+    'post /room/:slug/hook/github/push' : {
+        controller: 'room',
+        action: 'room_hook_github'
+    },
     'post /room/:slug/message' : {
         controller: 'message',
         action: 'create'
