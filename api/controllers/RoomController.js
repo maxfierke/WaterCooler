@@ -13,14 +13,14 @@ module.exports = {
 
     room_hook_github: function (req, res) {
         var slug = req.params.slug,
-            pusher = req.body.pusher,
+            pusher = req.body.payload.pusher,
             repo = {
-                owner: req.body.repository.owner.name,
-                name: req.body.repository.name,
-                url: req.body.repository.url
+                owner: req.body.payload.repository.owner.name,
+                name: req.body.payload.repository.name,
+                url: req.body.payload.repository.url
             },
-            commit_count = req.body.commits.length,
-            summary_url = req.body.compare;
+            commit_count = req.body.payload.commits.length,
+            summary_url = req.body.payload.compare;
         if (req.ip.match(/^204\.232\.175\.(6[4-9]|[78][0-9]|9[0-4])$/) || req.ip.match(/^192\.30\.252\.([0-1][0-9]?[0-9]?|2[0-4][0-9]|25[0-4])$/)) {
             sails.io.sockets['in'](slug).emit('github', { pusher: pusher, repo: repo, commit_count: commit_count, summary_url: summary_url });
             return res.json({ success: 'Posted to '+slug }, 200);
