@@ -11,6 +11,24 @@ var util = require('underscore'),
 
 module.exports = {
 
+    room_hook_bitbucket: function (req, res) {
+        if (req.ip === '131.103.20.165' || req.ip === '131.103.20.166') {
+            var payload = JSON.parse(req.body);
+            var slug = req.params.slug,
+            pusher = payload.user,
+            repo = {
+                owner: payload.repository.owner,
+                name: payload.repository.name,
+                url: payload.canon_url+payload.repository.absolute_url
+            },
+            commit_count = payload.commits.length,
+            sails.io.sockets['in'](slug).emit('bitbucket', { pusher: pusher, repo: repo, commit_count: commit_count });
+            return res.json({ success: 'Posted to '+slug }, 200);
+        } else {
+            return res.send(403);
+        }
+    },
+
     room_hook_github: function (req, res) {
         if (req.ip.match(/^204\.232\.175\.(6[4-9]|[78][0-9]|9[0-4])$/) || req.ip.match(/^192\.30\.252\.([0-1][0-9]?[0-9]?|2[0-4][0-9]|25[0-4])$/)) {
             var payload = JSON.parse(req.param('payload'));

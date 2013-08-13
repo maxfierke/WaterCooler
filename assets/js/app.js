@@ -59,6 +59,7 @@ if (window.WaterCooler) {
         });
 
         socket.on('github', WaterCooler.handler.githubPush);
+        socket.on('bitbucket', WaterCooler.handler.bitbucketPush);
 
         socket.on('presence', function(data) {
             isMe = (data.user.id === activeUser.id ? true : false);

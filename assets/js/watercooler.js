@@ -46,6 +46,9 @@ var WaterCooler = {
         },
         githubPush: function (push) {
             $('#content').append('<div class="message col-12"><div class="message-content col-lg-12 well well-small"><strong>'+push.pusher.name+'</strong> has pushed '+push.commit_count+' commits to <a href="'+push.repo.url+'">'+push.repo.owner+'/'+push.repo.name+'</a>. <a href="'+push.summary_url+'"><strong>View Summary</strong></a></div></div>');
+        },
+        bitbucketPush: function (push) {
+            $('#content').append('<div class="message col-12"><div class="message-content col-lg-12 well well-small"><strong>'+push.pusher.name+'</strong> has pushed '+push.commit_count+' commits to <a href="'+push.repo.url+'">'+push.repo.owner+'/'+push.repo.name+'</a>.</div></div>');
         }
     },
     util: {
