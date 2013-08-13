@@ -38,7 +38,8 @@ module.exports.policies = {
         'create': ['authenticated', 'admin'],
         'manage': ['authenticated', 'admin'],
         'destroy': ['authenticated', 'admin'],
-        'room_hook_github': true
+        'room_hook_github': true,
+        'room_hook_bitbucket': true
     },
 
     UserController: {
