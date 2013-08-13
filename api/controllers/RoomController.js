@@ -21,7 +21,7 @@ module.exports = {
                 name: payload.repository.name,
                 url: payload.canon_url+payload.repository.absolute_url
             },
-            commit_count = payload.commits.length,
+            commit_count = payload.commits.length;
             sails.io.sockets['in'](slug).emit('bitbucket', { pusher: pusher, repo: repo, commit_count: commit_count });
             return res.json({ success: 'Posted to '+slug }, 200);
         } else {
