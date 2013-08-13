@@ -13,7 +13,7 @@ module.exports = {
 
     room_hook_bitbucket: function (req, res) {
         if (req.ip === '131.103.20.165' || req.ip === '131.103.20.166') {
-            var payload = JSON.parse(req.body);
+            var payload = JSON.parse(req.param('payload'));
             var slug = req.params.slug,
             pusher = payload.user,
             repo = {
