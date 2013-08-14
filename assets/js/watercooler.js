@@ -56,7 +56,7 @@ var WaterCooler = {
             var data = {
                 user: { username: 'Bitbucket' },
                 createdAt: new Date().toISOString(),
-                message: '<strong>'+push.pusher+'</strong> has pushed '+push.commit_count+' commits to <a href="'+push.repo.url+'">'+push.repo.owner+'/'+push.repo.name+'</a>.'
+                message: '<strong>'+push.pusher+'</strong> has pushed '+push.commit_count+' commits to <a href="'+push.repo.url+'">'+push.repo.owner.name+'/'+push.repo.name+'</a>.'
             };
             $('#content').append(WaterCooler.util.parseMessageToHTML(data, true));
         }
