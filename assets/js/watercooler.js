@@ -50,7 +50,7 @@ var WaterCooler = {
                 createdAt: new Date().toISOString(),
                 message: '<strong>'+push.pusher.name+'</strong> has pushed '+push.commit_count+' commits to <a href="'+push.repo.url+'">'+push.repo.owner+'/'+push.repo.name+'</a>. <a href="'+push.summary_url+'"><strong>View Summary</strong></a>'
             };
-            $('#content').append(WaterCooler.util.parseMessageToHTML(data));
+            $('#content').append(WaterCooler.util.parseMessageToHTML(data, true));
         },
         bitbucketPush: function (push) {
             var data = {
@@ -58,11 +58,11 @@ var WaterCooler = {
                 createdAt: new Date().toISOString(),
                 message: '<strong>'+push.pusher+'</strong> has pushed '+push.commit_count+' commits to <a href="'+push.repo.url+'">'+push.repo.owner+'/'+push.repo.name+'</a>.'
             };
-            $('#content').append(WaterCooler.util.parseMessageToHTML(data));
+            $('#content').append(WaterCooler.util.parseMessageToHTML(data, true));
         }
     },
     util: {
-        parseMessageToHTML: function (data) {
+        parseMessageToHTML: function (data, noLinkify) {
 
             function parseTimestamp(timestamp) {
                 ts = new Date(Date.parse(timestamp));
@@ -152,10 +152,14 @@ var WaterCooler = {
 
             html += parseTimestamp(data.createdAt);
             html += '<b>'+(data.user.firstName && data.user.lastName ? data.user.firstName + ' ' + data.user.lastName : data.user.username)+'</b></div><div class="message-content col-lg-10 col-md-9 col-sm-8 well well-small">';
-            html += data.message.linkify() + '<br />';
-            html += parseYouTubeLink(data.message);
-            html += parseVimeoLink(data.message);
-            html += parseImgLinks(data.message);
+            if (noLinkify !== true) {
+                html += data.message.linkify() + '<br />';
+                html += parseYouTubeLink(data.message);
+                html += parseVimeoLink(data.message);
+                html += parseImgLinks(data.message);
+            } else {
+                html += data.message + '<br />';
+            }
             html += '</div>';
             return html;
         }
