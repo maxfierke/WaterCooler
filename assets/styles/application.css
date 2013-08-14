@@ -153,6 +153,12 @@ a.dropdown-toggle:focus {
     padding-left: 0;
 }
 
+.avatar {
+    margin-right: 5px;
+    margin-top: 4px;
+    border-radius: 3px;
+}
+
 .message-header,
 .message-content {
     display: inline-block;
