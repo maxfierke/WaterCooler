@@ -149,9 +149,14 @@ var WaterCooler = {
             }
 
             var html = '<div class="message col-12"><div class="message-header col-lg-2 col-md-3 col-sm-4">';
+            if (data.user.gravatar_hash) {
+                html += '<img class="pull-left avatar" src="https://secure.gravatar.com/avatar/'+data.user.gravatar_hash+'?s=32" />';
+            } else {
+                html += '<img class="pull-left avatar" src="" height="32" width="32" />';
+            }
 
-            html += parseTimestamp(data.createdAt);
-            html += '<b>'+(data.user.firstName && data.user.lastName ? data.user.firstName + ' ' + data.user.lastName : data.user.username)+'</b></div><div class="message-content col-lg-10 col-md-9 col-sm-8 well well-small">';
+            html += parseTimestamp(data.createdAt)+'<br />';
+            html += '<b>'+(data.user.firstName && data.user.lastName ? data.user.firstName + ' ' + data.user.lastName : data.user.username)+'</b><div class="clearfix"></div></div><div class="message-content col-lg-10 col-md-9 col-sm-8 well well-small">';
             if (noLinkify !== true) {
                 html += data.message.linkify() + '<br />';
                 html += parseYouTubeLink(data.message);
