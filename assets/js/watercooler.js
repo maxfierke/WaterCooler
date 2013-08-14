@@ -46,7 +46,8 @@ var WaterCooler = {
         },
         githubPush: function (push) {
             var data = {
-                user: { username: 'GitHub' },
+                user: { username: 'GitHub',
+                        gravatar_hash: '61024896f291303615bcd4f7a0dcfb74' },
                 createdAt: new Date().toISOString(),
                 message: '<strong>'+push.pusher.name+'</strong> has pushed '+push.commit_count+' commits to <a href="'+push.repo.url+'">'+push.repo.owner+'/'+push.repo.name+'</a>. <a href="'+push.summary_url+'"><strong>View Summary</strong></a>'
             };
