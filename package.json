@@ -11,10 +11,13 @@
         "optimist": "latest",
         "bcrypt": "latest",
         "sails-mongo": "latest",
+        "sails-redis": "latest",
         "validator": "latest",
         "underscore": "latest",
         "async": "latest",
-        "slug": "latest"
+        "slug": "latest",
+        "passport": "latest",
+        "passport-local": "latest"
     },
     "scripts": {
         "start": "node app.js",

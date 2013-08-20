@@ -6,12 +6,13 @@
  */
 
 var util = require('underscore'),
-    async = require('async');
+    async = require('async'),
+    passport = require('passport');
 
 module.exports = {
 
     index: function (req, res) {
-        if (req.session.authenticated) {
+        if (req.session.authenticated){
             res.redirect('/dashboard');
         } else {
             res.view({ title: 'Welcome' });
@@ -19,38 +20,35 @@ module.exports = {
     },
 
     login: function (req, res) {
-        var username = req.param("username");
-        var password = req.param("password");
-
-        User.findOneByUsername(username).done(function(err, user) {
-            if (err) {
-                console.log(err);
-                res.send(500, { error: "DB Error" });
-            } else {
-                if (user) {
-                    if (user.verifyPassword(password)) {
-                        Group.findOne({ type: "ADMIN", or: [{ admins: user.id }, { users: user.id }] }).done(function (err, group) {
-                            if (err) return res.send(500, { error: "DB Error" });
-                            if (group) {
-                                req.session.isAdmin = true;
-                            }  else {
-                                req.session.isAdmin = false;
-                            }
-                            req.session.authenticated = true;
-                            req.session.user = user.toJSON();
-                            res.send(user.toJSON());
-                        });
-                    } else {
-                        res.send(400, { error: "Wrong Password" });
-                    }
-                } else {
-                    res.send(404, { error: "User not Found" });
-                }
+        passport.authenticate('local', function(err, user, info){
+            if ((err) || (!user)){
+                res.send(400, {error: err});
+            }else{
+                req.logIn(user, function(err){
+                    if (err) res.send(err);
+                    Group.findOne({ type: "ADMIN", or: [{ admins: user.id }, { users: user.id }] }).done(function (err, group) {
+                        if (err) return res.send(500, { error: "DB Error" });
+                        if (group) {
+                            req.session.isAdmin = true;
+                        }  else {
+                            req.session.isAdmin = false;
+                        }
+                        req.session.authenticated = true;
+                    });
+                });
+                console.log(user.id);
+                //Set user session data
+                User.findOne({id: user.id}, function(err, userInfo){
+                    if(err) res.send(500, { error: "DB Error" }); 
+                    req.session.user = userInfo.toJSON();
+                    res.send(userInfo.toJSON());
+                });
             }
-        });
+        })(req, res);
     },
 
     logout: function (req, res) {
+        req.logout();
         req.session = null;
         res.clearCookie(sails.config.session.key, { path: '/' });
         res.redirect('/');
