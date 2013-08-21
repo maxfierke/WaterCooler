@@ -12,7 +12,7 @@ var util = require('underscore'),
 module.exports = {
 
     index: function (req, res) {
-        if (req.session.authenticated){
+        if (req.session.authenticated) {
             res.redirect('/dashboard');
         } else {
             res.view({ title: 'Welcome' });
@@ -20,11 +20,11 @@ module.exports = {
     },
 
     login: function (req, res) {
-        passport.authenticate('local', function(err, user, info){
+        passport.authenticate('local', function(err, user, info) {
             if ((err) || (!user)){
                 res.send(400, {error: err});
-            }else{
-                req.logIn(user, function(err){
+            } else {
+                req.logIn(user, function(err) {
                     if (err) res.send(err);
                     Group.findOne({ type: "ADMIN", or: [{ admins: user.id }, { users: user.id }] }).done(function (err, group) {
                         if (err) return res.send(500, { error: "DB Error" });
@@ -36,9 +36,8 @@ module.exports = {
                         req.session.authenticated = true;
                     });
                 });
-                console.log(user.id);
                 //Set user session data
-                User.findOne({id: user.id}, function(err, userInfo){
+                User.findOne({id: user.id}, function(err, userInfo) {
                     if(err) res.send(500, { error: "DB Error" }); 
                     req.session.user = userInfo.toJSON();
                     res.send(userInfo.toJSON());
