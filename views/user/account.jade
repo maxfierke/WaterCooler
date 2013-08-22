@@ -59,7 +59,7 @@ block scripts
                     $('#alerts').html('<div class="alert alert-success">Profile updated!</div>');
                 },
                 error: function(res) {
-                    $('#alerts').html('<div class="alert alert-error">Could not update profile: '+res.responseJSON.error+'</div>');
+                    $('#alerts').html('<div class="alert alert-danger">Could not update profile: '+res.responseJSON.error+'</div>');
                 }
             });
         });
@@ -76,17 +76,17 @@ block scripts
                         $('#alerts').html('<div class="alert alert-success">Password updated!</div>');
                     },
                     error: function(res) {
-                        $('#alerts').html('<div class="alert alert-error">Could not update password: '+res.responseJSON.error+'</div>');
+                        $('#alerts').html('<div class="alert alert-danger">Could not update password: '+res.responseJSON.error+'</div>');
                     }
                 });
             } else if (password.length < 6) {
-                $('#alerts').html('<div class="alert alert-error">Password is too short!</div>');
+                $('#alerts').html('<div class="alert alert-danger">Password is too short!</div>');
                 $('#password').popover({
                     title: "Validation Error",
                     content: "Password is too short!"
                 }).click();
             } else {
-                $('#alerts').html('<div class="alert alert-error">Passwords don\'t match</div>');
+                $('#alerts').html('<div class="alert alert-danger">Passwords don\'t match</div>');
                 $('#password').popover({
                     title: "Validation Error",
                     content: "Passwords don't match"

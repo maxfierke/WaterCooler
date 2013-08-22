@@ -12,18 +12,18 @@ if ($roomsList.length > 0) {
         data.rooms.forEach(function (room, i, all) {
             items.push('<li><a href="/room/'+room.slug+'">'+room.name+'</a></li>');
             if ($rooms.length > 0) {
-                var html = '<div class="well"><span class="pull-right"><i class="glyphicon glyphicon-user"></i> '+room.clientcount+
+                var html = '<div class="well"><span class="pull-right"><span class="glyphicon glyphicon-user"></span> '+room.clientcount+
                            ' users connected</span><h4><a href="/room/'+room.slug+'">'+room.name+'</a></h4><p class="col-lg-10">'+
-                           room.description+'</p><a href="/room/'+room.slug+'" class="btn btn-success btn-large pull-right">Jump in!</a>'+
-                           '<div class="clearfix"></div><hr /><div class="pull-left"><i class="glyphicon glyphicon-calendar"></i> '+
+                           room.description+'</p><a href="/room/'+room.slug+'" class="btn btn-success btn-lg pull-right">Jump in!</a>'+
+                           '<div class="clearfix"></div><hr /><div class="pull-left"><span class="glyphicon glyphicon-calendar"></span> '+
                            '<span class="label label-info">Created '+moment(room.createdAt).fromNow()+'</span></div><ul class="list-inline pull-right">';
                 if (room.groups && room.groups.length > 0) {
                     room.groups.forEach(function (group, j, allgroups) {
                         html += '<li><span class="label label-success">'+group.name+'</span></li>';
                     });
-                    html += '<i class="glyphicon glyphicon-user"></i></li>';
+                    html += '<span class="glyphicon glyphicon-user"></span></li>';
                 } else {
-                    html += '<li>Public <i class="glyphicon glyphicon-globe"></i></li>';
+                    html += '<li>Public <span class="glyphicon glyphicon-globe"></span></li>';
                 }
                 html += '</ul><div class="clearfix"></div></div>';
                 $rooms.append(html);

@@ -151,6 +151,7 @@ a.dropdown-toggle:focus {
 .message {
     display: block;
     padding-left: 0;
+    margin-right: 20px;
 }
 
 .avatar {
@@ -253,11 +254,6 @@ a.dropdown-toggle:focus {
     vertical-align: baseline;
     padding: .125em .3em;
     font-size: 90%;
-}
-
-.glyphicon:before {
-    position: relative;
-    top: 3px;
 }
 
 .twitter-typeahead {

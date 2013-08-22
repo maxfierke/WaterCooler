@@ -52,10 +52,10 @@ block scripts
                         window.location = "/dashboard";
                     }
                 ).fail(function(res){
-                    $('#alerts').html('<div class="alert alert-error">Could not login: '+res.responseJSON.error+'</div>');
+                    $('#alerts').html('<div class="alert alert-danger">Could not login: '+res.responseJSON.error+'</div>');
                 });
             } else {
-                $('#alerts').html('<div class="alert alert-error">Username and password are required</div>');
+                $('#alerts').html('<div class="alert alert-danger">Username and password are required</div>');
             }
             e.preventDefault();
         });
@@ -74,7 +74,7 @@ block scripts
                             window.location = "/";
                         }
                     ).fail(function(res){
-                        $('#alerts').html('<div class="alert alert-error">'+res.responseJSON.error+'</div>');
+                        $('#alerts').html('<div class="alert alert-danger">'+res.responseJSON.error+'</div>');
                     });
                 } else {
                     $('#signupPassword').popover({
@@ -83,7 +83,7 @@ block scripts
                 }).click();
                 }
             } else {
-                $('#alerts').html('<div class="alert alert-error">Username and password are required</div>');
+                $('#alerts').html('<div class="alert alert-danger">Username and password are required</div>');
             }
             e.preventDefault();
         });

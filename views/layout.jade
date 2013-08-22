@@ -4,19 +4,20 @@ html
     title WaterCooler - #{title}
     meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1")
     link(href="//fonts.googleapis.com/css?family=Courgette", rel="stylesheet", type="text/css")
-    link(href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css", rel="stylesheet", type="text/css")
-    link(href="/styles/bootstrap-glyphicons.min.css", rel="stylesheet", type="text/css")
+    link(href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css", rel="stylesheet", type="text/css")
+    link(href="/styles/select2.css", rel="stylesheet", type="text/css")
     link(href="/styles/application.css", rel="stylesheet", type="text/css")
     block styles
   body
-    .navbar.navbar-inverse.navbar-static-top
+    nav.navbar.navbar-inverse.navbar-static-top(role="navigation")
         .container
-            button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-responsive-collapse")
-                span.icon-bar
-                span.icon-bar
-                span.icon-bar
-            a.navbar-brand(href="/") WaterCooler
-            .nav-collapse.collapse.navbar-responsive-collapse
+            .navbar-header
+                button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.navbar-brand(href="/") WaterCooler
+            .collapse.navbar-collapse
                 - if (req.session.user)
                     ul.nav.navbar-nav.pull-right
                         li#user-dropdown.dropdown
@@ -28,11 +29,11 @@ html
                                     span #{req.session.user.username}
                             ul#user-menu.dropdown-menu(role="menu")
                                 li
-                                    a(href="/account") <i class="glyphicon glyphicon-cog glyphicon-white"></i> Account Settings
+                                    a(href="/account") <span class="glyphicon glyphicon-cog glyphicon-white"></span> Account Settings
                                 li
-                                    a(href="/user/#{req.session.user.username}") <i class="glyphicon glyphicon-user glyphicon-white"></i> Profile
+                                    a(href="/user/#{req.session.user.username}") <span class="glyphicon glyphicon-user glyphicon-white"></span> Profile
                                 li
-                                    a(href="/logout") <i class="glyphicon glyphicon-off glyphicon-white"></i> Logout
+                                    a(href="/logout") <span class="glyphicon glyphicon-off glyphicon-white"></span> Logout
                     ul.nav.navbar-nav
                         li.dropdown
                             a#roomsLabel.dropdown-toggle(href="#", data-toggle="dropdown") Rooms&nbsp;
@@ -50,7 +51,8 @@ html
     script(type="text/javascript", src="/js/sails.io.js")
 
     script(type="text/javascript", src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js")
-    script(type="text/javascript", src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js")
+    script(type="text/javascript", src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js")
+    script(type="text/javascript", src="/js/select2.min.js")
     script(type="text/javascript", src="/js/global.js")
 
     block scripts

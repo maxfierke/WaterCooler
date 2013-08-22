@@ -6,7 +6,7 @@ block module
             #alerts
         .row.well
             .lead Group Management
-            a.btn.btn-primary(href="#", data-toggle="modal", data-target="#addmodal") <i class="icon-plus icon-white"></i> Add Group
+            a.btn.btn-primary(href="#", data-toggle="modal", data-target="#addmodal") <span class="icon-plus icon-white"></span> Add Group
             hr
             table.table
                 thead
@@ -28,8 +28,8 @@ block module
                                 #{group.type}
                             td
                                 .btn-group
-                                    a.btn.btn-edit.btn-default(href="#", data-toggle="modal", data-target="#editmodal") <i class="glyphicon glyphicon-pencil"></i>
-                                    a.btn.btn-danger(href="#") <i class="glyphicon glyphicon-trash"></i>
+                                    a.btn.btn-edit.btn-default(href="#", data-toggle="modal", data-target="#editmodal") <span class="glyphicon glyphicon-pencil"></span>
+                                    a.btn.btn-danger(href="#") <span class="glyphicon glyphicon-trash"></span>
 
     #addmodal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="addLabel", aria-hidden="true")
         .modal-dialog
@@ -115,7 +115,7 @@ block scripts
                     $('#alerts').html('<div class="alert alert-success">Group "'+name+'" removed!</div>');
                 },
                 error: function(res) {
-                    $('#alerts').html('<div class="alert alert-error">Group could not be deleted: '+res.responseJSON.error+'</div>');
+                    $('#alerts').html('<div class="alert alert-danger">Group could not be deleted: '+res.responseJSON.error+'</div>');
                 }
             });
         });
@@ -133,7 +133,7 @@ block scripts
                     $('#editmodal').modal('show');
                 },
                 error: function(res) {
-                    $('#alerts').html('<div class="alert alert-error">Could not edit group: '+res.responseJSON.error+'</div>');
+                    $('#alerts').html('<div class="alert alert-danger">Could not edit group: '+res.responseJSON.error+'</div>');
                 }
 
             });
@@ -151,12 +151,12 @@ block scripts
                 type: 'PUT',
                 data: data,
                 success: function (data) {
-                    var html = '<td><a href="/group/'+data.slug+'">'+data.name+'</a></td><td>'+data.slug+'</td><td>'+data.description+'</td><td>'+data.type+'</td><td><div class="btn-group"><a class="btn btn-default btn-edit" href="#"><i class="glyphicon glyphicon-pencil"></i></a><a class="btn btn-danger" href="#"><i class="glyphicon glyphicon-trash"></i></a></div></td>';
+                    var html = '<td><a href="/group/'+data.slug+'">'+data.name+'</a></td><td>'+data.slug+'</td><td>'+data.description+'</td><td>'+data.type+'</td><td><div class="btn-group"><a class="btn btn-default btn-edit" href="#"><span class="glyphicon glyphicon-pencil"></span></a><a class="btn btn-danger" href="#"><span class="glyphicon glyphicon-trash"></span></a></div></td>';
                     $('#editmodal').modal('hide');
                     $('tr[data-groupid='+data.id+']').html(html);
                 },
                 error: function(res) {
-                    $('#alerts').html('<div class="alert alert-error">Group could not be updated: '+res.responseJSON.error+'</div>');
+                    $('#alerts').html('<div class="alert alert-danger">Group could not be updated: '+res.responseJSON.error+'</div>');
                 }
             });
             e.preventDefault();
@@ -175,12 +175,12 @@ block scripts
                 type: 'POST',
                 data: data,
                 success: function (data) {
-                    var html = '<tr data-groupid="'+data.id+'"><td><a href="/group/'+data.slug+'">'+data.name+'</a></td><td>'+data.slug+'</td><td>'+data.description+'</td><td>'+data.type+'</td><td><div class="btn-group"><a class="btn btn-default btn-edit" href="#"><i class="glyphicon glyphicon-pencil"></i></a><a class="btn btn-danger" href="#"><i class="glyphicon glyphicon-trash"></i></a></div></td></tr>';
+                    var html = '<tr data-groupid="'+data.id+'"><td><a href="/group/'+data.slug+'">'+data.name+'</a></td><td>'+data.slug+'</td><td>'+data.description+'</td><td>'+data.type+'</td><td><div class="btn-group"><a class="btn btn-default btn-edit" href="#"><span class="glyphicon glyphicon-pencil"></span></a><a class="btn btn-danger" href="#"><span class="glyphicon glyphicon-trash"></span></a></div></td></tr>';
                     $('#addmodal').modal('hide');
                     $('#group-table-data').append(html);
                 },
                 error: function(res) {
-                    $('#alerts').html('<div class="alert alert-error">Group could not be created: '+res.responseJSON.error+'</div>');
+                    $('#alerts').html('<div class="alert alert-danger">Group could not be created: '+res.responseJSON.error+'</div>');
                 }
             });
             e.preventDefault();

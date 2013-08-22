@@ -24,7 +24,7 @@ block module
                             td #{user.fullName}
                             td #{user.username}
                             td
-                                button.btn.btn-danger(type="button") <i class="glyphicon glyphicon-remove"></i>
+                                button.btn.btn-danger(type="button") <span class="glyphicon glyphicon-remove"></span>
                     tr#addRow
                         td
                             input#addUserName.form-control.typeahead(type="text", autocomplete="off")
@@ -55,7 +55,7 @@ block scripts
                     url: '/group/#{group.slug}/user',
                     data: { username: username }
                 }).success(function (user) {
-                    $('#addRow').before('<tr data-userid="'+user.id+'"><td>'+user.fullName+'</td><td>'+user.username+'</td><td><button class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i></button></td></tr>')
+                    $('#addRow').before('<tr data-userid="'+user.id+'"><td>'+user.fullName+'</td><td>'+user.username+'</td><td><button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove"></span></button></td></tr>')
                 }).fail(function (res) {
                     console.log(res.responseJSON);
                 });
@@ -73,7 +73,7 @@ block scripts
                     $('#alerts').html('<div class="alert alert-success">User "'+name+'" removed from #{group.name}!</div>');
                 },
                 error: function(res) {
-                    $('#alerts').html('<div class="alert alert-error">User could not be removed: '+res.responseJSON.error+'</div>');
+                    $('#alerts').html('<div class="alert alert-danger">User could not be removed: '+res.responseJSON.error+'</div>');
                 }
             });
         });

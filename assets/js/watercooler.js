@@ -157,7 +157,7 @@ var WaterCooler = {
             }
 
             html += parseTimestamp(data.createdAt)+'<br />';
-            html += '<b>'+(data.user.firstName && data.user.lastName ? data.user.firstName + ' ' + data.user.lastName : data.user.username)+'</b><div class="clearfix"></div></div><div class="message-content col-lg-10 col-md-9 col-sm-8 well well-small">';
+            html += '<b>'+(data.user.firstName && data.user.lastName ? data.user.firstName + ' ' + data.user.lastName : data.user.username)+'</b><div class="clearfix"></div></div><div class="message-content col-lg-10 col-md-9 col-sm-8 well well-sm">';
             if (noLinkify !== true) {
                 html += data.message.linkify() + '<br />';
                 html += parseYouTubeLink(data.message);

@@ -5,7 +5,7 @@ block content
         #alerts.row
         .row
             aside.col-lg-3
-                .well.well-small
+                .well.well-sm
                     ul.nav.nav-stacked.nav-pills
                         li
                             a(href="/dashboard") Dashboard
@@ -13,14 +13,14 @@ block content
                             a(href="/account") Account
                         li
                             a(href="/messages") Messages
-                .well.well-small
+                .well.well-sm
                     h5 Rooms
                     ul.rooms-list.nav.nav-stacked.nav-pills
-                .well.well-small
+                .well.well-sm
                     h5 Groups
                     ul.groups-list.nav.nav-stacked.nav-pills
                 - if (req.session.isAdmin)
-                    .well.well-small
+                    .well.well-sm
                         h5 Application Management
                         ul.nav.nav-stacked.nav-pills
                             li
