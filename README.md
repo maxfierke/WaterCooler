@@ -8,12 +8,12 @@ WaterCooler is a free and open-source group chat application designed for use in
 * Rich, realtime chat functionality
     * Remote image inclusion
     * YouTube & Vimeo link parse-to-details functionality
-    * Github integration through PUSH service hook (planned)
+    * GitHub and Bitbucket PUSH service hook integration
 * Useable on different screen sizes (responsive)
 * Easily deployable to Heroku
 
 ## Limitations
-There are currently a number of limitations, outside of unimplemented application functionality. There are currently a number of features missing from the Waterline ORM, namely support for association and aggregate functions. As a result, there are a number of inefficent workarounds in-place to emulate this behavior. These usually involve fetching a whole collection and iterating over each entry to filter out entries that don't match the conditions. I'm looking into whether or not it would be worth the effort to switch to Mongoose ODM at the cost of database portability, or whether I should just wait until Waterline catches up.
+There are currently a number of limitations, outside of unimplemented application functionality. There are currently a number of features missing from the Waterline ORM, namely support for associations and aggregate functions. As a result, there are a number of inefficent workarounds in-place to emulate this behavior. These usually involve fetching a whole collection and iterating over each entry to filter out entries that don't match the conditions. I'm looking into whether or not it would be worth the effort to switch to Mongoose ODM at the cost of database portability, or whether I should just wait until Waterline catches up.
 
 ## Requirements
 * Node.js (only tested on 0.10.x)
