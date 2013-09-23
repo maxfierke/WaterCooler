@@ -53,22 +53,17 @@ module.exports = {
         var password = req.param("password");
         var email = req.param("email");
         var location = req.param("location");
-        var data = {};
 
-        if (password === '' || password === null || password === 'undefined') {
-            data = { username: username, password: password, email: email,
-                     firstName: firstName, lastName: lastName, location: location };
-        } else if (password !== '' && password !== null && password !== "undefined") {
-            data = { password: password };
+        if (password !== '' && password !== null && typeof password !== "undefined") {
+            var data = { password: password };
         } else {
-            data = { username: username, email: email, firstName: firstName,
+            var data = { username: username, email: email, firstName: firstName,
                      lastName: lastName, location: location };
         }
 
         User.update(id, data).done(function(err, user) {
             if (err) {
-                console.log(err);
-                return res.send(err,500);
+                return res.json({ error: JSON.stringify(err) },500);
             } else if (user !== []) {
                 req.session.user = user[0].toJSON();
                 return res.json(user[0].toJSON(), 200);
