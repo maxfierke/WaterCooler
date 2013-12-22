@@ -12,7 +12,7 @@
         "bcrypt": "latest",
         "sails-mongo": "latest",
         "sails-redis": "latest",
-        "validator": "latest",
+        "sanitizer": "latest",
         "underscore": "latest",
         "async": "latest",
         "slug": "latest",

@@ -5,7 +5,7 @@
  * @description	:: Contains logic for handling requests.
  */
 
-var sanitize = require('validator').sanitize;
+var sanitize = require('sanitizer').sanitize;
 
 module.exports = {
 
@@ -14,7 +14,7 @@ module.exports = {
         var roomSlug = req.params.slug;
         Room.findOneBySlug(roomSlug, function (err, room) {
             if (err) return res.send(err,400);
-            message = sanitize(message).xss();
+            message = sanitize(message);
             Message.create({
                 user: req.session.user.id,
                 message: message,
