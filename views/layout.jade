@@ -1,15 +1,14 @@
 doctype 5
-html
+html(ng-app="watercooler")
   head
     title WaterCooler - #{title}
     meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1")
     link(href="//fonts.googleapis.com/css?family=Courgette", rel="stylesheet", type="text/css")
     link(href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css", rel="stylesheet", type="text/css")
-    link(href="/styles/select2.css", rel="stylesheet", type="text/css")
     link(href="/styles/application.css", rel="stylesheet", type="text/css")
     block styles
   body
-    nav.navbar.navbar-inverse.navbar-static-top(role="navigation")
+    nav.navbar.navbar-inverse.navbar-static-top(role="navigation", ng-controller="HeaderController")
         .container
             .navbar-header
                 button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
@@ -22,11 +21,11 @@ html
                     ul.nav.navbar-nav.pull-right
                         li#user-dropdown.dropdown
                             a.dropdown-toggle(href="#", data-toggle="dropdown")
-                                | Logged in as&nbsp;
+                                | Logged in as
                                 - if (req.session.user.firstName || req.session.user.lastName)
-                                    span #{req.session.user.firstName} #{req.session.user.lastName}
+                                    span  #{req.session.user.firstName} #{req.session.user.lastName}
                                 - else
-                                    span #{req.session.user.username}
+                                    span  #{req.session.user.username}
                             ul#user-menu.dropdown-menu(role="menu")
                                 li
                                     a(href="/account") <span class="glyphicon glyphicon-cog glyphicon-white"></span> Account Settings
@@ -36,23 +35,32 @@ html
                                     a(href="/logout") <span class="glyphicon glyphicon-off glyphicon-white"></span> Logout
                     ul.nav.navbar-nav
                         li.dropdown
-                            a#roomsLabel.dropdown-toggle(href="#", data-toggle="dropdown") Rooms&nbsp;
+                            a#roomsLabel.dropdown-toggle(href="#", data-toggle="dropdown") Rooms
                               b.caret
                             ul.rooms-list.dropdown-menu(role="menu", aria-labelledby="roomsLabel")
+                                li(ng-repeat="room in rooms")
+                                    a(href="/room/{{room.slug}}") {{ room.name }}
                         li.dropdown
-                            a#groupsLabel.dropdown-toggle(href="#", data-toggle="dropdown") Groups&nbsp;
+                            a#groupsLabel.dropdown-toggle(href="#", data-toggle="dropdown") Groups
                               b.caret
                             ul.groups-list.dropdown-menu(role="menu", aria-labelledby="groupsLabel")
+                                li(ng-repeat="group in groups")
+                                    a(href="/group/{{group.slug}}") {{ group.name }}
 
     block content
 
-    script(type="text/javascript", src="/js/socket.io.js")
-
-    script(type="text/javascript", src="/js/sails.io.js")
-
-    script(type="text/javascript", src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js")
+    script(type="text/javascript", src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js")
     script(type="text/javascript", src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js")
-    script(type="text/javascript", src="/js/select2.min.js")
-    script(type="text/javascript", src="/js/global.js")
+    script(type="text/javascript", src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js")
+    script(type="text/javascript", src="/js/socket.io.js")
+    script(type="text/javascript", src="/js/sails.io.js")
+    script(type="text/javascript", src="/js/moment.min.js")
+    script(type="text/javascript", src="/js/lodash.min.js")
+    script(type="text/javascript", src="/app/watercooler.js")
+    script(type="text/javascript", src="/app/controllers/HeaderController.js")
+    script(type="text/javascript", src="/app/controllers/ChatController.js")
+    script(type="text/javascript", src="/app/directives/chatwrapper.js")
+    script(type="text/javascript", src="/app/filters/fromNow.js")
+    script(type="text/javascript", src="/app/services/angular-sails.js")
 
     block scripts

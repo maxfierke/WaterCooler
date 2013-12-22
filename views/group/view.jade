@@ -11,7 +11,11 @@ block module
             h4 Administrators
             ul.list-inline
                 for user in group.admins
-                    li <a href="/user/#{user.username}">#{user.fullName}</a>
+                    li
+                        if user.fullName
+                            a(href="/user/#{user.username}") #{user.fullName}
+                        else
+                            a(href="/user/#{user.username}") #{user.username}
             h4 Users
             table.table
                 thead
