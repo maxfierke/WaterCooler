@@ -114,14 +114,14 @@ module.exports = {
 
     room: function (req, res) {
         var slug = req.params.slug;
-        Room.findOneBySlug(slug).done(function (err, room) {
+        Room.findOneBySlug(slug).exec(function (err, room) {
             if (err) return res.send(err, 404);
-            if (!req.isSocket) {
-                User.findOne({ id: req.session.user.id }).done(function (err, user) {
+            if (!req.isSocket && !req.wantsJSON) {
+                User.findOne({ id: req.session.user.id }).exec(function (err, user) {
                     if (err) return res.send(err, 500);
-                    res.view({ title: room.name, room: room, user: JSON.stringify(user.toJSON()) });
+                    return res.view({ title: room.name, room: room, user: JSON.stringify(user.toJSON()) });
                 });
-            } else {
+            } else if (req.isSocket) {
                 req.listen(room.slug);
                 Room.subscribe(room.id);
                 req.socket.on('disconnect', function () {
@@ -131,6 +131,8 @@ module.exports = {
                 req.socket.broadcast.to(room.slug).emit('presence', { state: 'online', user: req.session.user });
                 Message.subscribe(req.socket, [{ room: room.id }]);
                 res.json(room, 200);
+            } else {
+                return res.json(room, 200);
             }
         });
     },
