@@ -16,9 +16,13 @@ block content
                 .well.well-sm
                     h5 Rooms
                     ul.rooms-list.nav.nav-stacked.nav-pills
+                        li(ng-repeat="room in rooms")
+                            a(href="/room/{{room.slug}}") {{ room.name }}
                 .well.well-sm
                     h5 Groups
                     ul.groups-list.nav.nav-stacked.nav-pills
+                        li(ng-repeat="group in groups")
+                            a(href="/group/{{group.slug}}") {{ group.name }}
                 - if (req.session.isAdmin)
                     .well.well-sm
                         h5 Application Management
@@ -31,11 +35,31 @@ block content
                                 a(href="/users/manage") User Management
             block module
                 #rooms.col-lg-9
-                    .well
+                    .well(ng-if='rooms.length === 0')
                         h1.text-center.text-muted.text-light No rooms found!
+                    .well(ng-if='rooms.length > 0', ng-repeat='room in rooms')
+                        span.pull-right
+                            span.glyphicon.glyphicon-user
+                            span {{ room.clientcount }} users connected
+                        h4
+                            a(href="/room/{{room.slug}}") {{ room.name }}
+                        p.col-lg-10.
+                            {{ room.description }}
+                        a.btn.btn-success.btn-lg.pull-right(href="/room/{{room.slug}}") Jump in!
+                        .clearfix
+                        hr
+                        .pull-left
+                            span.glyphicon.glyphicon-calendar
+                            span.label.label-info Created {{ room.createdAt | fromNow }}
+                        ul.list-inline.pull-right
+                            li(ng-if='room.groups > 0', ng-repeat='group in room.groups')
+                                span.label.label-success {{ group.name }}
+                            li(ng-if='room.groups > 0')
+                                span.glyphicon.glyphicon-user
+                            li.
+                                Public <span class="glyphicon glyphicon-globe"></span>
+                        .clearfix
 
     footer.container
         p.text-muted.text-light Copyright &copy; 2013 Max Fierke &middot; Licensed under the MIT license &middot; <a href="https://github.com/maxfierke/WaterCooler/issues">Report a bug</a>
 
-block scripts
-    script(type="text/javascript", src="/js/moment.min.js")

@@ -7,8 +7,8 @@ html(ng-app="watercooler")
     link(href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css", rel="stylesheet", type="text/css")
     link(href="/styles/application.css", rel="stylesheet", type="text/css")
     block styles
-  body
-    nav.navbar.navbar-inverse.navbar-static-top(role="navigation", ng-controller="HeaderController")
+  body(ng-controller='PageController')
+    nav.navbar.navbar-inverse.navbar-static-top(role="navigation")
         .container
             .navbar-header
                 button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
@@ -57,10 +57,10 @@ html(ng-app="watercooler")
     script(type="text/javascript", src="/js/moment.min.js")
     script(type="text/javascript", src="/js/lodash.min.js")
     script(type="text/javascript", src="/app/watercooler.js")
-    script(type="text/javascript", src="/app/controllers/HeaderController.js")
+    script(type="text/javascript", src="/app/services/angular-sails.js")
     script(type="text/javascript", src="/app/controllers/ChatController.js")
+    script(type="text/javascript", src="/app/controllers/PageController.js")
     script(type="text/javascript", src="/app/directives/chatwrapper.js")
     script(type="text/javascript", src="/app/filters/fromNow.js")
-    script(type="text/javascript", src="/app/services/angular-sails.js")
 
     block scripts
