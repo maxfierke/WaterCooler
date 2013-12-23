@@ -48,20 +48,6 @@ module.exports = {
         }
     },
 
-    room_groups: function (req, res) {
-        var slug = req.params.slug;
-        Room.findOneBySlug(slug).done(function (err, room) {
-            if (err) return res.send(err, 404);
-            async.map(room.groups, function (group, cb) {
-                Group.findOne(group).done(function (err, dbgroup) {
-                    return cb(err, dbgroup);
-                });
-            }, function (err, hydratedGroups) {
-                return res.json({ groups: hydratedGroups }, 200);
-            });
-        });
-    },
-
     room_subscribers: function (req, res) {
         var slug = req.params.slug;
         Room.findOneBySlug(slug).done(function (err, room) {
@@ -116,24 +102,33 @@ module.exports = {
         var slug = req.params.slug;
         Room.findOneBySlug(slug).exec(function (err, room) {
             if (err) return res.send(err, 404);
-            if (!req.isSocket && !req.wantsJSON) {
-                User.findOne({ id: req.session.user.id }).exec(function (err, user) {
-                    if (err) return res.send(err, 500);
-                    return res.view({ title: room.name, room: room, user: JSON.stringify(user.toJSON()) });
+            async.map(room.groups, function (group, cb) {
+                Group.findOne(group).done(function (err, dbgroup) {
+                    return cb(err, dbgroup);
                 });
-            } else if (req.isSocket) {
-                req.listen(room.slug);
-                Room.subscribe(room.id);
-                req.socket.on('disconnect', function () {
-                    req.socket.broadcast.to(room.slug).emit('presence', { state: 'offline', user: req.session.user });
-                    req.socket.leave(room.slug);
-                });
-                req.socket.broadcast.to(room.slug).emit('presence', { state: 'online', user: req.session.user });
-                Message.subscribe(req.socket, [{ room: room.id }]);
-                res.json(room, 200);
-            } else {
-                return res.json(room, 200);
-            }
+            }, function (err, hydratedGroups) {
+                room.groups = hydratedGroups;
+                room.client_count = sails.io.sockets.clients(slug).length;
+
+                if (!req.isSocket && !req.wantsJSON) {
+                    User.findOne({ id: req.session.user.id }).exec(function (err, user) {
+                        if (err) return res.send(err, 500);
+                        return res.view({ title: room.name, room: room, user: JSON.stringify(user.toJSON()) });
+                    });
+                } else if (req.isSocket) {
+                    req.listen(room.slug);
+                    Room.subscribe(room.id);
+                    req.socket.on('disconnect', function () {
+                        req.socket.broadcast.to(room.slug).emit('presence', { state: 'offline', user: req.session.user });
+                        req.socket.leave(room.slug);
+                    });
+                    req.socket.broadcast.to(room.slug).emit('presence', { state: 'online', user: req.session.user });
+                    Message.subscribe(req.socket, [{ room: room.id }]);
+                    return res.json(room, 200);
+                } else {
+                    return res.json(room, 200);
+                }
+            });
         });
     },
 
