@@ -22,6 +22,10 @@ module.exports = {
         room: {
             type: 'string',
             required: true
+        },
+        ext_ref: {
+            type: 'json',
+            required: false
         }
     }
 
