@@ -7,11 +7,11 @@ block content
             aside.col-lg-3
                 .well.well-sm
                     ul.nav.nav-stacked.nav-pills
-                        li
+                        li(ng-class="{ active: isActive('/dashboard') }")
                             a(href="/dashboard") Dashboard
-                        li
+                        li(ng-class="{ active: isActive('/account') }")
                             a(href="/account") Account
-                        li
+                        li(ng-class="{ active: isActive('/messages') }")
                             a(href="/messages") Messages
                 .well.well-sm
                     h5 Rooms
@@ -21,17 +21,17 @@ block content
                 .well.well-sm
                     h5 Groups
                     ul.groups-list.nav.nav-stacked.nav-pills
-                        li(ng-repeat="group in groups")
+                        li(ng-repeat="group in groups", ng-class="{ active: isActive('/group/'+group.slug) }")
                             a(href="/group/{{group.slug}}") {{ group.name }}
                 - if (req.session.isAdmin)
                     .well.well-sm
                         h5 Application Management
                         ul.nav.nav-stacked.nav-pills
-                            li
+                            li(ng-class="{ active: isActive('/groups/manage') }")
                                 a(href="/groups/manage") Group Management
-                            li
+                            li(ng-class="{ active: isActive('/rooms/manage') }")
                                 a(href="/rooms/manage") Room Management
-                            li
+                            li(ng-class="{ active: isActive('/users/manage') }")
                                 a(href="/users/manage") User Management
             block module
                 #rooms.col-lg-9
@@ -40,7 +40,7 @@ block content
                     .well(ng-if='rooms.length > 0', ng-repeat='room in rooms')
                         span.pull-right
                             span.glyphicon.glyphicon-user
-                            span {{ room.clientcount }} users connected
+                            span  {{ room.clientcount }} users connected
                         h4
                             a(href="/room/{{room.slug}}") {{ room.name }}
                         p.col-lg-10.
