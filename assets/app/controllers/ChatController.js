@@ -1,16 +1,21 @@
-angular.module('watercooler').controller('ChatController', ['$scope', '$window', '$sails',
-    function ($scope, $window, socket) {
+angular.module('watercooler').controller('ChatController', ['$scope', '$window', '$sails', '$filter',
+    function ($scope, $window, socket, $filter) {
         $scope.activeUser = window.activeUser;
-        $scope.room = socket.get('/room/'+$window.location.pathname.split('/')[2], function (room) { $scope.room = room; });
+        $scope.room = socket.get('/room/'+$window.location.pathname.split('/')[2],
+                        function (room) { $scope.room = room; });
         $scope.clients = [];
-        $scope.messages = socket.get('/room/'+$window.location.pathname.split('/')[2]+'/messages?limit=5', function (res) { $scope.messages = res.messages; });
+        $scope.messages = socket.get('/room/'+$window.location.pathname.split('/')[2]+'/messages?limit=5',
+                            function (res) {
+                                $scope.messages = _.each(res.messages,
+                                    function (message) { return $filter('wcLinkify')(message) });
+                            });
         $scope.currentMessage = '';
 
         $scope.postMessage = function () {
             socket.post('/room/'+$scope.room.slug+'/message',
                 { message: $scope.currentMessage },
                 function (response) {
-                    $scope.messages.push(response.data);
+                    $scope.messages.push($filter('wcLinkify')(response.data));
                     $scope.currentMessage = '';
                 });
         };
@@ -22,7 +27,7 @@ angular.module('watercooler').controller('ChatController', ['$scope', '$window',
 
         socket.on('message', function(response) {
             if(response.model === 'message' && response.verb === 'create') {
-                $scope.messages.push(response.data);
+                $scope.messages.push($filter('wcLinkify')(response.data));
             }
         });
 
