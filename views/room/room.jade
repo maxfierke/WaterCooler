@@ -42,7 +42,7 @@ block content
                         a(href='/user/{{client.username}}')
                             span(ng-if='client.firstName && client.lastName') {{ client.firstName }} {{ client.lastName }}
                             span(ng-if='!(client.firstName && client.lastName)') {{ client.username }}
-                            span.label.label-info(ng-if='client.id === activeUser.id') Me
+                        span.label.label-info(ng-if='client.id === activeUser.id') Me
         .controls.row.col-lg-12.col-12.col-sm-12
             form#control-form.form-inline(ng-submit='postMessage()')
                 .col-lg-10.col-sm-10.col-10
