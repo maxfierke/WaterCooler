@@ -42,6 +42,10 @@ module.exports.policies = {
         'room_hook_bitbucket': true
     },
 
+    ServiceController: {
+        '*': 'authenticated'
+    },
+
     UserController: {
         '*': 'authenticated',
         'manage': ['authenticated', 'admin'],

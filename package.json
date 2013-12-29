@@ -17,7 +17,8 @@
         "async": "latest",
         "slug": "latest",
         "passport": "latest",
-        "passport-local": "latest"
+        "passport-local": "latest",
+        "request": "latest"
     },
     "scripts": {
         "start": "node app.js",

@@ -24,8 +24,16 @@ block content
                                 {{ message.user.username }}
                             .clearfix
                         .message-content.col-lg-10.col-md-9.col-sm-8.well.well-sm
-                            {{ message.message }}
-                            br
+                            span(ng-bind-html='message.message')
+                            div(ng-if='message.ext_ref.youtube')
+                                hr
+                                wc-video(href='', video-id='{{message.ext_ref.youtube}}', thumbnail='', type='youtube', title='', description='')
+                            div(ng-if='message.ext_ref.vimeo')
+                                hr
+                                wc-video(href='', video-id='{{message.ext_ref.vimeo}}', thumbnail='', type='vimeo', title='', description='')
+                            div.col-xs-3(ng-if='message.ext_ref.image')
+                                a(ng-href='{{message.ext_ref.image}}')
+                                    img.img-responsive.img-thumbnail(ng-src='{{message.ext_ref.image}}')
             aside#sidebar.col-lg-2.col-sm-3.col-3
                 header Users
                 ul#user-list
