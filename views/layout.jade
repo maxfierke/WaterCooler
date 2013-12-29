@@ -8,6 +8,7 @@ html(ng-app="watercooler")
     link(href="/styles/application.css", rel="stylesheet", type="text/css")
     block styles
   body(ng-controller='PageController')
+    div(toast="{ timeout: 2500, position: 'top' }")
     nav.navbar.navbar-inverse.navbar-static-top(role="navigation")
         .container
             .navbar-header
@@ -61,6 +62,7 @@ html(ng-app="watercooler")
     script(type="text/javascript", src="/app/services/angular-sails.js")
     script(type="text/javascript", src="/app/controllers/ChatController.js")
     script(type="text/javascript", src="/app/controllers/PageController.js")
+    script(type="text/javascript", src="/app/directives/angular-toasts.js")
     script(type="text/javascript", src="/app/directives/wcStage.js")
     script(type="text/javascript", src="/app/directives/wcVideo.js")
     script(type="text/javascript", src="/app/filters/fromNow.js")
