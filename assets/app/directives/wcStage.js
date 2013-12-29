@@ -1,4 +1,4 @@
-angular.module('watercooler').directive('chatwrapper', ["$window", "$sails", function ($window, socket) {
+angular.module('watercooler').directive('wcStage', ["$window", "$sails", function ($window, socket) {
     return {
         scope: {},
         link: function (scope, element) {
