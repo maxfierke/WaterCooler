@@ -9,8 +9,8 @@ angular.module('watercooler').controller('ChatController', ['$scope', '$window',
         $scope.postMessage = function () {
             socket.post('/room/'+$scope.room.slug+'/message',
                 { message: $scope.currentMessage },
-                function () {
-                    $scope.messages.push({ user: $scope.activeUser, message: $scope.currentMessage, createdAt: new Date() });
+                function (response) {
+                    $scope.messages.push(response.data);
                     $scope.currentMessage = '';
                 });
         };
