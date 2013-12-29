@@ -40,4 +40,23 @@ angular.module('watercooler').controller('ChatController', ['$scope', '$window',
                 $scope.clients = _.reject($scope.clients, function (client) { return client.id === response.user.id; });
             }
         });
+
+        socket.on('github', function (push) {
+            var message = {
+                user: { username: 'GitHub',
+                        gravatar_hash: '61024896f291303615bcd4f7a0dcfb74' },
+                createdAt: new Date().toISOString(),
+                message: '<strong>'+push.pusher.name+'</strong> has pushed '+push.commit_count+' commits to <a href="'+push.repo.url+'">'+push.repo.owner+'/'+push.repo.name+'</a>. <a href="'+push.summary_url+'"><strong>View Summary</strong></a>'
+            };
+            $scope.messages.push(message);
+        });
+
+        socket.on('bitbucket', function (push) {
+            var message = {
+                user: { username: 'Bitbucket' },
+                createdAt: new Date().toISOString(),
+                message: '<strong>'+push.pusher+'</strong> has pushed '+push.commit_count+' commits to <a href="'+push.repo.url+'">'+push.repo.owner.name+'/'+push.repo.name+'</a>.'
+            };
+            $scope.messages.push(message);
+        });
     }]);
