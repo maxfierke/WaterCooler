@@ -1,4 +1,4 @@
-angular.module('watercooler').directive('wcStage', ["$window", "$sails", function ($window, socket) {
+angular.module('watercooler').directive('wcStage', ["$window", "$sails", "$timeout", function ($window, socket, $timeout) {
     return {
         scope: {},
         link: function (scope, element) {
@@ -22,13 +22,18 @@ angular.module('watercooler').directive('wcStage', ["$window", "$sails", functio
                 }
             });
 
+            scope.$on('wc:message-update', function () {
+                // Allow 10ms for Angular to update the DOM with the latest message
+                $timeout(function () { stage.scrollTop(stage[0].scrollHeight); }, 10);
+            });
+
             socket.on('disconnect', function () {
                 stage.append('<strong class="text-error">Connection Lost! I\'ll try to reconnect...</strong><br />');
-                stage.scrollTop(stage.scrollHeight);
+                stage.scrollTop(stage[0].scrollHeight);
             });
 
             scope.$watch(scope.vph, function (newValue, oldValue) {
-                    setWinHeight(scope.vph(), scope.nbh(), scope.mch(), scope.rih());
+                setWinHeight(scope.vph(), scope.nbh(), scope.mch(), scope.rih());
             }, true);
 
             angular.element($window).bind('resize', function () {

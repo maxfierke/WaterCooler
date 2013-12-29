@@ -11,6 +11,10 @@ angular.module('watercooler').controller('ChatController', ['$scope', '$window',
                             });
         $scope.currentMessage = '';
 
+        $scope.$watch('messages.length', function () {
+            $scope.$parent.$broadcast('wc:message-update');
+        });
+
         $scope.postMessage = function () {
             socket.post('/room/'+$scope.room.slug+'/message',
                 { message: $scope.currentMessage },
