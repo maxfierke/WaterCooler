@@ -1,1 +1,1 @@
-var app = angular.module('watercooler', ['ngSails']);
+var app = angular.module('watercooler', ['ngSails', 'ngSanitize']);
