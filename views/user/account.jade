@@ -3,94 +3,45 @@ extends ../main/dashboard
 block module
     .col-lg-9
         #alerts.row
-        #account-container.row.well
-            form#account-form.col-lg-6
+        #account-container.row.well(ng-controller="AccountController", ng-init="user.id = '#{user.id}'")
+            form#account-form.col-lg-6(name='updateForm', ng-submit='updateAccount()')
                 fieldset
                     legend Update Profile
                     .form-group
                         label First Name
-                        input#firstName.form-control(type="text", value="#{user.firstName}", placeholder="First Name", required)
+                        input#firstName.form-control(type="text", ng-model='user.firstName', ng-init="user.firstName = '#{user.firstName}'", placeholder="First Name", required)
                     .form-group
                         label Last Name
-                        input#lastName.form-control(type="text", value="#{user.lastName}", placeholder="Last Name", required)
+                        input#lastName.form-control(type="text", ng-model='user.lastName', ng-init="user.lastName = '#{user.lastName}'", placeholder="Last Name", required)
                     .form-group
                         label Username
                         .input-group
                             span.input-group-addon @
-                            input#username.form-control(type="text", value="#{user.username}", placeholder="Username", required)
+                            input#username.form-control(type="text", ng-model='user.username', ng-init="user.username = '#{user.username}'", placeholder="Username", required)
                     .form-group
                         label Email
-                        input#email.form-control(type="email", value="#{user.email}", placeholder="Email", required)
+                        .input-group
+                            span.input-group-addon
+                                span.glyphicon.glyphicon-envelope
+                            input#email.form-control(type="email", ng-model='user.email', ng-init="user.email = '#{user.email}'", placeholder="Email", required)
                     .form-group
                         label Location
-                        input#location.form-control(type="text", value="#{user.location}", placeholder="Location")
-                    input.btn.btn-primary.btn-block(type="submit", value="Update Profile")
+                        .input-group
+                            span.input-group-addon
+                                span.glyphicon.glyphicon-map-marker
+                            input#location.form-control(type="text", ng-model='user.location', ng-init="user.location = '#{user.location}'", placeholder="Location")
+                    button.btn.btn-primary.btn-block(type="submit") Update Profile
             .col-lg-6
                 .text-center
                     img.img-thumbnail(src="https://secure.gravatar.com/avatar/#{user.gravatar_hash}?s=200")
                     br
                     br
-                form#password-form
+                form#password-form(name='passwordForm', ng-submit='updatePassword()')
                     legend Change Password
                     .form-group
                         label Password
-                        input#password.form-control(type="password", value="", placeholder="Password")
+                        input#password.form-control(type="password", ng-model='user.password', ng-init="user.password = ''", placeholder="Password", ng-minlength="6")
                     .form-group
                         label Confirm Password
-                        input#confirmPassword.form-control(type="password", value="", placeholder="Confirm Password")
-                    input.btn.btn-warning.btn-block(type="submit", value="Change Password")
-
-block scripts
-    script.
-        $("#account-form").submit(function(e){
-            e.preventDefault();
-            var username = $("#username").val();
-            var email = $("#email").val();
-            var location = $("#location").val();
-            var firstName = $("#firstName").val();
-            var lastName = $("#lastName").val();
-            var data = { username: username, email: email, firstName: firstName,
-                         lastName: lastName, location: location };
-            $.ajax({
-                type: 'PUT',
-                url: '/user/#{user.id}',
-                data: data,
-                success: function () {
-                    $('#alerts').html('<div class="alert alert-success">Profile updated!</div>');
-                },
-                error: function(res) {
-                    $('#alerts').html('<div class="alert alert-danger">Could not update profile: '+res.responseJSON.error+'</div>');
-                }
-            });
-        });
-        $('#password-form').submit(function (e) {
-            e.preventDefault();
-            var password = $("#password").val();
-            var confirmPassword = $("#confirmPassword").val();
-            if (password === confirmPassword && password.length > 5) {
-                $.ajax({
-                    type: 'PUT',
-                    url: '/user/#{user.id}',
-                    data: { password: password },
-                    success: function () {
-                        $('#alerts').html('<div class="alert alert-success">Password updated!</div>');
-                    },
-                    error: function(res) {
-                        $('#alerts').html('<div class="alert alert-danger">Could not update password: '+res.responseJSON.error+'</div>');
-                    }
-                });
-            } else if (password.length < 6) {
-                $('#alerts').html('<div class="alert alert-danger">Password is too short!</div>');
-                $('#password').popover({
-                    title: "Validation Error",
-                    content: "Password is too short!"
-                }).click();
-            } else {
-                $('#alerts').html('<div class="alert alert-danger">Passwords don\'t match</div>');
-                $('#password').popover({
-                    title: "Validation Error",
-                    content: "Passwords don't match"
-                }).click();
-            }
-        });
-
+                        input#confirmPassword.form-control(type="password", ng-model='user.confirmPassword', ng-init="user.confirmPassword = ''", placeholder="Confirm Password", ng-minlength="6")
+                    button.btn.btn-warning.btn-block(type="submit") Change Password
