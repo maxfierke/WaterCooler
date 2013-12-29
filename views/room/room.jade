@@ -10,18 +10,16 @@ block content
         .row.chat-row
             .container-fluid.col-lg-10.col-9.col-sm-9
                 #room-info
-                    h4#room-name.inline-heading {{ room.name }}
-                    #room-topic.inline-heading {{ room.description }}
+                    h4#room-name.inline-heading(ng-bind='room.name')
+                    #room-topic.inline-heading(ng-bind='room.description')
                 #content.well
                     .message.col-12(ng-repeat='message in messages')
                         .message-header.col-lg-2.col-md-3.col-sm-4
-                            img.pull-left.avatar(src='https://secure.gravatar.com/avatar/{{message.user.gravatar_hash}}?s=32')
-                            time(datetime='{{message.createdAt}}') {{ message.createdAt | fromNow }}
+                            img.pull-left.avatar(ng-src='https://secure.gravatar.com/avatar/{{message.user.gravatar_hash}}?s=32')
+                            time(datetime='{{message.createdAt}}', ng-bind='message.createdAt | fromNow')
                             br
-                            b(ng-if='message.user.firstName && message.user.lastName').
-                                {{ message.user.firstName }} {{ message.user.lastName }}
-                            b(ng-if='!(message.user.firstName && message.user.lastName)')
-                                {{ message.user.username }}
+                            b(ng-if='message.user.firstName && message.user.lastName', ng-bind="message.user.fullName")
+                            b(ng-if='!(message.user.firstName && message.user.lastName)', ng-bind="message.user.username")
                             .clearfix
                         .message-content.col-lg-10.col-md-9.col-sm-8.well.well-sm
                             span(ng-bind-html='message.message')
@@ -37,11 +35,11 @@ block content
             aside#sidebar.col-lg-2.col-sm-3.col-3
                 header Users
                 ul#user-list
-                    li(data-clientId='{{client.id}}', ng-repeat='client in clients')
-                        img(src='https://secure.gravatar.com/avatar/{{client.gravatar_hash}}?s=32')
+                    li(data-clientid='{{client.id}}', ng-repeat='client in clients')
+                        img(ng-src='https://secure.gravatar.com/avatar/{{client.gravatar_hash}}?s=32')
                         a(href='/user/{{client.username}}')
-                            span(ng-if='client.firstName && client.lastName') {{ client.firstName }} {{ client.lastName }}
-                            span(ng-if='!(client.firstName && client.lastName)') {{ client.username }}
+                            span(ng-if='client.firstName && client.lastName', ng-bind="client.fullName")
+                            span(ng-if='!(client.firstName && client.lastName)', ng-bind="client.username")
                         span.label.label-info(ng-if='client.id === activeUser.id') Me
         .controls.row.col-lg-12.col-12.col-sm-12
             form#control-form.form-inline(ng-submit='postMessage()')
